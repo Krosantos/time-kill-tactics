@@ -5,7 +5,6 @@ public class Unit : MonoBehaviour {
 
     public int MaxHealth, BaseStrength, BaseSpeed, Health, Strength, Speed;
     public Tile Tile;
-
     public Sprite Sprite
     {
         get

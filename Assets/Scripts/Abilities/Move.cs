@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : MonoBehaviour {
+public static class Move {
 
-	// Use this for initialization
-	void Start () {
+	public static void Standard(Unit unit){
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
+	public static void Flying(Unit unit){
+		
+	}
+	public static void Teleport(Unit unit){
 		
 	}
 }
