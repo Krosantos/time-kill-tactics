@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour {
@@ -31,7 +32,6 @@ public class Tile : MonoBehaviour {
                 return null;
             }
         }
-
     public Tile Uu
         {
             get
@@ -43,7 +43,6 @@ public class Tile : MonoBehaviour {
                 return null;
             }
         }
-
     public Tile Ur
         {
             get
@@ -59,7 +58,6 @@ public class Tile : MonoBehaviour {
                 return null;
             }
         }
-
     public Tile Dl
         {
             get
@@ -75,7 +73,6 @@ public class Tile : MonoBehaviour {
                 return null;
             }
         }
-
     public Tile Dd
         {
             get
@@ -87,7 +84,6 @@ public class Tile : MonoBehaviour {
                 return null;
             }
         }
-
     public Tile Dr
         {
             get
@@ -114,6 +110,7 @@ public class Tile : MonoBehaviour {
         set { gameObject.GetComponent<SpriteRenderer>().sprite = value; }
     }
 
+    [NonSerialized]
     public Unit Unit;
     public int Height, X, Y;
     public bool Passable, Blocking;
