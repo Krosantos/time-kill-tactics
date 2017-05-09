@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Tile : MonoBehaviour {
 
     public List<Tile> Neighbours
@@ -99,8 +100,10 @@ public class Tile : MonoBehaviour {
                 return null;
             }
         }
+    public bool DontDraw;
     public static List<Tile> AllTiles;
     public static Tile[,] TileMap;
+    public static GameObject Filler;
     public Sprite Sprite
     {
         get
@@ -109,6 +112,7 @@ public class Tile : MonoBehaviour {
         }
         set { gameObject.GetComponent<SpriteRenderer>().sprite = value; }
     }
+    public SpriteDict[] SpriteDictionary;
 
     [NonSerialized]
     public Unit Unit;
@@ -116,6 +120,53 @@ public class Tile : MonoBehaviour {
     public bool Passable, Blocking;
     public Terrain Terrain;
     public delegate void OnTurn(Tile self);
+
+    public void Update()
+    {
+        GetComponent<SpriteRenderer>().sortingOrder = Height + Y*-1;
+        transform.position = getTransformFromCoords(X, Y, Height);
+        DrawDown();
+        UpdateSprite();
+    }
+
+    private Vector3 getTransformFromCoords(int x, int y, int z)
+    {
+        return new Vector3(x + (y % 2) * 0.5f, 0.75f * y + 0.35f * z);
+    }
+
+    private void DrawDown()
+    {
+        for(var x = 0; x < transform.childCount; x++)
+        {
+            Destroy(transform.GetChild(x).gameObject);
+        }
+        if (DontDraw) return;
+        for (var z = Height; z> 0; z--)
+        {
+            var filler = Instantiate(Filler, getTransformFromCoords(X, Y, z-1), Quaternion.identity);
+            filler.transform.parent = transform;
+            filler.GetComponent<SpriteRenderer>().sortingOrder = (z-1) + Y*-1;
+        }
+    }
+
+    private void UpdateSprite()
+    {
+        foreach(var pair in SpriteDictionary)
+        {
+            if(pair.Name == Terrain.ToString())
+            {
+                Sprite = pair.Sprite;
+            }
+        }
+    }
+
+}
+
+[Serializable]
+public struct SpriteDict
+{
+    public string Name;
+    public Sprite Sprite;
 }
 
 public enum Terrain
