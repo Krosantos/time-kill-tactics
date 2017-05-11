@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class MapSerializer : MonoBehaviour {
 
     public GameObject TilePrefab;
     public TextAsset Input;
 
-	public static string SerializeMap(List<Tile> tileList)
+    public static string SerializeMap(List<Tile> tileList)
     {
         var result = "";
         foreach(var tile in tileList)

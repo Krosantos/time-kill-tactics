@@ -6,6 +6,7 @@ public class SpawnGrid : MonoBehaviour {
     public string SavePath, MapName;
     public GameObject TilePrefab;
     public GameObject FillerPrefab;
+    public SpriteDict[] SpriteDictionary, FillerDictionary;
     public int X,Y;
 
 	public void Awake(){
@@ -38,6 +39,10 @@ public class SpawnGrid : MonoBehaviour {
             Debug.Log("Writing!");
             var serialized = MapSerializer.SerializeMap(Tile.AllTiles);
             File.WriteAllText(SavePath + "/" + MapName + ".txt", serialized);
+        }
+        foreach(var tile in Tile.AllTiles)
+        {
+            tile.UpdateEditorSprite(FillerPrefab, SpriteDictionary, FillerDictionary);
         }
     }
 }
