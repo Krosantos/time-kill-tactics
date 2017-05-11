@@ -31,10 +31,24 @@ public class MapSerializer : MonoBehaviour {
         {
             var prefab = Instantiate(TilePrefab, new Vector3(), Quaternion.identity);
             var tile = prefab.GetComponent<Tile>();
-            Debug.Log(raw);
             JsonUtility.FromJsonOverwrite(raw, tile);
             Tile.AllTiles.Add(tile);
             tile.UpdateEditorSprite(FillerPrefab, TileDict, FillerDict);
+            prefab.transform.parent = transform;
+        }
+
+        int maxX = 0;
+        int maxY = 0;
+
+        foreach(var tile in Tile.AllTiles)
+        {
+            if (tile.X > maxX) maxX = tile.X;
+            if (tile.Y > maxY) maxY = tile.Y;
+        }
+        Tile.TileMap = new Tile[maxX+1, maxY+1];
+        foreach(var tile in Tile.AllTiles)
+        {
+            Tile.TileMap[tile.X, tile.Y] = tile;
         }
     }
 }
