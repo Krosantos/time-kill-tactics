@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour, ITurnEndable, IPointerClickHandler, ISelectHa
 
     public int MaxHealth, BaseStrength, BaseSpeed, Health, Strength, Speed;
     public bool HasMoved, HasAttacked;
+    [NonSerialized]
     public Tile Tile;
     public Sprite Sprite
     {
@@ -20,8 +21,6 @@ public class Unit : MonoBehaviour, ITurnEndable, IPointerClickHandler, ISelectHa
     // public Anisomething something
 
     public int Team;
-    //False for left, true for right.
-    public bool Facing;
     public delegate void MoveDel(Unit self);
     public delegate void AttackDel(Unit self, Unit victim);
     public delegate void OnTurnDel(Unit self);
@@ -51,7 +50,7 @@ public class Unit : MonoBehaviour, ITurnEndable, IPointerClickHandler, ISelectHa
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new NotImplementedException();
+        Move(this);
     }
 
     public void OnSelect(BaseEventData eventData)
