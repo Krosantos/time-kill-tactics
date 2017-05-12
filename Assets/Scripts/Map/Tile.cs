@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class Tile : MonoBehaviour {
+public class Tile : MonoBehaviour, IPointerClickHandler {
 
     public List<Tile> Neighbours
         {
@@ -118,4 +119,9 @@ public class Tile : MonoBehaviour {
     public bool Passable, Blocking;
     public Terrain Terrain;
     public delegate void OnTurn(Tile self);
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        
+    }
 }

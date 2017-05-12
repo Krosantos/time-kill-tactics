@@ -34,6 +34,7 @@ public class MapSerializer : MonoBehaviour {
             JsonUtility.FromJsonOverwrite(raw, tile);
             Tile.AllTiles.Add(tile);
             tile.UpdateEditorSprite(FillerPrefab, TileDict, FillerDict);
+            prefab.name = tile.X + "," + tile.Y;
             prefab.transform.parent = transform;
         }
 
