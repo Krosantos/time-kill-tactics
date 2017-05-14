@@ -4,7 +4,11 @@ using UnityEngine;
 
 public static class Move {
 	public static void Standard(Unit unit){
-		Debug.Log("RAH! "+unit.Speed);
+        var moveableTiles = unit.GetMovableTiles();
+        foreach(var tile in moveableTiles)
+        {
+            tile.GetComponent<SpriteRenderer>().color = Color.blue;
+        }
 	}
 	public static void Climb(Unit unit){
 

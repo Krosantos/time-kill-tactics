@@ -7,99 +7,101 @@ public class Tile : MonoBehaviour, IPointerClickHandler {
 
     public List<Tile> Neighbours
         {
-            get{
-                var result = new List<Tile>();
-                if(Ul != null) result.Add(Ul);
-                if(Uu != null) result.Add(Uu);
-                if(Ur != null) result.Add(Ur);
-                if(Dl != null) result.Add(Dl);
-                if(Dd != null) result.Add(Dd);
-                if(Dr != null) result.Add(Dr);
-                return result;
+            get
+            {
+            var result = new List<Tile>();
+            if (Ul != null) result.Add(Ul);
+            if (Ur != null) result.Add(Ur);
+            if (Rr != null) result.Add(Rr);
+            if (Dr != null) result.Add(Dr);
+            if (Dl != null) result.Add(Dl);
+            if (Ll != null) result.Add(Ll);
+            return result;
             }
         }
+   
     public Tile Ul
+    {
+        get
         {
-            get
+            if(Y%2 != 0)
             {
-                if (X%2 == 0 && X > 0)
-                {
-                    if (TileMap[X - 1, Y] != null) return TileMap[X - 1, Y];
-                }
-                else if (X > 0 && Y + 1 < TileMap.GetLength(1))
-                {
-                    if (TileMap[X - 1, Y + 1] != null) return TileMap[X - 1, Y + 1];
-                }
-                return null;
+                if (TileMap.GetLength(1) >= Y + 1) return TileMap[X, Y + 1];
             }
-        }
-    public Tile Uu
-        {
-            get
+            else
             {
-                if (Y + 1 < TileMap.GetLength(1))
-                {
-                    if (TileMap[X, Y + 1] != null) return TileMap[X, Y + 1];
-                }
-                return null;
+                if (X > 0 && TileMap.GetLength(1) >= Y + 1) return TileMap[X - 1, Y + 1];
             }
+            return null;
         }
+    }
+
     public Tile Ur
+    {
+        get
         {
-            get
+            if (Y % 2 != 0)
             {
-                if (X%2 == 0 && X + 1 < TileMap.GetLength(0))
-                {
-                    if (TileMap[X + 1, Y] != null) return TileMap[X + 1, Y];
-                }
-                else if (X%2 != 0 && X + 1 < TileMap.GetLength(0) && Y + 1 < TileMap.GetLength(1))
-                {
-                    if (TileMap[X + 1, Y + 1] != null) return TileMap[X + 1, Y + 1];
-                }
-                return null;
+                if (TileMap.GetLength(1) >= Y + 1 && TileMap.GetLength(0) >= X + 1) return TileMap[X+1, Y + 1];
             }
+            else
+            {
+                if (X > 0 && TileMap.GetLength(1) >= Y + 1) return TileMap[X, Y + 1];
+            }
+            return null;
         }
-    public Tile Dl
+    }
+
+    public Tile Rr
+    {
+        get
         {
-            get
-            {
-                if (X%2 == 0 && X > 0 && Y > 0)
-                {
-                    if (TileMap[X - 1, Y - 1] != null) return TileMap[X - 1, Y - 1];
-                }
-                else if (X%2 != 0 && X > 0)
-                {
-                    if (TileMap[X - 1, Y] != null) return TileMap[X - 1, Y];
-                }
-                return null;
-            }
+            if (TileMap.GetLength(0) >= X + 1) return TileMap[X + 1, Y];
+            return null;
         }
-    public Tile Dd
-        {
-            get
-            {
-                if (Y > 0)
-                {
-                    if (TileMap[X, Y - 1] != null) return TileMap[X, Y - 1];
-                }
-                return null;
-            }
-        }
+    }
+
     public Tile Dr
+    {
+        get
         {
-            get
+            if (Y % 2 != 0)
             {
-                if (X%2 == 0 && X + 1 < TileMap.GetLength(0) && Y > 0)
-                {
-                    if (TileMap[X + 1, Y - 1] != null) return TileMap[X + 1, Y - 1];
-                }
-                else if (X%2 != 0 && X + 1 < TileMap.GetLength(0))
-                {
-                    if (TileMap[X + 1, Y] != null) return TileMap[X + 1, Y];
-                }
-                return null;
+                if (Y > 0 && TileMap.GetLength(0) >= X + 1) return TileMap[X + 1, Y - 1];
             }
+            else
+            {
+                if (Y > 0) return TileMap[X, Y - 1];
+            }
+            return null;
         }
+    }
+
+    public Tile Dl
+    {
+        get
+        {
+            if (Y % 2 != 0)
+            {
+                if (Y > 0) return TileMap[X, Y - 1];
+            }
+            else
+            {
+                if (Y > 0 && X > 0) return TileMap[X - 1, Y - 1];
+            }
+            return null;
+        }
+    }
+
+    public Tile Ll
+    {
+        get
+        {
+            if (X > 0) return TileMap[X - 1, Y];
+            return null;
+        }
+    }
+
     public bool DontDraw;
     public static List<Tile> AllTiles;
     public static Tile[,] TileMap;

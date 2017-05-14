@@ -14,7 +14,10 @@ public class UnitBuilder : MonoBehaviour {
 
     public void Awake(){
         var input = SerializeUnit(TestUnit);
-        ConstructUnit(input);
+        var spawnUnitObj = ConstructUnit(input);
+        var spawnUnit = spawnUnitObj.GetComponent<Unit>();
+        spawnUnit.Tile = Tile.TileMap[2, 1];
+        spawnUnit.transform.position = spawnUnit.GetPosition();
     }
 
     // Add in delegate building bit.
