@@ -5,7 +5,7 @@ using UnityEngine;
 public static class NavigationExtensions {
 
     //Awwwww yiss, A* up in this bitch.
-    public static List<Tile> AStarPath(this Tile from, Tile to, Unit unit)
+    public static List<Tile> AStarPath(this Tile from, Tile to, Unit unit, int maxHeight = 1, bool moveThroughImpass = false)
     {
         var openList = new List<Tile>();
         var closedList = new List<Tile>();
@@ -28,7 +28,7 @@ public static class NavigationExtensions {
             closedList.Add(currentTile);
             foreach (var tile in currentTile.Neighbours)
             {
-                var tempG = gScore[currentTile];// + unit.MoveCost[tile.Terrain];
+                var tempG = gScore[currentTile]+1;
                 if (!openList.Contains(tile) && !closedList.Contains(tile))
                 {
                     openList.Add(tile);
@@ -46,16 +46,15 @@ public static class NavigationExtensions {
                     if (fScore.ContainsKey(tile)) fScore.Remove(tile);
                     fScore.Add(tile, gScore[tile] + GetHeuristic(tile, to));
                 }
-                //999 is a ~MAGIC NUMBER~. It's terrain cost shorthand for completely impassable.
-                //if (tile.IsImpassable(unit))
-                if(true)
+                //If we can't possibly move to the tile (occupied, too tall, whatever), discard it.
+                if (tile.IsImpassable(currentTile,unit,maxHeight,moveThroughImpass))
                 {
                     openList.Remove(tile);
                     closedList.Add(tile);
                 }
             }
         }
-        //If you made it this far, no route exists. Sorry, breh.
+        //If you made it this far, no route exists. Condolences.
         return null;
     }
 
@@ -68,7 +67,7 @@ public static class NavigationExtensions {
         var secondPos = Mathf.Abs(to.X - from.X) + 1;
         var thirdPos = Mathf.Abs(to.X - to.Y) * -1 - (from.X - from.Y) * -1 + 1;
 
-        //Because tileagons tesselate less smoothly than squares, we take the largest of 3 possible measures.
+        //Because hexagons tesselate less smoothly than squares, we take the largest of 3 possible measures.
         if (firstPos >= result) result = firstPos;
         if (secondPos >= result) result = secondPos;
         if (thirdPos >= result) result = thirdPos;
