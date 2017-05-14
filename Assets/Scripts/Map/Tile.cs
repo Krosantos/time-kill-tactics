@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class Tile : MonoBehaviour, IPointerClickHandler {
+public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDeselectHandler {
 
     public List<Tile> Neighbours
         {
@@ -124,6 +124,16 @@ public class Tile : MonoBehaviour, IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Tiiiile!");
+        if(!EventSystem.current.alreadySelecting)EventSystem.current.SetSelectedGameObject(this.gameObject);
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        Debug.Log("Tile Selected!");
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        Debug.Log("Tile Deselected!");
     }
 }

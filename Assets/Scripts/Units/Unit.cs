@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Unit : MonoBehaviour, ITurnEndable, IPointerClickHandler, ISelectHandler, IDeselectHandler
+public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandler, IDeselectHandler
 {
-
+    public Player Player;
     public int MaxHealth, BaseStrength, BaseSpeed, Health, Strength, Speed;
     public bool HasMoved, HasAttacked;
     [NonSerialized]
@@ -23,7 +23,8 @@ public class Unit : MonoBehaviour, ITurnEndable, IPointerClickHandler, ISelectHa
     public int Team;
     public delegate void MoveDel(Unit self);
     public delegate void AttackDel(Unit self, Unit victim);
-    public delegate void OnTurnDel(Unit self);
+    public delegate void OnTurnStartDel(Unit self);
+    public delegate void OnTurnEndDel(Unit self);
     public delegate void OnDeathDel(Unit self, Unit killer);
     public delegate void OnAttackedDel(Unit self, Unit attacker, int damage);
     public delegate void OnAttackDel(Unit self, Unit victim);
@@ -32,7 +33,8 @@ public class Unit : MonoBehaviour, ITurnEndable, IPointerClickHandler, ISelectHa
 
     public MoveDel Move;
     public AttackDel Attack;
-    public OnTurnDel OnTurn;
+    public OnTurnStartDel OnTurnStart;
+    public OnTurnEndDel OnTurnEnd;
     public OnDeathDel OnDeath;
     public OnAttackedDel OnAttacked;
     public OnAttackDel OnAttack;
@@ -41,25 +43,32 @@ public class Unit : MonoBehaviour, ITurnEndable, IPointerClickHandler, ISelectHa
 
     public List<string> Tags;
 
-    public void OnTurnEnd()
+    public void TurnStart()
     {
         HasMoved = false;
         HasAttacked = false;
-        OnTurn(this);
+        OnTurnStart(this);
+    }
+
+    public void TurnEnd()
+    {
+        HasMoved = true;
+        HasAttacked = true;
+        OnTurnEnd(this);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Move(this);
+        if(!EventSystem.current.alreadySelecting)EventSystem.current.SetSelectedGameObject(this.gameObject);
     }
 
     public void OnSelect(BaseEventData eventData)
     {
-        throw new NotImplementedException();
+        Debug.Log("Unit Selected!");
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        throw new NotImplementedException();
+        Debug.Log("Unit Deselected!");
     }
 }
