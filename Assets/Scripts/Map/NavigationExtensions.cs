@@ -47,7 +47,8 @@ public static class NavigationExtensions {
                     fScore.Add(tile, gScore[tile] + GetHeuristic(tile, to));
                 }
                 //999 is a ~MAGIC NUMBER~. It's terrain cost shorthand for completely impassable.
-                if (tile.IsImpassable(unit))
+                //if (tile.IsImpassable(unit))
+                if(true)
                 {
                     openList.Remove(tile);
                     closedList.Add(tile);
@@ -92,17 +93,23 @@ public static class NavigationExtensions {
     }
 
     //Helper function to see if a tile's impassable for any reason (be that terrain, or enemy occupation).
-    private static bool IsImpassable(this Tile tile, Unit unit)
+    private static bool IsImpassable(this Tile tile, Tile tileFrom, Unit unit, int maxHeight = 1, bool moveThroughImpass = false)
     {
-        /*if (unit.MoveCost[tile.Terrain] >= 999) return true;
-        if (tile.OccupyUnit != null)
-        {
-            if (tile.OccupyUnit.PlayerId != unit.PlayerId) return true;
-        }*/
+        // If the height delta's too great, or the tile is impassable, and we don't have an override, return true.
+        if(Mathf.Abs(tile.Height - tileFrom.Height) > maxHeight) return true;
+        if(tile.Unit != null){
+            if((tile.Unit.Team != unit.Team)&&!moveThroughImpass) return true;
+        }
+        if(!tile.Passable && !moveThroughImpass) return true;
         return false;
     }
 
-    public static List<Tile> GetMovableTiles(this Unit unit)
+    private static bool CanEndHere(this Tile tile, bool endOnImpass = false){
+        return (tile.Unit == null && (tile.Passable || endOnImpass));
+    }
+
+    // The moveThroughImpass flag lets us do stuff like have units that can fly/teleport.
+    public static List<Tile> GetMovableTiles(this Unit unit, int maxHeight = 1, bool moveThroughImpass = false, bool endOnImpass = false)
     {
         var tile = unit.Tile;
         var openList = new List<Tile>();
@@ -119,9 +126,9 @@ public static class NavigationExtensions {
             {
                 foreach (var neighbour in openTile.Neighbours)
                 {   //If it can be moved to, and isn't in the closed list, add it to the open list.
-                    if (1 + costDictionary[openTile] <= unit.Speed && !closedList.Contains(neighbour) && !openList.Contains(neighbour) && !tilesToOpen.Contains(neighbour))
+                    if (!neighbour.IsImpassable(openTile, unit, maxHeight, moveThroughImpass) && 1 + costDictionary[openTile] <= unit.Speed && !closedList.Contains(neighbour) && !openList.Contains(neighbour) && !tilesToOpen.Contains(neighbour))
                     {
-                        result.Add(neighbour);
+                        if(neighbour.CanEndHere(endOnImpass))result.Add(neighbour);
                         tilesToOpen.Add(neighbour);
                         costDictionary.Add(neighbour, 1 + costDictionary[openTile]);
                     }
