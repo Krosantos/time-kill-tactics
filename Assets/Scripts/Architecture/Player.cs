@@ -9,7 +9,9 @@ public class Player : MonoBehaviour, ITurnable
 
 	public void TurnStart()
 	{
-
+		foreach(var turnable in TurnAssets){
+			turnable.TurnStart();
+		}
 	}
 
     public void TurnEnd()
