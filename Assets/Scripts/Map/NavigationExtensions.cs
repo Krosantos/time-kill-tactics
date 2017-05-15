@@ -152,5 +152,21 @@ public static class NavigationExtensions {
         return result;
     }
 
+    public static void MoveUnit(this Tile tile, Unit unit)
+    {
+        // Use A* to get path.
+        // Start Animation
+
+        // For each tile in path, move unit to that tile.
+
+        unit.HasMoved = true;
+        unit.Tile.Unit = null;
+        unit.Tile = tile;
+        unit.Tile.Unit = unit;
+        unit.transform.position = unit.GetPosition();
+
+        // End Animation
+    }
+
 }
 

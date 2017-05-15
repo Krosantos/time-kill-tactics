@@ -114,6 +114,16 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
         }
         set { gameObject.GetComponent<SpriteRenderer>().sprite = value; }
     }
+    public Color Color
+    {
+        get
+        {
+            return gameObject.GetComponent<SpriteRenderer>().color;
+        }
+        set {
+            gameObject.GetComponent<SpriteRenderer>().color = value;
+        }
+    }
 
     [NonSerialized]
     public Unit Unit;
@@ -124,7 +134,18 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(!EventSystem.current.alreadySelecting)EventSystem.current.SetSelectedGameObject(this.gameObject);
+        if (!TurnManager.Active.alreadySelecting)
+        {
+            if (TurnManager.Active.EligibleToMoveTo(this))
+            {
+                this.MoveUnit(TurnManager.Active.SelectedUnit);
+            }
+            else
+            {
+                Debug.Log("Ineligible");
+                TurnManager.Active.SetSelectedGameObject(gameObject);
+            }
+        }
     }
 
     public void OnSelect(BaseEventData eventData)

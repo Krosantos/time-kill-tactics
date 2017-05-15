@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class Move {
-	public static void Standard(Unit unit){
-        var moveableTiles = unit.GetMovableTiles();
-        foreach(var tile in moveableTiles)
-        {
-            tile.GetComponent<SpriteRenderer>().color = Color.blue;
-        }
+    
+    public static List<Tile> Standard(Unit unit){
+        return unit.GetMovableTiles();
 	}
-	public static void Climb(Unit unit){
-
+	public static List<Tile> Climb(Unit unit){
+        return unit.GetMovableTiles(99);
 	}
-	public static void Flying(Unit unit){
-		
+	public static List<Tile> Flying(Unit unit){
+        return unit.GetMovableTiles(99, true);
 	}
-	public static void Teleport(Unit unit){
-		
+	public static List<Tile> Teleport(Unit unit){
+        return unit.GetMovableTiles(99, true, true);
 	}
 }

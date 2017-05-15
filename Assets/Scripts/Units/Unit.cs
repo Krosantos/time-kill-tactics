@@ -21,7 +21,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     // public Anisomething something
 
     public int Team;
-    public delegate void MoveDel(Unit self);
+    public delegate List<Tile> MoveDel(Unit self);
     public delegate void AttackDel(Unit self, Unit victim);
     public delegate void OnTurnStartDel(Unit self);
     public delegate void OnTurnEndDel(Unit self);
@@ -59,16 +59,28 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(!EventSystem.current.alreadySelecting)EventSystem.current.SetSelectedGameObject(this.gameObject);
+        if (!TurnManager.Active.alreadySelecting) {
+            if (TurnManager.Active.EligibleToAttack(this))
+            {
+                TurnManager.Active.SelectedUnit.Attack(TurnManager.Active.SelectedUnit,this);
+            }
+            else
+            {
+                TurnManager.Active.SetSelectedGameObject(gameObject);
+            }
+        }
     }
 
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log("Unit Selected!");
+        Debug.Log("Selecting Unit!");
+        TurnManager.Active.MovableTiles = Move(this);
+        TurnManager.Active.ColorTiles();
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        Debug.Log("Unit Deselected!");
+        Debug.Log("Deselecting Unit!");
+        TurnManager.Active.Clear();
     }
 }
