@@ -26,11 +26,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
         {
             if(Y%2 != 0)
             {
-                if (TileMap.GetLength(1) >= Y + 1) return TileMap[X, Y + 1];
+                if (TileMap.GetLength(1) > Y + 1) return TileMap[X, Y + 1];
             }
             else
             {
-                if (X > 0 && TileMap.GetLength(1) >= Y + 1) return TileMap[X - 1, Y + 1];
+                if (X > 0 && TileMap.GetLength(1) > Y + 1) return TileMap[X - 1, Y + 1];
             }
             return null;
         }
@@ -42,11 +42,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
         {
             if (Y % 2 != 0)
             {
-                if (TileMap.GetLength(1) >= Y + 1 && TileMap.GetLength(0) >= X + 1) return TileMap[X+1, Y + 1];
+                if (TileMap.GetLength(1) > Y + 1 && TileMap.GetLength(0) > X + 1) return TileMap[X+1, Y + 1];
             }
             else
             {
-                if (X > 0 && TileMap.GetLength(1) >= Y + 1) return TileMap[X, Y + 1];
+                if (X > 0 && TileMap.GetLength(1) > Y + 1) return TileMap[X, Y + 1];
             }
             return null;
         }
@@ -56,7 +56,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
     {
         get
         {
-            if (TileMap.GetLength(0) >= X + 1) return TileMap[X + 1, Y];
+            if (TileMap.GetLength(0) > X + 1) return TileMap[X + 1, Y];
             return null;
         }
     }
@@ -67,7 +67,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
         {
             if (Y % 2 != 0)
             {
-                if (Y > 0 && TileMap.GetLength(0) >= X + 1) return TileMap[X + 1, Y - 1];
+                if (Y > 0 && TileMap.GetLength(0) > X + 1) return TileMap[X + 1, Y - 1];
             }
             else
             {
@@ -136,13 +136,14 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
     {
         if (!TurnManager.Active.alreadySelecting)
         {
-            if (TurnManager.Active.EligibleToMoveTo(this))
+            if (TurnManager.EligibleToMoveTo(this))
             {
-                this.MoveUnit(TurnManager.Active.SelectedUnit);
+                this.MoveUnit(TurnManager.SelectedUnit);
+                TurnManager.Clear();
             }
             else
             {
-                Debug.Log("Ineligible");
+                TurnManager.Clear();
                 TurnManager.Active.SetSelectedGameObject(gameObject);
             }
         }
@@ -150,7 +151,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
 
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log("Tile Selected!");
+        TurnManager.SelectedTile = this;
     }
 
     public void OnDeselect(BaseEventData eventData)

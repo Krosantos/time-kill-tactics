@@ -4,32 +4,22 @@ using UnityEngine.EventSystems;
 
 // This combines the existing EventSystem (which handles stuff like clicking) with turns, and selecting multiple objects.
 public class TurnManager : EventSystem {
-    public List<Tile> MovableTiles;
-    public List<Unit> AttackableUnits;
+    public static List<Tile> MovableTiles;
+    public static List<Unit> AttackableUnits;
     public static TurnManager Active;
 
-    public Tile SelectedTile
-    {
-        get
-        {
-            return currentSelectedGameObject.GetComponent<Tile>();
-        }
-    }
-    public Unit SelectedUnit
-    {
-        get
-        {
-            return currentSelectedGameObject.GetComponent<Unit>();
-        }
-    }
+    public static Tile SelectedTile;
+    public static Unit SelectedUnit;
 
     new public void Awake()
     {
         base.Awake();
         Active = this;
+        MovableTiles = new List<Tile>();
+        AttackableUnits = new List<Unit>();
     }
 
-    public void ColorTiles()
+    public static void ColorTiles()
     {
         foreach(var tile in MovableTiles)
         {
@@ -41,7 +31,7 @@ public class TurnManager : EventSystem {
         }
     }
 
-    public void Clear()
+    public static void Clear()
     {
         foreach (var tile in MovableTiles)
         {
@@ -51,21 +41,19 @@ public class TurnManager : EventSystem {
         {
             unit.Tile.Color = Color.white;
         }
+        SelectedTile = null;
+        SelectedUnit = null;
         MovableTiles = new List<Tile>();
         AttackableUnits = new List<Unit>();
+        Active.SetSelectedGameObject(null);
     }
 
-    public bool EligibleToMoveTo(Tile tile)
+    public static bool EligibleToMoveTo(Tile tile)
     {
-        Debug.Log("MovableTiles Count: " + MovableTiles.Count);
-        foreach(var t in MovableTiles)
-        {
-            //Debug.Log(tile.name + " == " + t.name + "?");
-        }
         return MovableTiles.Contains(tile);
     }
 
-    public bool EligibleToAttack(Unit unit)
+    public static bool EligibleToAttack(Unit unit)
     {
         return AttackableUnits.Contains(unit);
     }

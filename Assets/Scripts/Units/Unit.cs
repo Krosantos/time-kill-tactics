@@ -60,12 +60,17 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!TurnManager.Active.alreadySelecting) {
-            if (TurnManager.Active.EligibleToAttack(this))
+            if(TurnManager.SelectedUnit == this){
+                TurnManager.Clear();
+            }
+            else if (TurnManager.EligibleToAttack(this))
             {
-                TurnManager.Active.SelectedUnit.Attack(TurnManager.Active.SelectedUnit,this);
+                TurnManager.SelectedUnit.Attack(TurnManager.SelectedUnit,this);
+                TurnManager.Clear();
             }
             else
             {
+                TurnManager.Clear();
                 TurnManager.Active.SetSelectedGameObject(gameObject);
             }
         }
@@ -73,14 +78,12 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
 
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log("Selecting Unit!");
-        TurnManager.Active.MovableTiles = Move(this);
-        TurnManager.Active.ColorTiles();
+        TurnManager.SelectedUnit = this;
+        TurnManager.MovableTiles = Move(this);
+        TurnManager.ColorTiles();
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        Debug.Log("Deselecting Unit!");
-        TurnManager.Active.Clear();
     }
 }
