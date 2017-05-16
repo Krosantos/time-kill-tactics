@@ -138,7 +138,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
         {
             if (TurnManager.EligibleToMoveTo(this))
             {
-                this.MoveUnit(TurnManager.SelectedUnit);
+                TurnManager.SelectedUnit.Move(TurnManager.SelectedUnit, this);
                 TurnManager.Clear();
             }
             else

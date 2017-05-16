@@ -25,7 +25,7 @@ public class UnitBuilder : MonoBehaviour {
         var result = Instantiate(UnitPrefab, new Vector3(), Quaternion.identity);
         var unit = result.GetComponent<Unit>();
         JsonUtility.FromJsonOverwrite(serializedUnit, unit);
-        unit.Move+=Move.Standard; 
+        new Climb().Apply(unit);
         return result;
     }
 
