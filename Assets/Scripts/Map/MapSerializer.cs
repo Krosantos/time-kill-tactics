@@ -5,12 +5,6 @@ public class MapSerializer : MonoBehaviour {
 
     public GameObject TilePrefab, FillerPrefab;
     public SpriteDict[] TileDict, FillerDict; 
-    public TextAsset Input;
-
-    public void Awake()
-    {
-        DeserializeMap(Input.text);
-    }
 
     public static string SerializeMap(List<Tile> tileList)
     {

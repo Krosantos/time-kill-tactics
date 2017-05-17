@@ -38,7 +38,7 @@ public class MoveStandard : Move
         unit.Tile.Unit = null;
         unit.Tile = tile;
         unit.Tile.Unit = unit;
-        unit.transform.position = unit.GetPosition();
+        unit.GetPosition();
         // End Animation
     }
 }
@@ -59,7 +59,7 @@ public class Climb : Move
         unit.Tile.Unit = null;
         unit.Tile = tile;
         unit.Tile.Unit = unit;
-        unit.transform.position = unit.GetPosition();
+        unit.GetPosition();
         // End Animation
     }
 }

@@ -22,14 +22,13 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
 
     public int Team;
     public delegate List<Tile> GetMovesDel(Unit self);
-    public delegate List<Unit> GetTargetsDel(Unit self);
+    public delegate List<Unit> GetTargetsDel(Unit self, bool targetAllies, bool targetEnemies);
     public delegate void MoveDel(Unit self, Tile tile);
     public delegate void AttackDel(Unit self, Unit victim);
     public delegate void OnTurnStartDel(Unit self);
     public delegate void OnTurnEndDel(Unit self);
     public delegate void OnDeathDel(Unit self, Unit killer);
     public delegate void OnAttackedDel(Unit self, Unit attacker, int damage);
-    public delegate void OnAttackDel(Unit self, Unit victim);
     public delegate void AbilityOneDel(Unit self, Unit target = null);
     public delegate void AbilityTwoDel(Unit self, Unit target = null);
 
@@ -41,7 +40,6 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     public OnTurnEndDel OnTurnEnd;
     public OnDeathDel OnDeath;
     public OnAttackedDel OnAttacked;
-    public OnAttackDel OnAttack;
     public AbilityOneDel AbilityOne;
     public AbilityTwoDel AbilityTwo;
 
@@ -84,7 +82,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     {
         TurnManager.SelectedUnit = this;
         if(!HasMoved)TurnManager.MovableTiles = GetMoves(this);
-        //if(!HasAttacked) TurnManager.AttackableUnits = GetTargets(this);
+        if(!HasAttacked) TurnManager.AttackableUnits = GetTargets(this, false, true);
         TurnManager.ColorTiles();
     }
 
