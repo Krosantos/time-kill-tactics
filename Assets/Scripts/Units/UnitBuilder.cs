@@ -16,6 +16,7 @@ public class UnitBuilder : MonoBehaviour {
         JsonUtility.FromJsonOverwrite(serializedUnit, unit);
         new Climb().Apply(unit);
         unit.GetTargets += Target.Melee;
+        unit.Attack += Attack.Standard;
         return result;
     }
 

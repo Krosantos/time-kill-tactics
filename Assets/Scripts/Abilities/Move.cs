@@ -38,7 +38,7 @@ public class MoveStandard : Move
         unit.Tile.Unit = null;
         unit.Tile = tile;
         unit.Tile.Unit = unit;
-        unit.GetPosition();
+        unit.SyncUi();
         // End Animation
     }
 }
@@ -52,14 +52,14 @@ public class Climb : Move
 
     public override void Execute(Unit unit, Tile tile)
     {
-        var path = unit.Tile.AStarPath(tile, unit, 99);
+        //var path = unit.Tile.AStarPath(tile, unit, 99);
         // Start Animation
         // For each tile in path, move unit to that tile.
         unit.HasMoved = true;
         unit.Tile.Unit = null;
         unit.Tile = tile;
         unit.Tile.Unit = unit;
-        unit.GetPosition();
+        unit.SyncUi();
         // End Animation
     }
 }

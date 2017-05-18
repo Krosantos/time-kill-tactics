@@ -20,7 +20,8 @@ public class SpawnUnits : MonoBehaviour {
             unit.Tile.Unit = unit;
             new MoveStandard().Apply(unit);
             unit.GetTargets += Target.Melee;
-            unit.GetPosition();
+            unit.Attack += Attack.Standard;
+            unit.SyncUi();
         }
         foreach (var pos in EnemyPositions)
         {
@@ -30,8 +31,9 @@ public class SpawnUnits : MonoBehaviour {
             unit.Tile.Unit = unit;
             new MoveStandard().Apply(unit);
             unit.GetTargets += Target.Melee;
+            unit.Attack += Attack.Standard;
             unit.transform.rotation = new Quaternion(0f, -180f, 0f, 0f);
-            unit.GetPosition();
+            unit.SyncUi();
         }
     }
 }

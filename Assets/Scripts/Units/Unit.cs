@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandler, IDeselectHandler
@@ -10,6 +11,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     public bool HasMoved, HasAttacked;
     [NonSerialized]
     public Tile Tile;
+    public Text AttackText, HpText;
     public Sprite Sprite
     {
         get
@@ -67,7 +69,16 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
             }
             else if (TurnManager.EligibleToAttack(this))
             {
-                TurnManager.SelectedUnit.Attack(TurnManager.SelectedUnit,this);
+                var attacker = TurnManager.SelectedUnit;
+                attacker.Attack(attacker, this);
+                if (Health <= 0)
+                {
+                    Health = 0;
+                    OnDeath(this, attacker);
+                }
+                this.SyncUi();
+                attacker.SyncUi();
+                attacker.HasAttacked = true;
                 TurnManager.Clear();
             }
             else
