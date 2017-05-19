@@ -32,7 +32,6 @@ public class SpawnUnits : MonoBehaviour {
             new MoveStandard().Apply(unit);
             unit.GetTargets += Target.Melee;
             unit.Attack += Attack.Standard;
-            unit.transform.rotation = new Quaternion(0f, -180f, 0f, 0f);
             unit.SyncUi();
         }
     }
