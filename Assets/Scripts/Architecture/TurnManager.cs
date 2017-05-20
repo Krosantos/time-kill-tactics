@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class TurnManager : EventSystem {
     public static List<Tile> MovableTiles;
     public static List<Unit> AttackableUnits;
+    public static List<Player> Players;
     public static TurnManager Active;
 
     public static Tile SelectedTile;
@@ -15,8 +16,14 @@ public class TurnManager : EventSystem {
     {
         base.Awake();
         Active = this;
+        Players = new List<Player>();
         MovableTiles = new List<Tile>();
         AttackableUnits = new List<Unit>();
+    }
+
+    public void EndTurn()
+    {
+
     }
 
     public static void ColorTiles()
