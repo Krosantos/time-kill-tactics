@@ -10,6 +10,7 @@ public static class UnitExtensions {
 
     public static void GetPosition(this Unit unit)
     {
+        if(unit.Tile == null) return;
         var x = unit.Tile.X;
         var y = unit.Tile.Y;
         var z = unit.Tile.Height;

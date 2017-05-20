@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -7,9 +6,8 @@ using UnityEngine.EventSystems;
 public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandler, IDeselectHandler
 {
     public Player Player;
-    public int MaxHealth, BaseStrength, BaseSpeed, Health, Strength, Speed;
+    public int Cost, MaxHealth, BaseStrength, BaseSpeed, Health, Strength, Speed;
     public bool HasMoved, HasAttacked;
-    [NonSerialized]
     public Tile Tile;
     public Text AttackText, HpText;
     public Sprite Sprite

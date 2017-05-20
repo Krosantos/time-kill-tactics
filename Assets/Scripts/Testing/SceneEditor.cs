@@ -2,12 +2,25 @@
 using System.IO;
 using UnityEngine;
 
-public class SpawnGrid : MonoBehaviour {
-    public string SavePath, MapName;
+public class SceneEditor : MonoBehaviour {
+    public string SavePath, MapName, ArmyName;
     public GameObject TilePrefab;
     public GameObject FillerPrefab;
     public SpriteDict[] SpriteDictionary, FillerDictionary;
     public int X,Y;
+
+    private List<Unit> AllUnits{
+        get{
+            var result = new List<Unit>();
+
+            var gameObjs = GameObject.FindGameObjectsWithTag("Unit");
+            foreach(var obj in gameObjs){
+                var unit = obj.GetComponent<Unit>();
+                if(unit != null)result.Add(unit);
+            }
+            return result;
+        }
+    }
 
 	public void Awake(){
 		Tile.AllTiles = new List<Tile>();
@@ -36,13 +49,25 @@ public class SpawnGrid : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Writing!");
+            Debug.Log("Writing Map!");
             var serialized = MapSerializer.SerializeMap(Tile.AllTiles);
             File.WriteAllText(SavePath + "/" + MapName + ".txt", serialized);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Debug.Log("Writing Units!");
+            var army = new Army();
+            foreach(var unit in AllUnits){
+                army.Units.Add(new SerializedUnit(unit));
+            }
+            File.WriteAllText(SavePath + "/" + ArmyName + ".txt", army.ToString());
         }
         foreach(var tile in Tile.AllTiles)
         {
             tile.UpdateEditorSprite(FillerPrefab, SpriteDictionary, FillerDictionary);
+        }
+        foreach(var unit in AllUnits){
+            unit.SyncUi();
         }
     }
 }
