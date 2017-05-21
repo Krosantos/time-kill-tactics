@@ -11,7 +11,7 @@ public class LoadGame : MonoBehaviour {
 
     public void Awake()
     {
-        Serializer.DeserializeMap(MapJson.text);
+        // Serializer.DeserializeMap(MapJson.text);
         
     }
 }

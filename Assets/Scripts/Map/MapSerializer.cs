@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MapSerializer : MonoBehaviour {
@@ -6,26 +7,21 @@ public class MapSerializer : MonoBehaviour {
     public GameObject TilePrefab, FillerPrefab;
     public SpriteDict[] TileDict, FillerDict; 
 
-    public static string SerializeMap(List<Tile> tileList)
+    public static SerializedMap SerializeMap(List<Tile> tileList, string name)
     {
-        var result = "";
-        foreach(var tile in tileList)
-        {
-            result += JsonUtility.ToJson(tile)+";";
-        }
-        result = result.Substring(0, result.Length - 1);
+        var result = new SerializedMap(tileList, name);
+        Debug.Log(result.ToString());
         return result;
     }
 
-    public void DeserializeMap(string serializedMap)
+    public void DeserializeMap(SerializedMap serializedMap)
     {
-        var split = serializedMap.Split(';');
         Tile.AllTiles = new List<Tile>();
-        foreach(var raw in split)
+        foreach(var raw in serializedMap.Tiles)
         {
             var prefab = Instantiate(TilePrefab, new Vector3(), Quaternion.identity);
             var tile = prefab.GetComponent<Tile>();
-            JsonUtility.FromJsonOverwrite(raw, tile);
+            JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(raw), tile);
             Tile.AllTiles.Add(tile);
             tile.UpdateEditorSprite(FillerPrefab, TileDict, FillerDict);
             prefab.name = tile.X + "," + tile.Y;
@@ -46,4 +42,22 @@ public class MapSerializer : MonoBehaviour {
             Tile.TileMap[tile.X, tile.Y] = tile;
         }
     }
+}
+
+[Serializable]
+public struct SerializedMap{
+    public List<string> Tiles;
+    public string Name;
+
+    public SerializedMap(List<Tile> tiles, string name){
+        Name = name;
+        Tiles = new List<string>();
+        foreach(var tile in tiles){
+            Tiles.Add(JsonUtility.ToJson(tile));
+        }
+    }
+
+    public override string ToString(){
+		return JsonUtility.ToJson(this);
+	}
 }

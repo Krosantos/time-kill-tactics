@@ -50,14 +50,14 @@ public class SceneEditor : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Writing Map!");
-            var serialized = MapSerializer.SerializeMap(Tile.AllTiles);
-            File.WriteAllText(SavePath + "/" + MapName + ".txt", serialized);
+            var serialized = MapSerializer.SerializeMap(Tile.AllTiles, MapName);
+            File.WriteAllText(SavePath + "/" + MapName + ".json", serialized.ToString());
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Debug.Log("Writing Units!");
             var army = new Army();
-            File.WriteAllText(SavePath + "/" + ArmyName + ".txt", army.ToString());
+            File.WriteAllText(SavePath + "/" + ArmyName + ".json", army.ToString());
         }
         foreach(var tile in Tile.AllTiles)
         {

@@ -18,10 +18,19 @@ public class Army {
         liminal.Strength = 2;
         liminal.Name = "Venerated Necrolith";
         liminal.SpriteReference = "NEC_VeneratedNecrolith";
-        liminal.GetMoves = liminal.GetTargets = liminal.Move = liminal.Attack = liminal.OnTurnStart = liminal.OnTurnEnd = liminal.OnDeath = liminal.OnAttacked = liminal.AbilityOne = liminal.AbilityTwo = liminal.Tags = new string[1];
+		liminal.AbilityOne = liminal.AbilityTwo = "";
+		liminal.MoveType = "Climb";
+        liminal.GetTargets = liminal.OnMove = liminal.Attack = liminal.OnTurnStart = liminal.OnTurnEnd = liminal.OnDeath = liminal.OnAttacked = liminal.Tags = new string[1];
         Units.Add(liminal);
 
         var blap = liminal;
+		blap.Name = "Decaying Thrall";
+		blap.SpriteReference = "NEC_DecayingThrall";
+		blap.MoveType = "Standard";
+		blap.Strength = blap.Health = 1;
+		blap.Speed = 2;
+		blap.X = 3;
+		blap.Y = 2;
         Units.Add(blap);
 	}
 
@@ -38,8 +47,8 @@ public class Army {
 [Serializable]
 public struct SerializedUnit{
 	public int X, Y, Health, Strength, Speed;
-    public string[] GetMoves, GetTargets, Move, Attack, OnTurnStart, OnTurnEnd, OnDeath, OnAttacked, AbilityOne, AbilityTwo, Tags;
-    public string Name, SpriteReference;
+    public string[] GetTargets, OnMove, Attack, OnTurnStart, OnTurnEnd, OnDeath, OnAttacked, Tags;
+    public string Name, SpriteReference, MoveType, AbilityOne, AbilityTwo;
 
     public override string ToString(){
 		return JsonUtility.ToJson(this);
