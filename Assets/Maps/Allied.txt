@@ -1,1 +1,89 @@
-{"Name":"","Units":[{}]}
+{
+    "Name": "",
+    "Units": [
+        {
+            "X": 2,
+            "Y": 2,
+            "Health": 4,
+            "Strength": 2,
+            "Speed": 2,
+            "GetMoves": [
+                ""
+            ],
+            "GetTargets": [
+                ""
+            ],
+            "Move": [
+                ""
+            ],
+            "Attack": [
+                ""
+            ],
+            "OnTurnStart": [
+                ""
+            ],
+            "OnTurnEnd": [
+                ""
+            ],
+            "OnDeath": [
+                ""
+            ],
+            "OnAttacked": [
+                ""
+            ],
+            "AbilityOne": [
+                ""
+            ],
+            "AbilityTwo": [
+                ""
+            ],
+            "Tags": [
+                ""
+            ],
+            "Name": "Venerated Necrolith",
+            "SpriteReference": "NEC_VeneratedNecrolith"
+        },
+        {
+            "X": 2,
+            "Y": 2,
+            "Health": 4,
+            "Strength": 2,
+            "Speed": 2,
+            "GetMoves": [
+                ""
+            ],
+            "GetTargets": [
+                ""
+            ],
+            "Move": [
+                ""
+            ],
+            "Attack": [
+                ""
+            ],
+            "OnTurnStart": [
+                ""
+            ],
+            "OnTurnEnd": [
+                ""
+            ],
+            "OnDeath": [
+                ""
+            ],
+            "OnAttacked": [
+                ""
+            ],
+            "AbilityOne": [
+                ""
+            ],
+            "AbilityTwo": [
+                ""
+            ],
+            "Tags": [
+                ""
+            ],
+            "Name": "Venerated Necrolith",
+            "SpriteReference": "NEC_VeneratedNecrolith"
+        }
+    ]
+}

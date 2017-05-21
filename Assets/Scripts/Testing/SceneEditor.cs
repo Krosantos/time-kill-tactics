@@ -57,9 +57,6 @@ public class SceneEditor : MonoBehaviour {
         {
             Debug.Log("Writing Units!");
             var army = new Army();
-            foreach(var unit in AllUnits){
-                army.Units.Add(new SerializedUnit(unit));
-            }
             File.WriteAllText(SavePath + "/" + ArmyName + ".txt", army.ToString());
         }
         foreach(var tile in Tile.AllTiles)
