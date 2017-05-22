@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class OnDeath : MonoBehaviour {
+public class OnMove : MonoBehaviour {
 
     public static void Apply(Unit unit, string ability)
     {
         switch (ability)
         {
-            case "Explode":
+            case "Grow":
                 break;
-            case "Rebirth":
+            case "Leak":
                 break;
             default:
                 break;

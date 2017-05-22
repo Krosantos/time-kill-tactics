@@ -6,6 +6,7 @@ public class Player : MonoBehaviour, ITurnable
 	public int Team;
 	public List<ITurnable> TurnAssets;
 	public List<Unit> Units;
+    public UnitBuilder UnitBuilder;
 
 	public void TurnStart()
 	{

@@ -1,10 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Target : MonoBehaviour {
 
-	public static List<Unit> Melee(Unit unit, bool targetAllies = false, bool targetEnemies = true)
+    public static void Apply(Unit unit, string targetType)
+    {
+        switch (targetType)
+        {
+            case "Ranged":
+                break;
+            case "Spear":
+                break;
+            default:
+                unit.GetTargets += Melee;
+                break;
+        }
+    }
+
+    public static List<Unit> Melee(Unit unit, bool targetAllies = false, bool targetEnemies = true)
     {
         var result = new List<Unit>();
         foreach(var neighbour in unit.Tile.Neighbours)

@@ -5,7 +5,15 @@ using UnityEngine;
 public class MapSerializer : MonoBehaviour {
 
     public GameObject TilePrefab, FillerPrefab;
-    public SpriteDict[] TileDict, FillerDict; 
+    public TextAsset MapFile;
+    public SpriteDict[] TileDict, FillerDict;
+
+    public void Awake()
+    {
+        if (MapFile == null) return;
+        var serializedMap = JsonUtility.FromJson<SerializedMap>(MapFile.text);
+        DeserializeMap(serializedMap);
+    }
 
     public static SerializedMap SerializeMap(List<Tile> tileList, string name)
     {
@@ -21,7 +29,7 @@ public class MapSerializer : MonoBehaviour {
         {
             var prefab = Instantiate(TilePrefab, new Vector3(), Quaternion.identity);
             var tile = prefab.GetComponent<Tile>();
-            JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(raw), tile);
+            JsonUtility.FromJsonOverwrite(raw, tile);
             Tile.AllTiles.Add(tile);
             tile.UpdateEditorSprite(FillerPrefab, TileDict, FillerDict);
             prefab.name = tile.X + "," + tile.Y;

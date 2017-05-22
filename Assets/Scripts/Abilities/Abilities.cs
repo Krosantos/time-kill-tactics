@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Abilities : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public static void Apply(Unit unit, string ability)
+    {
+        switch (ability)
+        {
+            case "Ranged":
+                break;
+            case "Spear":
+                break;
+            default:
+                break;
+        }
+    }
 }
