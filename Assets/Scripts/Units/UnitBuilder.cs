@@ -9,15 +9,15 @@ public class UnitBuilder {
         return JsonUtility.ToJson(unit);
     }
     
-    public static GameObject ConstructUnit(GameObject unitPrefab, string serialized){
+    public static Unit ConstructUnit(GameObject unitPrefab, SerializedUnit serializedUnit){
         var result = GameObject.Instantiate(unitPrefab, new Vector3(), Quaternion.identity);
         var unit = result.GetComponent<Unit>();
 
         // The brunt of stat and ability assignment happens in here.
-        var serializedUnit = JsonUtility.FromJson<SerializedUnit>(serialized);
         serializedUnit.OverwriteUnit(unit);
+        unit.SyncUi();
         // Get sprite? Get facing and team?
-        return result;
+        return unit;
     }
 
 }
