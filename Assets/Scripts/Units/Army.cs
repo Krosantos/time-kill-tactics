@@ -88,6 +88,7 @@ public struct SerializedUnit{
         }
 
         // Add attack targeting, and abilities
+        Debug.Log(TargetType);
         Target.Apply(unit, TargetType);
         Abilities.Apply(unit, AbilityOne);
         Abilities.Apply(unit, AbilityTwo);

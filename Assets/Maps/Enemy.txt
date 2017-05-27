@@ -1,0 +1,77 @@
+{
+    "Name": "",
+    "Units": [
+        {
+            "X": 6,
+            "Y": 2,
+            "Health": 4,
+            "Strength": 2,
+            "Speed": 2,
+            "GetTargets": [
+                ""
+            ],
+            "OnMove": [
+                ""
+            ],
+            "Attack": [
+                ""
+            ],
+            "OnTurnStart": [
+                ""
+            ],
+            "OnTurnEnd": [
+                ""
+            ],
+            "OnDeath": [
+                ""
+            ],
+            "OnAttacked": [
+                ""
+            ],
+            "Tags": [
+                ""
+            ],
+            "Name": "Venerated Necrolith",
+            "SpriteReference": "NEC_VeneratedNecrolith",
+            "MoveType": "Climb",
+            "AbilityOne": "",
+            "AbilityTwo": ""
+        },
+        {
+            "X": 5,
+            "Y": 2,
+            "Health": 1,
+            "Strength": 1,
+            "Speed": 2,
+            "GetTargets": [
+                ""
+            ],
+            "OnMove": [
+                ""
+            ],
+            "Attack": [
+                ""
+            ],
+            "OnTurnStart": [
+                ""
+            ],
+            "OnTurnEnd": [
+                ""
+            ],
+            "OnDeath": [
+                ""
+            ],
+            "OnAttacked": [
+                ""
+            ],
+            "Tags": [
+                ""
+            ],
+            "Name": "Decaying Thrall",
+            "SpriteReference": "NEC_DecayingThrall",
+            "MoveType": "Standard",
+            "AbilityOne": "",
+            "AbilityTwo": ""
+        }
+    ]
+}
