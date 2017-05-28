@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnDeath : MonoBehaviour {
+public class OnKill : MonoBehaviour
+{
 
     public static void Apply(Unit unit, string ability)
     {
         switch (ability)
         {
-            case "Explode":
+            case "Highlander":
                 break;
-            case "Rebirth":
+            case "Skeletons":
                 break;
             case "Standard":
-                unit.OnDeath += Standard;
+                unit.OnKill += Standard;
                 break;
             default:
                 break;
         }
     }
 
-    public static void Standard(Unit unit, Unit attacker)
+    public static void Standard(Unit killer, Unit victim)
     {
-        //Unit plays death animation.
+        //Nothing.
     }
 }

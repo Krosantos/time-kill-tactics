@@ -28,6 +28,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     public delegate void OnTurnStartDel(Unit self);
     public delegate void OnTurnEndDel(Unit self);
     public delegate void OnDeathDel(Unit self, Unit killer);
+    public delegate void OnKillDel(Unit self, Unit victim);
     public delegate void OnAttackedDel(Unit self, Unit attacker, int damage);
     public delegate void AbilityOneDel(Unit self, Unit target = null);
     public delegate void AbilityTwoDel(Unit self, Unit target = null);
@@ -39,6 +40,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     public OnTurnStartDel OnTurnStart;
     public OnTurnEndDel OnTurnEnd;
     public OnDeathDel OnDeath;
+    public OnKillDel OnKill;
     public OnAttackedDel OnAttacked;
     public AbilityOneDel AbilityOne;
     public AbilityTwoDel AbilityTwo;
@@ -72,6 +74,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                 if (Health <= 0)
                 {
                     Health = 0;
+                    OnKill(attacker, this);
                     OnDeath(this, attacker);
                 }
                 this.SyncUi();
