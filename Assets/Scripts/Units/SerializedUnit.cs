@@ -50,6 +50,8 @@ public struct SerializedUnit
         Abilities.Apply(unit, AbilityTwo);
         OnDeath.Apply(unit, "Standard");
         OnKill.Apply(unit, "Standard");
+        OnTurn.Apply(unit, "Standard", true);
+        OnTurn.Apply(unit, "Standard", false);
         // Add all the OnX abilities
         foreach (var ability in OnMoves)
         {

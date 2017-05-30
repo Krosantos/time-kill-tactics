@@ -86,6 +86,8 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
             {
                 TurnManager.Clear();
                 TurnManager.Active.SetSelectedGameObject(gameObject);
+                // I'll swap back to the below once it's networked.
+                //if (Team == Player.Me.Team) TurnManager.Active.SetSelectedGameObject(gameObject);
             }
         }
     }

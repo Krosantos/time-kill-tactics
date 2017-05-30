@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 // This combines the existing EventSystem (which handles stuff like clicking) with turns, and selecting multiple objects.
+// This is the hotseat/single-player version. We'll make a networked version later.
 public class TurnManager : EventSystem {
     public static List<Tile> MovableTiles;
     public static List<Unit> AttackableUnits;
-    public static List<Player> Players;
+    public bool PlayerActive;
+    public Player Player;
+    public Player Enemy;
     public static TurnManager Active;
 
     public static Tile SelectedTile;
@@ -16,14 +19,23 @@ public class TurnManager : EventSystem {
     {
         base.Awake();
         Active = this;
-        Players = new List<Player>();
         MovableTiles = new List<Tile>();
         AttackableUnits = new List<Unit>();
     }
 
     public void EndTurn()
     {
-
+        if (PlayerActive)
+        {
+            Player.TurnEnd();
+            Enemy.TurnStart();
+        }
+        else
+        {
+            Enemy.TurnEnd();
+            Player.TurnStart();
+        }
+        PlayerActive = !PlayerActive;        
     }
 
     public static void ColorTiles()

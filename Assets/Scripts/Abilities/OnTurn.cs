@@ -12,8 +12,17 @@ public class OnTurn : MonoBehaviour {
                 break;
             case "Wither":
                 break;
+            case "Standard":
+                if (onStart) unit.OnTurnStart += Standard;
+                else unit.OnTurnEnd += Standard;
+                break;
             default:
                 break;
         }
+    }
+
+    public static void Standard(Unit self)
+    {
+
     }
 }
