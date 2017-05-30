@@ -32,4 +32,11 @@ public static class UnitExtensions {
         else unit.AttackText.color = Color.white;
     }
 
+    public static void CleanlyDestroy(this Unit unit)
+    {
+        Debug.Log(unit.Player);
+        unit.Player.Units.Remove(unit);
+        GameObject.Destroy(unit.transform.parent.gameObject);
+        TurnManager.Active.CheckForVictory();
+    }
 }

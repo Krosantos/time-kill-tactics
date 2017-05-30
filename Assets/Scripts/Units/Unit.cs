@@ -76,6 +76,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                     Health = 0;
                     OnKill(attacker, this);
                     OnDeath(this, attacker);
+                    this.CleanlyDestroy();
                 }
                 this.SyncUi();
                 attacker.SyncUi();

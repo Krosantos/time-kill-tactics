@@ -38,6 +38,13 @@ public class TurnManager : EventSystem {
         PlayerActive = !PlayerActive;        
     }
 
+    public void CheckForVictory()
+    {
+        // ...I should probably do this server-side only.
+        //Debug.Log(Player.Units.Count);
+        //Debug.Log(Enemy.Units.Count);
+    }
+
     public static void ColorTiles()
     {
         foreach(var tile in MovableTiles)

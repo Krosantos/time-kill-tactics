@@ -13,8 +13,7 @@ public class Player : MonoBehaviour, ITurnable
     public static Player Me;
 
 	public void Awake(){
-		UnitBuilder = new UnitBuilder();
-		UnitBuilder.Team = Team;
+		UnitBuilder = new UnitBuilder(Team, this);
 		TurnAssets = new List<ITurnable>();
 		Units = new List<Unit>();
 	}
