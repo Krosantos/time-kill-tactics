@@ -2,80 +2,76 @@
     "Name": "",
     "Units": [
         {
-            "X": 6,
+            "X": 2,
             "Y": 2,
             "Health": 4,
             "Strength": 2,
             "Speed": 2,
-            "GetTargets": [
-                ""
+            "OnMoves": [
+                "Standard"
             ],
-            "OnMove": [
-                ""
+            "Attacks": [
+                "Standard"
             ],
-            "Attack": [
-                ""
+            "OnTurnStarts": [
+                "Standard"
             ],
-            "OnTurnStart": [
-                ""
+            "OnTurnEnds": [
+                "Standard"
             ],
-            "OnTurnEnd": [
-                ""
+            "OnDeaths": [
+                "Standard"
             ],
-            "OnDeath": [
-                ""
+            "OnKills": [
+                "Standard"
             ],
-            "OnKill": [
-                ""
-            ],
-            "OnAttacked": [
-                ""
+            "OnAttackeds": [
+                "Standard"
             ],
             "Tags": [
-                ""
+                "Standard"
             ],
             "Name": "Venerated Necrolith",
             "SpriteReference": "NEC_VeneratedNecrolith",
             "MoveType": "Climb",
+            "TargetType": "Melee",
             "AbilityOne": "",
             "AbilityTwo": ""
         },
         {
-            "X": 5,
+            "X": 3,
             "Y": 2,
             "Health": 1,
             "Strength": 1,
             "Speed": 2,
-            "GetTargets": [
-                ""
+            "OnMoves": [
+                "Standard"
             ],
-            "OnMove": [
-                ""
+            "Attacks": [
+                "Standard"
             ],
-            "Attack": [
-                ""
+            "OnTurnStarts": [
+                "Standard"
             ],
-            "OnTurnStart": [
-                ""
+            "OnTurnEnds": [
+                "Standard"
             ],
-            "OnTurnEnd": [
-                ""
+            "OnDeaths": [
+                "Standard"
             ],
-            "OnDeath": [
-                ""
+            "OnKills": [
+                "Standard"
             ],
-            "OnKill": [
-                ""
-            ],
-            "OnAttacked": [
-                ""
+            "OnAttackeds": [
+                "Standard"
             ],
             "Tags": [
-                ""
+                "Standard"
             ],
             "Name": "Decaying Thrall",
             "SpriteReference": "NEC_DecayingThrall",
             "MoveType": "Standard",
+            "TargetType": "Melee",
             "AbilityOne": "",
             "AbilityTwo": ""
         }

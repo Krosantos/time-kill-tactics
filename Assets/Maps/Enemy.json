@@ -1,0 +1,79 @@
+{
+    "Name": "",
+    "Units": [
+        {
+            "X": 7,
+            "Y": 2,
+            "Health": 4,
+            "Strength": 2,
+            "Speed": 2,
+            "OnMoves": [
+                "Standard"
+            ],
+            "Attacks": [
+                "Standard"
+            ],
+            "OnTurnStarts": [
+                "Standard"
+            ],
+            "OnTurnEnds": [
+                "Standard"
+            ],
+            "OnDeaths": [
+                "Standard"
+            ],
+            "OnKills": [
+                "Standard"
+            ],
+            "OnAttackeds": [
+                "Standard"
+            ],
+            "Tags": [
+                "Standard"
+            ],
+            "Name": "Venerated Necrolith",
+            "SpriteReference": "NEC_VeneratedNecrolith",
+            "MoveType": "Climb",
+            "TargetType": "Melee",
+            "AbilityOne": "",
+            "AbilityTwo": ""
+        },
+        {
+            "X": 6,
+            "Y": 3,
+            "Health": 1,
+            "Strength": 1,
+            "Speed": 2,
+            "OnMoves": [
+                "Standard"
+            ],
+            "Attacks": [
+                "Standard"
+            ],
+            "OnTurnStarts": [
+                "Standard"
+            ],
+            "OnTurnEnds": [
+                "Standard"
+            ],
+            "OnDeaths": [
+                "Standard"
+            ],
+            "OnKills": [
+                "Standard"
+            ],
+            "OnAttackeds": [
+                "Standard"
+            ],
+            "Tags": [
+                "Standard"
+            ],
+            "Name": "Decaying Thrall",
+            "SpriteReference": "NEC_DecayingThrall",
+            "MoveType": "Standard",
+            "TargetType": "Melee",
+            "AbilityOne": "",
+            "AbilityTwo": ""
+        }
+    ]
+}

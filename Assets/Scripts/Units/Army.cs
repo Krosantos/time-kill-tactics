@@ -24,7 +24,8 @@ public class Army {
 		liminal.MoveType = "Climb";
         liminal.TargetType = "Melee";
         liminal.OnMoves = liminal.Attacks = liminal.OnTurnStarts = liminal.OnTurnEnds = liminal.OnDeaths = liminal.OnKills = liminal.OnAttackeds = liminal.Tags = new string[1];
-        Units.Add(liminal);
+        liminal.Attacks[0] = "Standard";
+		Units.Add(liminal);
 
         var blap = liminal;
 		blap.Name = "Decaying Thrall";

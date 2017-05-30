@@ -8,6 +8,13 @@ public static class UnitExtensions {
         unit.SetText();
     }
 
+    public static void ToggleGrey(this Unit unit, bool shouldGrey){
+        var renderer = unit.GetComponent<SpriteRenderer>();
+        if(renderer == null) return;
+        var toLoad = shouldGrey ? "MAT_GreyScale" : "MAT_Standard";
+        renderer.material = Resources.Load<Material>(toLoad);
+    }
+
     public static void GetPosition(this Unit unit)
     {
         if(unit.Tile == null) return;

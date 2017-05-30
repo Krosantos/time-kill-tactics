@@ -4,14 +4,17 @@ public class Attack : MonoBehaviour {
 
     public static void Apply(Unit unit, string onAttack)
     {
+        Debug.Log(onAttack);
         switch (onAttack)
         {
             case "Poison":
                 break;
             case "Destroy":
                 break;
-            default:
+            case "Standard":
                 unit.Attack += Standard;
+                break;
+            default:
                 break;
         }
     }

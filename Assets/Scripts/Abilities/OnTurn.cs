@@ -23,6 +23,6 @@ public class OnTurn : MonoBehaviour {
 
     public static void Standard(Unit self)
     {
-
+        self.ToggleGrey(false);
     }
 }
