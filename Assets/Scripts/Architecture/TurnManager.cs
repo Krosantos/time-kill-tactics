@@ -52,7 +52,7 @@ public class TurnManager : EventSystem {
         foreach(var tile in MovableTiles)
         {
             tile.ToggleGrey(true);
-            tile.Color = new Color(0.33f,0.33f,0.33f);
+            tile.Color = new Color(0.5f,0.5f,0.5f);
         }
         foreach(var unit in AttackableUnits)
         {

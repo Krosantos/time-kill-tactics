@@ -15,7 +15,13 @@ public class UnitBuilder {
     public static string SerializeUnit(Unit unit){
         return JsonUtility.ToJson(unit);
     }
-    
+
+    public Sprite GetSprite(string spriteReference)
+    {
+        var toFind = "Sprites/Units/" + spriteReference;
+        return Resources.Load<Sprite>(toFind);
+    }
+
     public Unit ConstructUnit(GameObject unitPrefab, SerializedUnit serializedUnit){
         var result = GameObject.Instantiate(unitPrefab, new Vector3(), Quaternion.identity);
         var unit = result.GetComponentInChildren<Unit>();
@@ -24,6 +30,7 @@ public class UnitBuilder {
         serializedUnit.OverwriteUnit(unit);
         unit.SyncUi();
         // Get sprite? Get facing and team?
+        unit.Sprite = GetSprite(serializedUnit.SpriteReference);
         unit.Team = Team;
         unit.Player = Player;
         if(unit.Team != 0)unit.transform.Rotate(new Vector3(0f, 180f, 0f));
