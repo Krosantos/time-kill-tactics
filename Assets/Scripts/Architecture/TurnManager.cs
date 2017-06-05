@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class TurnManager : EventSystem {
     public static List<Tile> MovableTiles;
     public static List<Unit> AttackableUnits;
+    public static List<Unit> UnitsInRange;
     public bool PlayerActive;
     public Player Player;
     public Player Enemy;
@@ -21,6 +22,7 @@ public class TurnManager : EventSystem {
         Active = this;
         MovableTiles = new List<Tile>();
         AttackableUnits = new List<Unit>();
+        UnitsInRange = new List<Unit>();
     }
 
     public void EndTurn()
@@ -49,10 +51,17 @@ public class TurnManager : EventSystem {
     {
         foreach(var tile in MovableTiles)
         {
+            tile.ToggleGrey(true);
             tile.Color = new Color(0.33f,0.33f,0.33f);
         }
         foreach(var unit in AttackableUnits)
         {
+            unit.Tile.ToggleGrey(true);
+            unit.Tile.Color = new Color(0.45f, 0.27f, 0.27f);
+        }
+        foreach(var unit in UnitsInRange)
+        {
+            unit.Tile.ToggleGrey(true);
             unit.Tile.Color = new Color(0.45f, 0.27f, 0.27f);
         }
     }
@@ -61,16 +70,24 @@ public class TurnManager : EventSystem {
     {
         foreach (var tile in MovableTiles)
         {
+            tile.ToggleGrey(false);
             tile.Color = Color.white;
         }
         foreach (var unit in AttackableUnits)
         {
+            unit.Tile.ToggleGrey(false);
+            unit.Tile.Color = Color.white;
+        }
+        foreach (var unit in UnitsInRange)
+        {
+            unit.Tile.ToggleGrey(false);
             unit.Tile.Color = Color.white;
         }
         SelectedTile = null;
         SelectedUnit = null;
         MovableTiles = new List<Tile>();
         AttackableUnits = new List<Unit>();
+        UnitsInRange = new List<Unit>();
         Active.SetSelectedGameObject(null);
     }
 

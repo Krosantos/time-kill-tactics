@@ -59,7 +59,6 @@ public struct SerializedUnit
         }
         foreach (var ability in Attacks)
         {
-            Debug.Log(ability);
             Attack.Apply(unit, ability);
         }
         foreach (var ability in OnTurnStarts)

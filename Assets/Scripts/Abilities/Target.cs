@@ -17,7 +17,7 @@ public class Target : MonoBehaviour {
         }
     }
 
-    public static List<Unit> Melee(Unit unit, bool targetAllies = false, bool targetEnemies = true)
+    public static List<Unit> Melee(Unit unit, bool targetAllies = false, bool targetEnemies = true, bool getAllInRange = false)
     {
         var result = new List<Unit>();
         foreach(var neighbour in unit.Tile.Neighbours)
@@ -26,6 +26,20 @@ public class Target : MonoBehaviour {
             {
                 if (neighbour.Unit.Team != unit.Team && targetEnemies) result.Add(neighbour.Unit);
                 if (neighbour.Unit.Team == unit.Team && targetAllies) result.Add(neighbour.Unit);
+            }
+        }
+        if (getAllInRange)
+        {
+            foreach (var tile in TurnManager.MovableTiles)
+            {
+                foreach (var neighbour in tile.Neighbours)
+                {
+                    if (neighbour.Unit != null)
+                    {
+                        if (neighbour.Unit.Team != unit.Team && targetEnemies) result.Add(neighbour.Unit);
+                        if (neighbour.Unit.Team == unit.Team && targetAllies) result.Add(neighbour.Unit);
+                    }
+                }
             }
         }
         return result;

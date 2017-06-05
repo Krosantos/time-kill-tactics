@@ -27,6 +27,14 @@ public static class TileExtensions {
         }
     }
 
+    public static void ToggleGrey(this Tile tile, bool shouldGrey)
+    {
+        var renderer = tile.GetComponent<SpriteRenderer>();
+        if (renderer == null) return;
+        var toLoad = shouldGrey ? "MAT_GreyScale" : "MAT_Standard";
+        renderer.material = Resources.Load<Material>(toLoad);
+    }
+
     private static Vector3 GetTransformFromCoords(int x, int y, int z)
     {
         return new Vector3(x + (y % 2) * 0.5f, 0.75f * y + 0.35f * z);

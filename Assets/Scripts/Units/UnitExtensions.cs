@@ -43,6 +43,7 @@ public static class UnitExtensions {
     {
         Debug.Log(unit.Player);
         unit.Player.Units.Remove(unit);
+        unit.Player.TurnAssets.Remove(unit);
         GameObject.Destroy(unit.transform.parent.gameObject);
         TurnManager.Active.CheckForVictory();
     }

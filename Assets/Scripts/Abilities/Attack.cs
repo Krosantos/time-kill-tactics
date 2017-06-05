@@ -4,7 +4,6 @@ public class Attack : MonoBehaviour {
 
     public static void Apply(Unit unit, string onAttack)
     {
-        Debug.Log(onAttack);
         switch (onAttack)
         {
             case "Poison":
