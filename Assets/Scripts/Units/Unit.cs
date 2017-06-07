@@ -16,7 +16,13 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
         {
             return gameObject.GetComponent<SpriteRenderer>().sprite;
         }
-        set { gameObject.GetComponent<SpriteRenderer>().sprite = value; }
+        set
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = value;
+            var previousCollider = gameObject.GetComponent<PolygonCollider2D>();
+            if(previousCollider != null) Destroy(previousCollider);
+            gameObject.AddComponent<PolygonCollider2D>();
+        }
     }
     // public Anisomething something
 

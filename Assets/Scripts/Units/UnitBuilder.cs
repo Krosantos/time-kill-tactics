@@ -28,12 +28,12 @@ public class UnitBuilder {
 
         // The brunt of stat and ability assignment happens in here.
         serializedUnit.OverwriteUnit(unit);
-        unit.SyncUi();
         // Get sprite? Get facing and team?
         unit.Sprite = GetSprite(serializedUnit.SpriteReference);
         unit.Team = Team;
         unit.Player = Player;
         if(unit.Team != 0)unit.transform.Rotate(new Vector3(0f, 180f, 0f));
+        unit.SyncUi();
         return unit;
     }
 
