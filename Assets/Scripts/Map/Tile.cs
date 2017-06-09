@@ -130,21 +130,23 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
     public int Height, X, Y;
     public bool Passable, Blocking;
     public Terrain Terrain;
-    public delegate void OnTurn(Tile self);
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!TurnManager.Active.alreadySelecting)
         {
-            if (TurnManager.EligibleToMoveTo(this))
-            {
-                TurnManager.SelectedUnit.Move(TurnManager.SelectedUnit, this);
-                TurnManager.Clear();
-            }
-            else
-            {
-                TurnManager.Clear();
-                TurnManager.Active.SetSelectedGameObject(gameObject);
+            if(Unit != null) Unit.OnPointerClick(eventData);
+            else {
+                if (TurnManager.EligibleToMoveTo(this))
+                {
+                    TurnManager.SelectedUnit.Move(TurnManager.SelectedUnit, this);
+                    TurnManager.Clear();
+                }
+                else
+                {
+                    TurnManager.Clear();
+                    TurnManager.Active.SetSelectedGameObject(gameObject);
+                }
             }
         }
     }

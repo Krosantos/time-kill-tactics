@@ -41,7 +41,6 @@ public static class UnitExtensions {
 
     public static void CleanlyDestroy(this Unit unit)
     {
-        Debug.Log(unit.Player);
         unit.Player.Units.Remove(unit);
         unit.Player.TurnAssets.Remove(unit);
         GameObject.Destroy(unit.transform.parent.gameObject);

@@ -84,7 +84,6 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                     OnDeath(this, attacker);
                     this.CleanlyDestroy();
                 }
-                attacker.HasAttacked = true;
                 this.SyncUi();
                 attacker.SyncUi();
                 if(attacker.HasAttacked && attacker.HasMoved) attacker.ToggleGrey(true);

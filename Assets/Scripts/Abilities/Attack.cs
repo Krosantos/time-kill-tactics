@@ -22,5 +22,6 @@ public class Attack : MonoBehaviour {
     {
         victim.Health -= attacker.Strength;
         attacker.HasMoved = true;
+        attacker.HasAttacked = true;
     }
 }

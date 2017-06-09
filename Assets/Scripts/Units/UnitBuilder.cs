@@ -28,7 +28,6 @@ public class UnitBuilder {
 
         // The brunt of stat and ability assignment happens in here.
         serializedUnit.OverwriteUnit(unit);
-        // Get sprite? Get facing and team?
         unit.Sprite = GetSprite(serializedUnit.SpriteReference);
         unit.Team = Team;
         unit.Player = Player;
