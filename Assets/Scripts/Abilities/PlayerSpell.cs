@@ -6,6 +6,7 @@ public abstract class PlayerSpell : ITurnable
     public string SpriteReference, Name, Text;
     public int Cost, Cooldown, Ammo, CooldownCounter;
     public bool HasCost, HasCooldown, HasAmmo;
+    public Type TargetType;
     public Player Player;
     public abstract void TurnEnd();
     public void TurnStart(){}
@@ -46,6 +47,7 @@ public class SpellHeal : PlayerSpell{
         Cooldown = 1;
         CooldownCounter = 0;
         HasAmmo = HasCooldown = true;
+        TargetType = Type.GetType("Unit");
     }
 
     public override void TurnEnd(){
