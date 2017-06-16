@@ -12,7 +12,6 @@ public class TurnManager : EventSystem {
     public Player Player;
     public Player Enemy;
     public static TurnManager Active;
-
     public static Tile SelectedTile;
     public static Unit SelectedUnit;
 
@@ -45,6 +44,14 @@ public class TurnManager : EventSystem {
         // ...I should probably do this server-side only.
         //Debug.Log(Player.Units.Count);
         //Debug.Log(Enemy.Units.Count);
+        if(Player.Units.Count <= 0){
+            Debug.Log("Enemy Wins!");
+            Application.Quit();
+        }
+        if(Enemy.Units.Count <= 0){
+            Debug.Log("Player Wins!");
+            Application.Quit();
+        }
     }
 
     public static void ColorTiles()

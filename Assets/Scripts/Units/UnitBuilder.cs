@@ -26,6 +26,7 @@ public class UnitBuilder {
         var result = GameObject.Instantiate(unitPrefab, new Vector3(), Quaternion.identity);
         var unit = result.GetComponentInChildren<Unit>();
 
+        Debug.Log(this.GetType());
         // The brunt of stat and ability assignment happens in here.
         serializedUnit.OverwriteUnit(unit);
         unit.Sprite = GetSprite(serializedUnit.SpriteReference);

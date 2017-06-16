@@ -7,6 +7,7 @@ public class Army {
 
 	public string Name;
 	public List<SerializedUnit> Units;
+	public List<String> Spells;
 
 	public Army(){
 		Units = new List<SerializedUnit>();
