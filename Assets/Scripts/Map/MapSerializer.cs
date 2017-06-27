@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapSerializer : MonoBehaviour {
+public class MapSerializer : MonoBehaviour
+{
 
     public GameObject TilePrefab, FillerPrefab;
     public TextAsset MapFile;
@@ -25,7 +26,7 @@ public class MapSerializer : MonoBehaviour {
     public void DeserializeMap(SerializedMap serializedMap)
     {
         Tile.AllTiles = new List<Tile>();
-        foreach(var raw in serializedMap.Tiles)
+        foreach (var raw in serializedMap.Tiles)
         {
             var prefab = Instantiate(TilePrefab, new Vector3(), Quaternion.identity);
             var tile = prefab.GetComponent<Tile>();
@@ -39,13 +40,13 @@ public class MapSerializer : MonoBehaviour {
         int maxX = 0;
         int maxY = 0;
 
-        foreach(var tile in Tile.AllTiles)
+        foreach (var tile in Tile.AllTiles)
         {
             if (tile.X > maxX) maxX = tile.X;
             if (tile.Y > maxY) maxY = tile.Y;
         }
-        Tile.TileMap = new Tile[maxX+1, maxY+1];
-        foreach(var tile in Tile.AllTiles)
+        Tile.TileMap = new Tile[maxX + 1, maxY + 1];
+        foreach (var tile in Tile.AllTiles)
         {
             Tile.TileMap[tile.X, tile.Y] = tile;
         }
@@ -53,19 +54,23 @@ public class MapSerializer : MonoBehaviour {
 }
 
 [Serializable]
-public struct SerializedMap{
+public struct SerializedMap
+{
     public List<string> Tiles;
     public string Name;
 
-    public SerializedMap(List<Tile> tiles, string name){
+    public SerializedMap(List<Tile> tiles, string name)
+    {
         Name = name;
         Tiles = new List<string>();
-        foreach(var tile in tiles){
+        foreach (var tile in tiles)
+        {
             Tiles.Add(JsonUtility.ToJson(tile));
         }
     }
 
-    public override string ToString(){
-		return JsonUtility.ToJson(this);
-	}
+    public override string ToString()
+    {
+        return JsonUtility.ToJson(this);
+    }
 }

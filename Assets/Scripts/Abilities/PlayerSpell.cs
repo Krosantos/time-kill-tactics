@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class PlayerSpell : ITurnable
 {
@@ -11,6 +13,9 @@ public abstract class PlayerSpell : ITurnable
     public abstract void TurnEnd();
     public void TurnStart(){}
     public abstract void Cast();
+
+    // TODO: toss this list on the TurnManager, use to highlight/cast spells.
+    public abstract List<ISelectHandler> GetValidTargets();
 
     public bool IsDisabled(){
         if(HasCost){

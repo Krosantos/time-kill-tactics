@@ -2,7 +2,8 @@
 using System.Linq;
 using UnityEngine;
 
-public static class NavigationExtensions {
+public static class NavigationExtensions
+{
 
     //Awwwww yiss, A* up in this bitch.
     public static List<Tile> AStarPath(this Tile from, Tile to, Unit unit, int maxHeight = 1, bool moveThroughImpass = false)
@@ -28,7 +29,7 @@ public static class NavigationExtensions {
             closedList.Add(currentTile);
             foreach (var tile in currentTile.Neighbours)
             {
-                var tempG = gScore[currentTile]+1;
+                var tempG = gScore[currentTile] + 1;
                 if (!openList.Contains(tile) && !closedList.Contains(tile))
                 {
                     openList.Add(tile);
@@ -47,7 +48,7 @@ public static class NavigationExtensions {
                     fScore.Add(tile, gScore[tile] + GetHeuristic(tile, to));
                 }
                 //If we can't possibly move to the tile (occupied, too tall, whatever), discard it.
-                if (tile.IsImpassable(currentTile,unit,maxHeight,moveThroughImpass))
+                if (tile.IsImpassable(currentTile, unit, maxHeight, moveThroughImpass))
                 {
                     openList.Remove(tile);
                     closedList.Add(tile);
@@ -95,15 +96,17 @@ public static class NavigationExtensions {
     private static bool IsImpassable(this Tile tile, Tile tileFrom, Unit unit, int maxHeight = 1, bool moveThroughImpass = false)
     {
         // If the height delta's too great, or the tile is impassable, and we don't have an override, return true.
-        if(Mathf.Abs(tile.Height - tileFrom.Height) > maxHeight) return true;
-        if(tile.Unit != null){
-            if((tile.Unit.Team != unit.Team)&&!moveThroughImpass) return true;
+        if (Mathf.Abs(tile.Height - tileFrom.Height) > maxHeight) return true;
+        if (tile.Unit != null)
+        {
+            if ((tile.Unit.Team != unit.Team) && !moveThroughImpass) return true;
         }
-        if(!tile.Passable && !moveThroughImpass) return true;
+        if (!tile.Passable && !moveThroughImpass) return true;
         return false;
     }
 
-    private static bool CanEndHere(this Tile tile, bool endOnImpass = false){
+    private static bool CanEndHere(this Tile tile, bool endOnImpass = false)
+    {
         return (tile.Unit == null && (tile.Passable || endOnImpass));
     }
 
@@ -127,7 +130,7 @@ public static class NavigationExtensions {
                 {   //If it can be moved to, and isn't in the closed list, add it to the open list.
                     if (!neighbour.IsImpassable(openTile, unit, maxHeight, moveThroughImpass) && 1 + costDictionary[openTile] <= unit.Speed && !closedList.Contains(neighbour) && !openList.Contains(neighbour) && !tilesToOpen.Contains(neighbour))
                     {
-                        if(neighbour.CanEndHere(endOnImpass))result.Add(neighbour);
+                        if (neighbour.CanEndHere(endOnImpass)) result.Add(neighbour);
                         tilesToOpen.Add(neighbour);
                         costDictionary.Add(neighbour, 1 + costDictionary[openTile]);
                     }

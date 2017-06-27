@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public static class MiscExtensions {
+public static class MiscExtensions
+{
 
     public static Sprite GetSpriteFromDict(this Terrain terrain, SpriteDict[] dict)
     {

@@ -8,6 +8,7 @@ public class TurnManager : EventSystem {
     public static List<Tile> MovableTiles;
     public static List<Unit> AttackableUnits;
     public static List<Unit> UnitsInRange;
+    public static List<ITurnable> CastableTargets;
     public bool PlayerActive;
     public Player Player;
     public Player Enemy;
@@ -22,6 +23,7 @@ public class TurnManager : EventSystem {
         MovableTiles = new List<Tile>();
         AttackableUnits = new List<Unit>();
         UnitsInRange = new List<Unit>();
+        CastableTargets = new List<ITurnable>();
     }
 
     public void EndTurn()
@@ -95,6 +97,7 @@ public class TurnManager : EventSystem {
         MovableTiles = new List<Tile>();
         AttackableUnits = new List<Unit>();
         UnitsInRange = new List<Unit>();
+        CastableTargets = new List<ITurnable>();
         Active.SetSelectedGameObject(null);
     }
 
@@ -106,5 +109,10 @@ public class TurnManager : EventSystem {
     public static bool EligibleToAttack(Unit unit)
     {
         return AttackableUnits.Contains(unit);
+    }
+
+    public static bool EligibleToCast(ITurnable target)
+    {
+        return CastableTargets.Contains(target);
     }
 }

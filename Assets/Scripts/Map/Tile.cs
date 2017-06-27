@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDeselectHandler {
+public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDeselectHandler
+{
 
     public List<Tile> Neighbours
+    {
+        get
         {
-            get
-            {
             var result = new List<Tile>();
             if (Ul != null) result.Add(Ul);
             if (Ur != null) result.Add(Ur);
@@ -17,14 +18,14 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
             if (Dl != null) result.Add(Dl);
             if (Ll != null) result.Add(Ll);
             return result;
-            }
         }
-   
+    }
+
     public Tile Ul
     {
         get
         {
-            if(Y%2 != 0)
+            if (Y % 2 != 0)
             {
                 if (TileMap.GetLength(1) > Y + 1) return TileMap[X, Y + 1];
             }
@@ -42,7 +43,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
         {
             if (Y % 2 != 0)
             {
-                if (TileMap.GetLength(1) > Y + 1 && TileMap.GetLength(0) > X + 1) return TileMap[X+1, Y + 1];
+                if (TileMap.GetLength(1) > Y + 1 && TileMap.GetLength(0) > X + 1) return TileMap[X + 1, Y + 1];
             }
             else
             {
@@ -120,7 +121,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
         {
             return gameObject.GetComponent<SpriteRenderer>().color;
         }
-        set {
+        set
+        {
             gameObject.GetComponent<SpriteRenderer>().color = value;
         }
     }
@@ -135,8 +137,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
     {
         if (!TurnManager.Active.alreadySelecting)
         {
-            if(Unit != null) Unit.OnPointerClick(eventData);
-            else {
+            if (Unit != null) Unit.OnPointerClick(eventData);
+            else
+            {
                 if (TurnManager.EligibleToMoveTo(this))
                 {
                     TurnManager.SelectedUnit.Move(TurnManager.SelectedUnit, this);

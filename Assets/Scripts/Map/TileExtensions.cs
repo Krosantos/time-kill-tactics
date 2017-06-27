@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-public static class TileExtensions {
+public static class TileExtensions
+{
     public static void UpdateEditorSprite(this Tile tile, GameObject fillerPrefab, SpriteDict[] spriteDict, SpriteDict[] fillerDict)
     {
         tile.GetComponent<SpriteRenderer>().sortingOrder = tile.Height + tile.Y * -1;

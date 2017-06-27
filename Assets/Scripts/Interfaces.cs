@@ -1,6 +1,7 @@
 ﻿using System;
 
-public interface ITurnable {
+public interface ITurnable
+{
     void TurnStart();
     void TurnEnd();
 }
