@@ -12,10 +12,10 @@ public abstract class PlayerSpell : ITurnable
     public Player Player;
     public abstract void TurnEnd();
     public void TurnStart(){}
-    public abstract void Cast();
+    public abstract void Cast(Tile tile);
 
     // TODO: toss this list on the TurnManager, use to highlight/cast spells.
-    public abstract List<ISelectHandler> GetValidTargets();
+    public abstract List<Tile> GetValidTargets();
 
     public bool IsDisabled(){
         if(HasCost){
@@ -60,9 +60,19 @@ public class SpellHeal : PlayerSpell{
         if(CooldownCounter < 0) CooldownCounter = 0;
     }
 
-    public override void Cast(){
+    public override List<Tile> GetValidTargets(){
+        var result = new List<Tile>();
+        if(IsDisabled()) return result;
+        foreach(var unit in Player.Units){
+            result.Add(unit.Tile);
+        }
+        return result;
+    }
+
+    public override void Cast(Tile tile){
         if(IsDisabled()) return;
-        Debug.Log("Lol, no clue how I'm gonna implement selecting and stuff yet.");
+        tile.Unit.Health += 2;
+        if(tile.Unit.Health > tile.Unit.MaxHealth) tile.Unit.Health = tile.Unit.MaxHealth;
         Ammo --;
         CooldownCounter = Cooldown;
     }
