@@ -137,7 +137,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
     {
         if (!TurnManager.Active.alreadySelecting)
         {
-            if (Unit != null) Unit.OnPointerClick(eventData);
+            if(TurnManager.EligibleToCast(this)){
+                TurnManager.SelectedSpell.Cast(this);
+            }
+            else if (Unit != null) Unit.OnPointerClick(eventData);
             else
             {
                 if (TurnManager.EligibleToMoveTo(this))
@@ -161,6 +164,6 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
 
     public void OnDeselect(BaseEventData eventData)
     {
-        Debug.Log("Tile Deselected!");
+        
     }
 }

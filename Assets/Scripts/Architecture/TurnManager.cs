@@ -15,6 +15,7 @@ public class TurnManager : EventSystem {
     public static TurnManager Active;
     public static Tile SelectedTile;
     public static Unit SelectedUnit;
+    public static PlayerSpell SelectedSpell;
 
     new public void Awake()
     {
@@ -103,16 +104,16 @@ public class TurnManager : EventSystem {
 
     public static bool EligibleToMoveTo(Tile tile)
     {
-        return MovableTiles.Contains(tile);
+        return SelectedUnit != null && MovableTiles.Contains(tile);
     }
 
     public static bool EligibleToAttack(Unit unit)
     {
-        return AttackableUnits.Contains(unit);
+        return SelectedUnit != null && AttackableUnits.Contains(unit);
     }
 
     public static bool EligibleToCast(Tile target)
     {
-        return SpellableTiles.Contains(target);
+        return SelectedSpell != null && SpellableTiles.Contains(target);
     }
 }
