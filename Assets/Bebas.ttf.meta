@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 69e6912812b73c94db4b6485cf921c2a
-timeCreated: 1495066089
+guid: 1567c71896e721248aaaaefe5aa96c8d
+timeCreated: 1498794186
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
@@ -9,13 +9,13 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: KenPixel Mini Square
+  fontName: Bebas
   fontNames:
-  - KenPixel Mini Square
+  - Bebas
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
-  ascentCalculationMode: 0
+  ascentCalculationMode: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
