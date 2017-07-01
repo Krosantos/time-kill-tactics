@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,6 +40,11 @@ public class MapSerializer : MonoBehaviour
 
         int maxX = 0;
         int maxY = 0;
+
+        CameraDrag.MinX = Tile.AllTiles.Min(t => t.transform.position.x);
+        CameraDrag.MinY = Tile.AllTiles.Min(t => t.transform.position.y);
+        CameraDrag.MaxX = Tile.AllTiles.Max(t => t.transform.position.x);
+        CameraDrag.MaxY = Tile.AllTiles.Max(t => t.transform.position.y);
 
         foreach (var tile in Tile.AllTiles)
         {
