@@ -25,8 +25,9 @@ public class CameraDrag : MonoBehaviour
         if (delta.magnitude >= Sensitivity) { 
         
             var pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - _dragOrigin);
-            var move = new Vector3(Mathf.Clamp(pos.x * DragSpeed, MinX, MaxX), Mathf.Clamp(pos.y * DragSpeed, MinY, MaxY), 0f);
+            var move = new Vector3(pos.x * DragSpeed, pos.y * DragSpeed, 0f);
             transform.Translate(move, Space.World);
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, MinX, MaxX), Mathf.Clamp(transform.position.y, MinY, MaxY), transform.position.z);
         } else {
             _dragOrigin = Input.mousePosition;
         }
