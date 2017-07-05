@@ -4,7 +4,8 @@ using UnityEngine;
 public class Player : MonoBehaviour, ITurnable
 {
 	public int Team;
-	public List<ITurnable> TurnAssets;
+    public string Name;
+    public List<ITurnable> TurnAssets;
     public bool IsEnemy;
 	public List<Unit> Units;
 	public List<PlayerSpell> Spells;
@@ -23,12 +24,6 @@ public class Player : MonoBehaviour, ITurnable
 
 	public void Start(){
         // This little block has to change once we go networked.
-        if (IsEnemy) TurnManager.Active.Enemy = this;
-        else
-        {
-            TurnManager.Active.Player = this;
-            Me = this;
-        }
 		var army = JsonUtility.FromJson<Army>(Army.text);
 		foreach(var unitString in army.Units){
 			var unit = UnitBuilder.ConstructUnit(UnitPrefab, unitString);

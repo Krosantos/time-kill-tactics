@@ -30,7 +30,7 @@ public class Target : MonoBehaviour {
         }
         if (getAllInRange)
         {
-            foreach (var tile in TurnManager.MovableTiles)
+            foreach (var tile in ClickManager.MovableTiles)
             {
                 foreach (var neighbour in tile.Neighbours)
                 {

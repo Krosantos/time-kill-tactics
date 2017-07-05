@@ -4,15 +4,12 @@ using UnityEngine.EventSystems;
 
 // This combines the existing EventSystem (which handles stuff like clicking) with turns, and selecting multiple objects.
 // This is the hotseat/single-player version. We'll make a networked version later.
-public class TurnManager : EventSystem {
+public class ClickManager : EventSystem {
     public static List<Tile> MovableTiles;
     public static List<Unit> AttackableUnits;
     public static List<Unit> UnitsInRange;
     public static List<Tile> SpellableTiles;
-    public bool PlayerActive;
-    public Player Player;
-    public Player Enemy;
-    public static TurnManager Active;
+    public static ClickManager Active;
     public static Tile SelectedTile;
     public static Unit SelectedUnit;
     public static PlayerSpell SelectedSpell;
@@ -25,36 +22,6 @@ public class TurnManager : EventSystem {
         AttackableUnits = new List<Unit>();
         UnitsInRange = new List<Unit>();
         SpellableTiles = new List<Tile>();
-    }
-
-    public void EndTurn()
-    {
-        if (PlayerActive)
-        {
-            Player.TurnEnd();
-            Enemy.TurnStart();
-        }
-        else
-        {
-            Enemy.TurnEnd();
-            Player.TurnStart();
-        }
-        PlayerActive = !PlayerActive;        
-    }
-
-    public void CheckForVictory()
-    {
-        // ...I should probably do this server-side only.
-        //Debug.Log(Player.Units.Count);
-        //Debug.Log(Enemy.Units.Count);
-        if(Player.Units.Count <= 0){
-            Debug.Log("Enemy Wins!");
-            Application.Quit();
-        }
-        if(Enemy.Units.Count <= 0){
-            Debug.Log("Player Wins!");
-            Application.Quit();
-        }
     }
 
     public static void ColorTiles()

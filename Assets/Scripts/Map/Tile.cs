@@ -135,23 +135,23 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!TurnManager.Active.alreadySelecting)
+        if (!ClickManager.Active.alreadySelecting)
         {
-            if(TurnManager.EligibleToCast(this)){
-                TurnManager.SelectedSpell.Cast(this);
+            if(ClickManager.EligibleToCast(this)){
+                ClickManager.SelectedSpell.Cast(this);
             }
             else if (Unit != null) Unit.OnPointerClick(eventData);
             else
             {
-                if (TurnManager.EligibleToMoveTo(this))
+                if (ClickManager.EligibleToMoveTo(this))
                 {
-                    TurnManager.SelectedUnit.Move(TurnManager.SelectedUnit, this);
-                    TurnManager.Clear();
+                    ClickManager.SelectedUnit.Move(ClickManager.SelectedUnit, this);
+                    ClickManager.Clear();
                 }
                 else
                 {
-                    TurnManager.Clear();
-                    TurnManager.Active.SetSelectedGameObject(gameObject);
+                    ClickManager.Clear();
+                    ClickManager.Active.SetSelectedGameObject(gameObject);
                 }
             }
         }
@@ -159,7 +159,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
 
     public void OnSelect(BaseEventData eventData)
     {
-        TurnManager.SelectedTile = this;
+        ClickManager.SelectedTile = this;
     }
 
     public void OnDeselect(BaseEventData eventData)

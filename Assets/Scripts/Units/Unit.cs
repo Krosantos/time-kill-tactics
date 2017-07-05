@@ -69,13 +69,13 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!TurnManager.Active.alreadySelecting || !HasMoved || !HasAttacked) {
-            if(TurnManager.SelectedUnit == this){
-                TurnManager.Clear();
+        if (!ClickManager.Active.alreadySelecting || !HasMoved || !HasAttacked) {
+            if(ClickManager.SelectedUnit == this){
+                ClickManager.Clear();
             }
-            else if (TurnManager.EligibleToAttack(this))
+            else if (ClickManager.EligibleToAttack(this))
             {
-                var attacker = TurnManager.SelectedUnit;
+                var attacker = ClickManager.SelectedUnit;
                 attacker.Attack(attacker, this);
                 if (Health <= 0)
                 {
@@ -87,12 +87,12 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                 this.SyncUi();
                 attacker.SyncUi();
                 if(attacker.HasAttacked && attacker.HasMoved) attacker.ToggleGrey(true);
-                TurnManager.Clear();
+                ClickManager.Clear();
             }
             else
             {
-                TurnManager.Clear();
-                TurnManager.Active.SetSelectedGameObject(gameObject);
+                ClickManager.Clear();
+                ClickManager.Active.SetSelectedGameObject(gameObject);
                 // I'll swap back to the below once it's networked.
                 //if (Team == Player.Me.Team) TurnManager.Active.SetSelectedGameObject(gameObject);
             }
@@ -101,11 +101,11 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
 
     public void OnSelect(BaseEventData eventData)
     {
-        TurnManager.SelectedUnit = this;
-        if (!HasMoved) TurnManager.MovableTiles = GetMoves(this);
-        if (!HasAttacked)TurnManager.AttackableUnits = GetTargets(this, false, true, false);
-        if (!HasMoved && !HasAttacked) TurnManager.UnitsInRange = GetTargets(this, false, true, true);
-        TurnManager.ColorTiles();
+        ClickManager.SelectedUnit = this;
+        if (!HasMoved) ClickManager.MovableTiles = GetMoves(this);
+        if (!HasAttacked)ClickManager.AttackableUnits = GetTargets(this, false, true, false);
+        if (!HasMoved && !HasAttacked) ClickManager.UnitsInRange = GetTargets(this, false, true, true);
+        ClickManager.ColorTiles();
     }
 
     public void OnDeselect(BaseEventData eventData)
