@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour {
 
@@ -8,9 +9,12 @@ public class UiManager : MonoBehaviour {
     public bool PlayerActive;
     public Player Player;
     public Player Enemy;
+    public Text PlayerName, EnemyName;
 
     public void Awake(){
         Active = this;
+        PlayerName.text = Player.Name;
+        EnemyName.text = Enemy.Name;
     }
 
 	public void EndTurn()
