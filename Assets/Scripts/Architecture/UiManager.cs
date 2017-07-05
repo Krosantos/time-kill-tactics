@@ -35,8 +35,6 @@ public class UiManager : MonoBehaviour {
     public void CheckForVictory()
     {
         // ...I should probably do this server-side only.
-        //Debug.Log(Player.Units.Count);
-        //Debug.Log(Enemy.Units.Count);
         if(Player.Units.Count <= 0){
             Debug.Log("Enemy Wins!");
             Application.Quit();

@@ -40,11 +40,7 @@ public class Army {
 	}
 
 	public override string ToString(){
-		foreach(var unit in Units){
-			Debug.Log(JsonUtility.ToJson(unit));
-		}
 		var result = JsonUtility.ToJson(this, true);
-		Debug.Log(result);
 		return result;
 	}
 }

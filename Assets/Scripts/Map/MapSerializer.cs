@@ -13,25 +13,26 @@ public class MapSerializer : MonoBehaviour
     public void Awake()
     {
         if (MapFile == null) return;
-        var serializedMap = JsonUtility.FromJson<SerializedMap>(MapFile.text);
+        var serializedMap = JsonUtility.FromJson<Map>(MapFile.text);
         DeserializeMap(serializedMap);
     }
 
-    public static SerializedMap SerializeMap(List<Tile> tileList, string name)
+    public static Map SerializeMap(List<Tile> tileList, string name)
     {
-        var result = new SerializedMap(tileList, name);
+
+        var result = new Map(tileList, name);
         Debug.Log(result.ToString());
         return result;
     }
 
-    public void DeserializeMap(SerializedMap serializedMap)
+    public void DeserializeMap(Map serializedMap)
     {
         Tile.AllTiles = new List<Tile>();
         foreach (var raw in serializedMap.Tiles)
         {
             var prefab = Instantiate(TilePrefab, new Vector3(), Quaternion.identity);
             var tile = prefab.GetComponent<Tile>();
-            JsonUtility.FromJsonOverwrite(raw, tile);
+            raw.OverwriteTile(tile);
             Tile.AllTiles.Add(tile);
             tile.UpdateEditorSprite(FillerPrefab, TileDict, FillerDict);
             prefab.name = tile.X + "," + tile.Y;
@@ -56,27 +57,5 @@ public class MapSerializer : MonoBehaviour
         {
             Tile.TileMap[tile.X, tile.Y] = tile;
         }
-    }
-}
-
-[Serializable]
-public struct SerializedMap
-{
-    public List<string> Tiles;
-    public string Name;
-
-    public SerializedMap(List<Tile> tiles, string name)
-    {
-        Name = name;
-        Tiles = new List<string>();
-        foreach (var tile in tiles)
-        {
-            Tiles.Add(JsonUtility.ToJson(tile));
-        }
-    }
-
-    public override string ToString()
-    {
-        return JsonUtility.ToJson(this);
     }
 }
