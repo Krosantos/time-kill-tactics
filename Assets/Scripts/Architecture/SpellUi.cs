@@ -10,8 +10,16 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler, ISelectHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        ClickManager.Clear();
-        ClickManager.Active.SetSelectedGameObject(gameObject);
+		if(!Spell.Player.IsActive) return;
+        if (ClickManager.SelectedSpell == Spell)
+        {
+            ClickManager.Clear();
+        }
+        else
+        {
+            ClickManager.Clear();
+            ClickManager.Active.SetSelectedGameObject(gameObject);
+        }
     }
 
     public void OnSelect(BaseEventData eventData)

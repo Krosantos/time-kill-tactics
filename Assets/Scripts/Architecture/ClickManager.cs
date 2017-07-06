@@ -65,7 +65,7 @@ public class ClickManager : EventSystem {
             unit.Tile.ToggleGrey(false);
             unit.Tile.Color = Color.white;
         }
-        foreach(var tile in MovableTiles)
+        foreach(var tile in SpellableTiles)
         {
             tile.ToggleGrey(false);
             tile.Color = Color.white;

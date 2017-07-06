@@ -7,7 +7,7 @@ public class Player : MonoBehaviour, ITurnable
 	public int Team;
     public string Name;
     public List<ITurnable> TurnAssets;
-    public bool IsEnemy;
+    public bool IsEnemy, IsActive;
 	public List<Unit> Units;
 	public List<PlayerSpell> Spells;
 	public TextAsset Army;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, ITurnable
 	public int Mana, MaxMana;
     public static Player Me;
 
-	public void Awake(){
+    public void Awake(){
 		UnitBuilder = new UnitBuilder(Team, this);
 		TurnAssets = new List<ITurnable>();
 		Units = new List<Unit>();
@@ -46,7 +46,8 @@ public class Player : MonoBehaviour, ITurnable
 
 	public void TurnStart()
 	{
-		foreach(var turnable in TurnAssets){
+        IsActive = true;
+        foreach(var turnable in TurnAssets){
 			turnable.TurnStart();
 		}
         Mana++;
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour, ITurnable
 
     public void TurnEnd()
     {
+        IsActive = false;
         foreach(var turnable in TurnAssets){
 			turnable.TurnEnd();
 		}

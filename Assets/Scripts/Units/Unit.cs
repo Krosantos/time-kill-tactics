@@ -20,7 +20,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = value;
             var previousCollider = gameObject.GetComponent<PolygonCollider2D>();
-            if(previousCollider != null) Destroy(previousCollider);
+            if (previousCollider != null) Destroy(previousCollider);
             gameObject.AddComponent<PolygonCollider2D>();
         }
     }
@@ -69,8 +69,15 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!ClickManager.Active.alreadySelecting || !HasMoved || !HasAttacked) {
-            if(ClickManager.SelectedUnit == this){
+        if (ClickManager.EligibleToCast(Tile))
+        {
+            ClickManager.SelectedSpell.Cast(Tile);
+            ClickManager.Clear();
+        }
+        else if (!ClickManager.Active.alreadySelecting || !HasMoved || !HasAttacked)
+        {
+            if (ClickManager.SelectedUnit == this)
+            {
                 ClickManager.Clear();
             }
             else if (ClickManager.EligibleToAttack(this))
@@ -86,10 +93,10 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                 }
                 this.SyncUi();
                 attacker.SyncUi();
-                if(attacker.HasAttacked && attacker.HasMoved) attacker.ToggleGrey(true);
+                if (attacker.HasAttacked && attacker.HasMoved) attacker.ToggleGrey(true);
                 ClickManager.Clear();
             }
-            else
+            else if (Player.IsActive)
             {
                 ClickManager.Clear();
                 ClickManager.Active.SetSelectedGameObject(gameObject);
@@ -103,13 +110,13 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     {
         ClickManager.SelectedUnit = this;
         if (!HasMoved) ClickManager.MovableTiles = GetMoves(this);
-        if (!HasAttacked)ClickManager.AttackableUnits = GetTargets(this, false, true, false);
+        if (!HasAttacked) ClickManager.AttackableUnits = GetTargets(this, false, true, false);
         if (!HasMoved && !HasAttacked) ClickManager.UnitsInRange = GetTargets(this, false, true, true);
         ClickManager.ColorTiles();
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        
+
     }
 }

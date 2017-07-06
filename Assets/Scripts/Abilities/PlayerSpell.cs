@@ -80,9 +80,10 @@ public class SpellHeal : PlayerSpell
 
     public override void Cast(Tile tile)
     {
-        if (IsDisabled()) return;
+        if (IsDisabled() || tile.Unit == null) return;
         tile.Unit.Health += 2;
         if (tile.Unit.Health > tile.Unit.MaxHealth) tile.Unit.Health = tile.Unit.MaxHealth;
+        tile.Unit.SyncUi();
         Ammo--;
         CooldownCounter = Cooldown;
     }
