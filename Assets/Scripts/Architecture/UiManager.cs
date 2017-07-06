@@ -9,7 +9,8 @@ public class UiManager : MonoBehaviour {
     public bool PlayerActive;
     public Player Player;
     public Player Enemy;
-    public Text PlayerName, EnemyName;
+    public Text PlayerName, EnemyName, PlayerMana, EnemyMana;
+    public Image PlayerManaRing, EnemyManaRing;
 
     public void Awake(){
         Active = this;
@@ -30,6 +31,18 @@ public class UiManager : MonoBehaviour {
             Player.TurnStart();
         }
         PlayerActive = !PlayerActive;        
+    }
+
+    public void Update(){
+        _updateMana(Player, PlayerMana, PlayerManaRing);
+        _updateMana(Enemy, EnemyMana, EnemyManaRing);
+    }
+
+    private void _updateMana(Player player, Text manaText, Image manaRing){
+        manaText.text = "Mana\r\n"+player.Mana+"/"+player.MaxMana;
+        Debug.Log("Pre: " + manaRing.fillAmount);
+        manaRing.fillAmount = player.MaxMana == 0 ? 0f : (float)player.Mana / (float)player.MaxMana;
+        Debug.Log("Post: " + manaRing.fillAmount);
     }
 
     public void CheckForVictory()

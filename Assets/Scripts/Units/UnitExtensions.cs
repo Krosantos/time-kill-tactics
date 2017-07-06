@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public static class UnitExtensions {
+public static class UnitExtensions
+{
 
     public static void SyncUi(this Unit unit)
     {
@@ -8,20 +9,22 @@ public static class UnitExtensions {
         unit.SetText();
     }
 
-    public static void ToggleGrey(this Unit unit, bool shouldGrey){
+    public static void ToggleGrey(this Unit unit, bool shouldGrey)
+    {
         var renderer = unit.GetComponent<SpriteRenderer>();
-        if(renderer == null) return;
+        if (renderer == null) return;
         var toLoad = shouldGrey ? "MAT_GreyScale" : "MAT_Standard";
         renderer.material = Resources.Load<Material>(toLoad);
     }
 
     public static void GetPosition(this Unit unit)
     {
-        if(unit.Tile == null) return;
+        if (unit.Tile == null) return;
         var x = unit.Tile.X;
         var y = unit.Tile.Y;
         var z = unit.Tile.Height;
-        var pos = new Vector3(x + (y % 2) * 0.5f, (0.75f * y + 0.35f * z)+0.25f);
+        var pos = new Vector3(x + (y % 2) * 0.5f, (0.75f * y + 0.35f * z) + 0.25f);
+        unit.GetComponent<SpriteRenderer>().sortingOrder = 1 + unit.Tile.Height + unit.Tile.Y * -1;
         unit.transform.parent.position = pos;
     }
 

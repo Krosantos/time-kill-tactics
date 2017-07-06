@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, ITurnable
 	public TextAsset Army;
     public UnitBuilder UnitBuilder;
 	public GameObject UnitPrefab;
-	public int Mana;
+	public int Mana, MaxMana;
     public static Player Me;
 
 	public void Awake(){
@@ -45,7 +45,9 @@ public class Player : MonoBehaviour, ITurnable
 		foreach(var turnable in TurnAssets){
 			turnable.TurnStart();
 		}
-	}
+        Mana++;
+		if(Mana > MaxMana) Mana = MaxMana;
+    }
 
     public void TurnEnd()
     {
