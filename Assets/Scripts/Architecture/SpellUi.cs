@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class SpellUi : MonoBehaviour, IPointerClickHandler
 {
     public PlayerSpell Spell;
+    public Image SpellIcon;
     public Button Button;
     public Sprite Up, Down, UpClick, DownClick;
 

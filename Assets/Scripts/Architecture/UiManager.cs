@@ -81,6 +81,9 @@ public class UiManager : MonoBehaviour
         {
             spellUi.Spell = spell;
             // Set the display icon, and relevant cooldown/mana/ammo information.
+            var resourceString = "Sprites/Spells/" + spell.SpriteReference;
+            var toLoad = Resources.Load<Sprite>(resourceString);
+            spellUi.SpellIcon.sprite = toLoad;
 
         }
 
