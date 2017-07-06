@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: 4d356dc74c4ae499cad7f124803e0809
-timeCreated: 1494729113
+timeCreated: 1499370758
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Army: {instanceID: 0}
+  - UnitPrefab: {fileID: 1342163572490762, guid: 5ffb687097d136249b1f99c60df1d711,
+      type: 2}
+  - SpellPrefab: {fileID: 1171542314763486, guid: 7fb697baedc669e4599b6f6a78cd74ca,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

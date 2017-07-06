@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour, ITurnable
@@ -30,13 +31,16 @@ public class Player : MonoBehaviour, ITurnable
 			Units.Add(unit);
 			TurnAssets.Add(unit);
 		}
-		foreach(var spellString in army.Spells){
-			var spell = PlayerSpell.ConstructSpell(spellString);
+
+		// Add Spells. They nest under each other in the UI for ease of procedural generation.
+        var currentSpellTab = gameObject;
+        foreach(var spellString in army.Spells){
+			var spell = PlayerSpell.ConstructSpell(spellString, this);
 			if(spell != null){
-				spell.Player = this;
 				Spells.Add(spell);
 				TurnAssets.Add(spell);
-			}
+                currentSpellTab = UiManager.Active.createSpellTab(currentSpellTab, spell);
+            }
 		}
 	}
 

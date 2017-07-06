@@ -41,6 +41,11 @@ public class ClickManager : EventSystem {
             unit.Tile.ToggleGrey(true);
             unit.Tile.Color = new Color(0.45f, 0.27f, 0.27f);
         }
+        foreach(var tile in SpellableTiles)
+        {
+            tile.ToggleGrey(true);
+            tile.Color = new Color(1f,0.952f,0.682f);
+        }
     }
 
     public static void Clear()
@@ -60,8 +65,14 @@ public class ClickManager : EventSystem {
             unit.Tile.ToggleGrey(false);
             unit.Tile.Color = Color.white;
         }
+        foreach(var tile in MovableTiles)
+        {
+            tile.ToggleGrey(false);
+            tile.Color = Color.white;
+        }
         SelectedTile = null;
         SelectedUnit = null;
+        SelectedSpell = null;
         MovableTiles = new List<Tile>();
         AttackableUnits = new List<Unit>();
         UnitsInRange = new List<Unit>();
