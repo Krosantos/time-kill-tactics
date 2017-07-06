@@ -96,12 +96,10 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                 if (attacker.HasAttacked && attacker.HasMoved) attacker.ToggleGrey(true);
                 ClickManager.Clear();
             }
-            else if (Player.IsActive)
+            else if (Player.IsActive == true)
             {
                 ClickManager.Clear();
                 ClickManager.Active.SetSelectedGameObject(gameObject);
-                // I'll swap back to the below once it's networked.
-                //if (Team == Player.Me.Team) TurnManager.Active.SetSelectedGameObject(gameObject);
             }
         }
     }

@@ -77,7 +77,7 @@ public class ClickManager : EventSystem {
         AttackableUnits = new List<Unit>();
         UnitsInRange = new List<Unit>();
         SpellableTiles = new List<Tile>();
-        Active.SetSelectedGameObject(null);
+        if (!Active.alreadySelecting) Active.SetSelectedGameObject(null);
     }
 
     public static bool EligibleToMoveTo(Tile tile)

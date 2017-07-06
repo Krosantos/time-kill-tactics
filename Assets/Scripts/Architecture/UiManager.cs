@@ -67,15 +67,21 @@ public class UiManager : MonoBehaviour
     {
         var newTab = Instantiate(SpellTabPrefab, new Vector3(), Quaternion.identity);
         newTab.transform.SetParent(parent.transform, false);
+
+        // Set positioning.
         var rectTransform = newTab.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
             rectTransform.anchoredPosition = new Vector3(50f, 50f);
         }
+
+        // Load up the relevant spell.
         var spellUi = newTab.GetComponent<SpellUi>();
         if (spellUi != null)
         {
             spellUi.Spell = spell;
+            // Set the display icon, and relevant cooldown/mana/ammo information.
+
         }
 
         return newTab;

@@ -16,20 +16,11 @@ public abstract class PlayerSpell : ITurnable
 
     public bool IsDisabled()
     {
-        if (HasCost)
-        {
-            if (Player == null) return true;
-            if (Player.Mana < Cost) return true;
-        }
-        if (HasCooldown)
-        {
-            if (CooldownCounter != 0) return true;
-        }
-        if (HasAmmo)
-        {
-            if (Ammo <= 0) return true;
-        }
-
+        if(Player == null) return true;
+        if(!Player.IsActive) return true;
+        if (HasCost && Player.Mana < Cost) return true;
+        if (HasCooldown && CooldownCounter != 0) return true;        
+        if (HasAmmo && Ammo <= 0) return true;
         return false;
     }
 
