@@ -12,7 +12,7 @@ public class UiManager : MonoBehaviour
     public Player Enemy;
     public Text PlayerName, EnemyName, PlayerMana, EnemyMana;
     public Image PlayerManaRing, EnemyManaRing;
-    public GameObject SpellTabPrefab;
+    public GameObject SpellTabUp, SpellTabDown;
 
     public void Awake()
     {
@@ -65,14 +65,14 @@ public class UiManager : MonoBehaviour
 
     public GameObject createSpellTab(GameObject parent, PlayerSpell spell)
     {
-        var newTab = Instantiate(SpellTabPrefab, new Vector3(), Quaternion.identity);
+        var newTab = Instantiate(spell.Player.IsEnemy ? SpellTabDown : SpellTabUp, new Vector3(), Quaternion.identity);
         newTab.transform.SetParent(parent.transform, false);
 
         // Set positioning.
         var rectTransform = newTab.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            rectTransform.anchoredPosition = new Vector3(50f, 50f);
+            rectTransform.anchoredPosition = spell.Player.IsEnemy ? new Vector3(-50f, -50f) : new Vector3(50f, 50f);
         }
 
         // Load up the relevant spell.
