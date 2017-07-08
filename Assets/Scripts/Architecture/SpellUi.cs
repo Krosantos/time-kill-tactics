@@ -8,12 +8,40 @@ using UnityEngine.EventSystems;
 public class SpellUi : MonoBehaviour, IPointerClickHandler
 {
     public PlayerSpell Spell;
-    public Image SpellIcon;
+    public Image SpellIcon, Disabled;
+    public Text ManaCost, CooldownText;
     public Button Button;
 
-    public void Update()
+    public void FixedUpdate()
     {
         Button.interactable = !Spell.IsDisabled();
+        if (Spell.IsDisabled()) Disabled.fillAmount = 1f;
+        _setCooldown();
+        _setMana();
+        _setAmmo();
+    }
+
+    private void _setCooldown()
+    {
+        if (!Spell.HasCooldown)
+        {
+            CooldownText.text = "";
+            Disabled.fillAmount = 0f;
+            return;
+        }
+        var percentage = (float)Spell.CooldownCounter / (float)Spell.Cooldown;
+        Disabled.fillAmount = percentage;
+        CooldownText.text = Spell.CooldownCounter == 0 ? "" : Spell.CooldownCounter.ToString();
+    }
+
+    private void _setMana()
+    {
+        ManaCost.text = Spell.HasCost ? Spell.Cost.ToString() : "";
+    }
+
+    private void _setAmmo()
+    {
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
