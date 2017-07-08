@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public abstract class PlayerSpell : ITurnable
 {
     public string SpriteReference, Name, Text;
-    public int Cost, Cooldown, Ammo, CooldownCounter;
+    public int Cost, Cooldown, Ammo, MaxAmmo, CooldownCounter;
     public bool HasCost, HasCooldown, HasAmmo;
     public Player Player;
     public abstract void TurnEnd();

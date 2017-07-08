@@ -11,6 +11,8 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
     public Image SpellIcon, Disabled;
     public Text ManaCost, CooldownText;
     public Button Button;
+    public Sprite AmmoFull, AmmoEmpty;
+    public Image[] AmmoDots;
 
     public void FixedUpdate()
     {
@@ -41,7 +43,11 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
 
     private void _setAmmo()
     {
-
+        for (var x = 0; x < AmmoDots.Length; x++)
+        {
+            Debug.Log((x + 1 <= Spell.Ammo) ? "Full" : "Empty");
+            AmmoDots[x].sprite = (x + 1 <= Spell.Ammo) ? AmmoFull : AmmoEmpty;
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)

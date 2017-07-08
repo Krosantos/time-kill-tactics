@@ -12,7 +12,7 @@ public class UiManager : MonoBehaviour
     public Player Enemy;
     public Text PlayerName, EnemyName, PlayerMana, EnemyMana;
     public Image PlayerManaRing, EnemyManaRing;
-    public GameObject SpellTabUp, SpellTabDown;
+    public GameObject SpellTabUp, SpellTabDown, SpellAmmoDot;
 
     public void Awake()
     {
@@ -65,14 +65,15 @@ public class UiManager : MonoBehaviour
 
     public GameObject createSpellTab(GameObject parent, PlayerSpell spell)
     {
-        var newTab = Instantiate(spell.Player.IsEnemy ? SpellTabDown : SpellTabUp, new Vector3(), Quaternion.identity);
+        var isFlipped = spell.Player.IsEnemy;
+        var newTab = Instantiate(isFlipped ? SpellTabDown : SpellTabUp, new Vector3(), Quaternion.identity);
         newTab.transform.SetParent(parent.transform, false);
 
         // Set positioning.
         var rectTransform = newTab.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            rectTransform.anchoredPosition = spell.Player.IsEnemy ? new Vector3(-50f, -50f) : new Vector3(50f, 50f);
+            rectTransform.anchoredPosition = isFlipped ? new Vector3(-50f, -50f) : new Vector3(50f, 50f);
         }
 
         // Load up the relevant spell.
@@ -85,6 +86,40 @@ public class UiManager : MonoBehaviour
             var toLoad = Resources.Load<Sprite>(resourceString);
             spellUi.SpellIcon.sprite = toLoad;
 
+            // If the spell uses Ammo, set up that indicator.
+            if (spell.HasAmmo)
+            {
+                spellUi.AmmoDots = new Image[spell.MaxAmmo];
+                for (var x = 0; x < spell.MaxAmmo; x++)
+                {
+                    var newDot = Instantiate(SpellAmmoDot, new Vector3(), Quaternion.identity);
+                    newDot.transform.SetParent(spellUi.transform, false);
+                    var dotTransform = newDot.GetComponent<RectTransform>();
+                    if (dotTransform != null)
+                    {
+                        // The positioning will be slightly different depending on which side of the screen this loads on.
+                        if (isFlipped)
+                        {
+                            dotTransform.anchoredPosition = new Vector3(100f, (-25f * (x + 1)) + 12.5f);
+                            dotTransform.anchorMax = new Vector2(0f, 1f);
+                            dotTransform.anchorMin = new Vector2(0f, 1f);
+                        }
+                        else
+                        {
+                            dotTransform.anchoredPosition = new Vector3(100f, (25f * (x + 1)) - 12.5f);
+                            dotTransform.anchorMax = new Vector2(0f, 0f);
+                            dotTransform.anchorMin = new Vector2(0f, 0f);
+                        }
+                    }
+
+                    var dotSprite = newDot.GetComponent<Image>();
+                    spellUi.AmmoDots[x] = dotSprite;
+                }
+            }
+            else
+            {
+                spellUi.AmmoDots = new Image[0];
+            }
         }
 
         return newTab;
