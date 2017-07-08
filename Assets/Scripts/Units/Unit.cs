@@ -35,7 +35,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     public delegate void OnTurnEndDel(Unit self);
     public delegate void OnDeathDel(Unit self, Unit killer);
     public delegate void OnKillDel(Unit self, Unit victim);
-    public delegate void OnAttackedDel(Unit self, Unit attacker, int damage);
+    public delegate void OnAttackedDel(Unit attacker, Unit self, int damage);
     public delegate void AbilityOneDel(Unit self, Unit target = null);
     public delegate void AbilityTwoDel(Unit self, Unit target = null);
 

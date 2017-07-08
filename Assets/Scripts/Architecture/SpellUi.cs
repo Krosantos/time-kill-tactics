@@ -45,7 +45,6 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
     {
         for (var x = 0; x < AmmoDots.Length; x++)
         {
-            Debug.Log((x + 1 <= Spell.Ammo) ? "Full" : "Empty");
             AmmoDots[x].sprite = (x + 1 <= Spell.Ammo) ? AmmoFull : AmmoEmpty;
         }
     }

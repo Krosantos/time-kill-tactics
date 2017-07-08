@@ -63,7 +63,7 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    public GameObject createSpellTab(GameObject parent, PlayerSpell spell)
+    public GameObject createSpellTab(GameObject parent, int index, PlayerSpell spell)
     {
         var isFlipped = spell.Player.IsEnemy;
         var newTab = Instantiate(isFlipped ? SpellTabDown : SpellTabUp, new Vector3(), Quaternion.identity);
@@ -73,7 +73,7 @@ public class UiManager : MonoBehaviour
         var rectTransform = newTab.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            rectTransform.anchoredPosition = isFlipped ? new Vector3(-50f, -50f) : new Vector3(50f, 50f);
+            rectTransform.anchoredPosition = isFlipped ? new Vector3((-100f * (index + 1) + 50f), -50f) : new Vector3((100f * (index + 1) - 50f), 50f);
         }
 
         // Load up the relevant spell.

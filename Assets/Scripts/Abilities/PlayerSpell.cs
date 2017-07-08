@@ -30,6 +30,8 @@ public abstract class PlayerSpell : ITurnable
         {
             case "Heal":
                 return new SpellHeal(player);
+            case "Kill":
+                return new SpellKill(player);
             default:
                 return null;
         }

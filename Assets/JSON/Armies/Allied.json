@@ -1,6 +1,6 @@
 {
     "Name": "",
-    "Spells":["Heal"],
+    "Spells":["Heal","Kill"],
     "Units": [
         {
             "X": 2,
