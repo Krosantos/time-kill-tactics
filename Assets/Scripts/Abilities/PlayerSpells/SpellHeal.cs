@@ -8,7 +8,7 @@ public class SpellHeal : PlayerSpell
         SpriteReference = "PS_Heal";
         Name = "Heal";
         Text = "Heal any unit for 2 HP.";
-        Ammo = MaxAmmo = 5;
+        Ammo = MaxAmmo = 3;
         Cooldown = 1;
         CooldownCounter = 0;
         HasAmmo = HasCooldown = true;

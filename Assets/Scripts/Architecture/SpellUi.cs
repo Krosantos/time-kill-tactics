@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class SpellUi : MonoBehaviour, IPointerClickHandler
 {
     public PlayerSpell Spell;
-    public Image SpellIcon, Disabled;
+    public Image SpellIcon, Disabled, CostRing;
     public Text ManaCost, CooldownText;
     public Button Button;
     public Sprite AmmoFull, AmmoEmpty;
@@ -28,17 +28,25 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
         if (!Spell.HasCooldown)
         {
             CooldownText.text = "";
-            Disabled.fillAmount = 0f;
             return;
         }
-        var percentage = (float)Spell.CooldownCounter / (float)Spell.Cooldown;
-        Disabled.fillAmount = percentage;
+        Disabled.fillAmount = (Spell.IsDisabled() && Spell.CooldownCounter == 0) ? 1f : (float)Spell.CooldownCounter / (float)Spell.Cooldown;
         CooldownText.text = Spell.CooldownCounter == 0 ? "" : Spell.CooldownCounter.ToString();
     }
 
     private void _setMana()
     {
-        ManaCost.text = Spell.HasCost ? Spell.Cost.ToString() : "";
+        if (Spell.HasCost)
+        {
+            CostRing.color = Color.white;
+            ManaCost.text = Spell.Cost.ToString();
+            ManaCost.color = Spell.Player.Mana >= Spell.Cost ? Color.white : Color.red;
+        }
+        else
+        {
+            CostRing.color = Color.clear;
+            ManaCost.text = "";
+        }
     }
 
     private void _setAmmo()
@@ -67,5 +75,4 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
             }
         }
     }
-
 }

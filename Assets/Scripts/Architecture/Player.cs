@@ -44,7 +44,7 @@ public class Player : MonoBehaviour, ITurnable
             {
                 Spells.Add(spell);
                 TurnAssets.Add(spell);
-                parent = UiManager.Active.createSpellTab(parent, index, spell);
+                UiManager.Active.createSpellTab(parent, index, spell);
             }
             index++;
         }
