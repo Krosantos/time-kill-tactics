@@ -73,7 +73,7 @@ public class UiManager : MonoBehaviour
         var rectTransform = newTab.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            rectTransform.anchoredPosition = isFlipped ? new Vector3((-100f * (index + 1) + 62.5f), -50f) : new Vector3((112.5f * (index + 1) - 50f), 50f);
+            rectTransform.anchoredPosition = isFlipped ? new Vector3((-112.5f * (index + 1) + 62.5f), -50f) : new Vector3((112.5f * (index + 1) - 50f), 50f);
         }
 
         // Load up the relevant spell.
