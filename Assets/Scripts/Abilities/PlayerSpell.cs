@@ -9,8 +9,8 @@ public abstract class PlayerSpell : ITurnable
     public int Cost, Cooldown, Ammo, MaxAmmo, CooldownCounter;
     public bool HasCost, HasCooldown, HasAmmo;
     public Player Player;
+    public abstract void TurnStart();
     public abstract void TurnEnd();
-    public void TurnStart() { }
     public abstract void Cast(Tile tile);
     public abstract List<Tile> GetValidTargets();
 

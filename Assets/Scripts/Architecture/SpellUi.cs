@@ -17,10 +17,15 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
     public void FixedUpdate()
     {
         Button.interactable = !Spell.IsDisabled();
-        if (Spell.IsDisabled()) Disabled.fillAmount = 1f;
         _setCooldown();
         _setMana();
         _setAmmo();
+        if (!Spell.Player.IsActive && (!Spell.HasCooldown || Spell.CooldownCounter == 0)) _useFullDisable();
+    }
+
+    private void _useFullDisable()
+    {
+        Disabled.fillAmount = 1f;
     }
 
     private void _setCooldown()
@@ -30,7 +35,7 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
             CooldownText.text = "";
             return;
         }
-        Disabled.fillAmount = (Spell.IsDisabled() && Spell.CooldownCounter == 0) ? 1f : (float)Spell.CooldownCounter / (float)Spell.Cooldown;
+        Disabled.fillAmount = (float)Spell.CooldownCounter / (float)Spell.Cooldown;
         CooldownText.text = Spell.CooldownCounter == 0 ? "" : Spell.CooldownCounter.ToString();
     }
 
@@ -40,7 +45,15 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
         {
             CostRing.color = Color.white;
             ManaCost.text = Spell.Cost.ToString();
-            ManaCost.color = Spell.Player.Mana >= Spell.Cost ? Color.white : Color.red;
+            if (Spell.Player.Mana < Spell.Cost)
+            {
+                _useFullDisable();
+                ManaCost.color = Color.red;
+            }
+            else
+            {
+                ManaCost.color = Color.white;
+            }
         }
         else
         {
@@ -55,6 +68,7 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
         {
             AmmoDots[x].sprite = (x + 1 <= Spell.Ammo) ? AmmoFull : AmmoEmpty;
         }
+        if (Spell.HasAmmo && Spell.Ammo == 0) _useFullDisable();
     }
 
     public void OnPointerClick(PointerEventData eventData)

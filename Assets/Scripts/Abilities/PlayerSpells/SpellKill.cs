@@ -14,11 +14,13 @@ public class SpellKill : PlayerSpell
         HasCost = HasCooldown = true;
     }
 
-    public override void TurnEnd()
+    public override void TurnStart()
     {
         CooldownCounter--;
         if (CooldownCounter < 0) CooldownCounter = 0;
     }
+
+    public override void TurnEnd() { }
 
     public override List<Tile> GetValidTargets()
     {
