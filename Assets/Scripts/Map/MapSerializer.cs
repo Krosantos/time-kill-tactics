@@ -21,7 +21,7 @@ public class MapSerializer : MonoBehaviour
     {
 
         var result = new Map(tileList, name);
-        Debug.Log(result.ToString());
+        Debug.Log($"Writing {tileList.Count} tiles!");
         return result;
     }
 
