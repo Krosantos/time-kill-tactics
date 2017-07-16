@@ -27,6 +27,7 @@ public class UnitBuilder {
         var unit = result.GetComponentInChildren<Unit>();
         // The brunt of stat and ability assignment happens in here.
         serializedUnit.OverwriteUnit(unit);
+        unit.SerializedUnit = serializedUnit;
         unit.Sprite = GetSprite(serializedUnit.SpriteReference);
         unit.Team = Team;
         unit.Player = Player;

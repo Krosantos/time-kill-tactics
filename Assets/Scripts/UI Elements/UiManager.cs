@@ -13,6 +13,7 @@ public class UiManager : MonoBehaviour
     public Text PlayerName, EnemyName, PlayerMana, EnemyMana;
     public Image PlayerManaRing, EnemyManaRing;
     public GameObject SpellTabUp, SpellTabDown, SpellAmmoDot;
+    public GameObject UnitHover, SpellHover, TileHover;
 
     public void Awake()
     {
@@ -100,7 +101,7 @@ public class UiManager : MonoBehaviour
                         // The positioning will be slightly different depending on which side of the screen this loads on.
                         if (isFlipped)
                         {
-                            dotTransform.anchoredPosition = new Vector3(0f, (-25f * (x + 1)) + 12.5f);
+                            dotTransform.anchoredPosition = new Vector3(0f, (-25f * (x + 1)));
                             dotTransform.anchorMax = new Vector2(0f, 1f);
                             dotTransform.anchorMin = new Vector2(0f, 1f);
                         }

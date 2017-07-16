@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     public bool HasMoved, HasAttacked;
     public Tile Tile;
     public Text AttackText, HpText;
+    public SerializedUnit SerializedUnit;
     public Sprite Sprite
     {
         get
@@ -102,6 +103,10 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                 ClickManager.Active.SetSelectedGameObject(gameObject);
             }
         }
+    }
+
+    public void OnMouseOver(){
+        Debug.Log("PENIS PENIS PENIS");
     }
 
     public void OnSelect(BaseEventData eventData)
