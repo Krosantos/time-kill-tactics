@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using System.Text;
 
 public static class MiscExtensions
 {
@@ -13,5 +15,13 @@ public static class MiscExtensions
             }
         }
         return dict[0].Sprite;
+    }
+
+    public static Byte[] Encode(this string input){
+        return Encoding.UTF8.GetBytes(input);
+    }
+
+    public static string Decode(this byte[] input){
+        return Encoding.UTF8.GetString(input);
     }
 }
