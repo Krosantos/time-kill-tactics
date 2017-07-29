@@ -34,7 +34,7 @@ public class Target : MonoBehaviour {
             {
                 foreach (var neighbour in tile.Neighbours)
                 {
-                    if (neighbour.Unit != null)
+                    if (neighbour.Unit != null && Mathf.Abs(tile.Height - neighbour.Height) < 2)
                     {
                         if (neighbour.Unit.Team != unit.Team && targetEnemies) result.Add(neighbour.Unit);
                         if (neighbour.Unit.Team == unit.Team && targetAllies) result.Add(neighbour.Unit);
