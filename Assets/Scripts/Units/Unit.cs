@@ -94,7 +94,6 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                 }
                 this.SyncUi();
                 attacker.SyncUi();
-                if (attacker.HasAttacked && attacker.HasMoved) attacker.ToggleGrey(true);
                 ClickManager.Clear();
             }
             else if (Player.IsActive == true)
@@ -106,7 +105,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     }
 
     public void OnMouseOver(){
-        Debug.Log("PENIS PENIS PENIS");
+        
     }
 
     public void OnSelect(BaseEventData eventData)

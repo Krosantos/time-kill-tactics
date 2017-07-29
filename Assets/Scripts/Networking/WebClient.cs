@@ -41,10 +41,13 @@ public class WebClient : MonoBehaviour
     void OnConnect(IAsyncResult ar)
     {
         Debug.Log(_socket.Connected);
-        Debug.Log("I AM CONNECT");
-        Status = Status.Connected;
-        _socket.Send("OPEN THE FLOODGATES".Encode());
-        Receive();
+        if (_socket.Connected)
+        {
+            Debug.Log("I AM CONNECT");
+            Status = Status.Connected;
+            _socket.Send("OPEN THE FLOODGATES".Encode());
+            Receive();
+        }
     }
 
     public void Send(BaseMessage msg)

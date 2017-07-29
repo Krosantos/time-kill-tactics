@@ -5,6 +5,7 @@ public static class UnitExtensions
 
     public static void SyncUi(this Unit unit)
     {
+        if ((unit.HasAttacked || unit.GetTargets(unit, false, true, false).Count == 0) && unit.HasMoved && unit.Player.IsActive) unit.ToggleGrey(true);
         unit.GetPosition();
         unit.SetText();
     }
