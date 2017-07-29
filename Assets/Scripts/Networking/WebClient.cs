@@ -15,7 +15,7 @@ public class WebClient : MonoBehaviour
     private Socket _socket;
     private object _lock;
     private float _timeSinceLastMessage;
-    private List<RawMessage> _activeQueue, _passiveQueue;
+    private List<BaseMessage> _activeQueue, _passiveQueue;
 
     // Reconnect?
 
@@ -30,8 +30,8 @@ public class WebClient : MonoBehaviour
     public void Connect()
     {
         _lock = new object();
-        _activeQueue = new List<RawMessage>();
-        _passiveQueue = new List<RawMessage>();
+        _activeQueue = new List<BaseMessage>();
+        _passiveQueue = new List<BaseMessage>();
         _timeSinceLastMessage = 0f;
         _socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
         _socket.BeginConnect(IpAddress, Port, new AsyncCallback(OnConnect), _socket);
@@ -47,7 +47,7 @@ public class WebClient : MonoBehaviour
         Receive();
     }
 
-    public void Send(RawMessage msg)
+    public void Send(BaseMessage msg)
     {
         if (Status != Status.Connected)
         {
@@ -63,7 +63,7 @@ public class WebClient : MonoBehaviour
     {
         // Digest the message backlog.
         _timeSinceLastMessage += Time.deltaTime;
-        if (_timeSinceLastMessage > Heartbeat) Send(new RawMessage());
+        if (_timeSinceLastMessage > Heartbeat) Send(new BaseMessage());
         // Swap out the queues. The lock prevents the constant Receive from altering them as this happens.
         lock (_lock)
         {
@@ -82,7 +82,7 @@ public class WebClient : MonoBehaviour
     // In the callback, we'll call Receive() again, so as to re-prime the socket for incoming messages.
     void Receive()
     {
-        var msg = new RawMessage();
+        var msg = new BaseMessage();
         _socket.BeginReceive(msg.Buffer, 0, 256, SocketFlags.None, new AsyncCallback(OnReceive), msg);
     }
 
@@ -92,7 +92,7 @@ public class WebClient : MonoBehaviour
         if (length > 0)
         {
             _timeSinceLastMessage = 0f;
-            var msg = (RawMessage)ar.AsyncState;
+            var msg = (BaseMessage)ar.AsyncState;
             lock (_lock) _passiveQueue.Add(msg);
         }
         Receive();

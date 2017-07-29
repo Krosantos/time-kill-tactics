@@ -6,7 +6,11 @@ public class MessageRelay : MonoBehaviour {
 
     public int lemon;
     
-	public void RelayMessage(RawMessage msg){
+	public void RelayMessage(BaseMessage msg){
         Debug.Log(msg.Buffer.Decode());
+    }
+
+    public void Test(){
+
     }
 }
