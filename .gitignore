@@ -34,3 +34,4 @@ sysinfo.txt
 #.env files and node modules for the server
 **/node_modules/*
 **/.env
+Server/npm-debug.log

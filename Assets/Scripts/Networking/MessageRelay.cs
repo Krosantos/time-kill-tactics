@@ -29,6 +29,7 @@ public class MessageRelay : MonoBehaviour {
                 break;
             case "BEAT":
                 classified = null;
+                break;
             default:
                 classified = null;
                 break;
