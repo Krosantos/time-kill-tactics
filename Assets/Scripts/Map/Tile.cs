@@ -145,7 +145,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
             else if (Unit != null) Unit.OnPointerClick(eventData);
             else if (ClickManager.EligibleToMoveTo(this))
             {
-                ClickManager.SelectedUnit.Move(ClickManager.SelectedUnit, this);
+                // Moving this server-side, experimentally!
+                // ClickManager.SelectedUnit.Move(ClickManager.SelectedUnit, this);
+                WebClient.Active.Send(new MoveMessage(ClickManager.SelectedUnit, this));
                 ClickManager.Clear();
             }
             else

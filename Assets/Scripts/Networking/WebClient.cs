@@ -11,7 +11,7 @@ public class WebClient : MonoBehaviour
     public string IpAddress;
     public int Port, Heartbeat;
     public Status Status;
-    public WebClient Active;
+    public static WebClient Active;
     private MessageRelay _messageRelay;
     private Socket _socket;
     private object _lock;
