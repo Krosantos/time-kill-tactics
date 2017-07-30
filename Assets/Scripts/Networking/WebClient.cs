@@ -11,6 +11,7 @@ public class WebClient : MonoBehaviour
     public string IpAddress;
     public int Port, Heartbeat;
     public Status Status;
+    public WebClient Active;
     private MessageRelay _messageRelay;
     private Socket _socket;
     private object _lock;
@@ -24,6 +25,7 @@ public class WebClient : MonoBehaviour
     void Awake()
     {
         _messageRelay = gameObject.AddComponent<MessageRelay>();
+        Active = this;
         Connect();
     }
 
@@ -45,7 +47,6 @@ public class WebClient : MonoBehaviour
         {
             Debug.Log("I AM CONNECT");
             Status = Status.Connected;
-            _socket.Send("OPEN THE FLOODGATES".Encode());
             Receive();
         }
     }
@@ -66,7 +67,7 @@ public class WebClient : MonoBehaviour
     {
         // Digest the message backlog.
         _timeSinceLastMessage += Time.deltaTime;
-        if (_timeSinceLastMessage > Heartbeat) Send(new BaseMessage());
+        if (_timeSinceLastMessage > Heartbeat) Send(new RawMessage());
         // Swap out the queues. The lock prevents the constant Receive from altering them as this happens.
         lock (_lock)
         {
@@ -76,7 +77,7 @@ public class WebClient : MonoBehaviour
         }
         foreach (var msg in _activeQueue)
         {
-            _messageRelay.RelayMessage(msg);
+            _messageRelay.ProcessMessage(msg);
         }
         _activeQueue.Clear();
     }
@@ -85,7 +86,7 @@ public class WebClient : MonoBehaviour
     // In the callback, we'll call Receive() again, so as to re-prime the socket for incoming messages.
     void Receive()
     {
-        var msg = new BaseMessage();
+        var msg = new RawMessage();
         _socket.BeginReceive(msg.Buffer, 0, 256, SocketFlags.None, new AsyncCallback(OnReceive), msg);
     }
 

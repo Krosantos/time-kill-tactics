@@ -9,7 +9,8 @@ const server = net.createServer(conn => {
   conn.on('end', () => console.log('client disconnected'))
   conn.on('data', data => {
     console.log(data)
-    repeater(conn)
+    conn.write(data)
+    // repeater(conn)
   })
   conn.on('error', err => console.log(err))
 })
