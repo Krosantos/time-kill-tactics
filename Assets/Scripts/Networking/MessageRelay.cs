@@ -21,18 +21,22 @@ public class MessageRelay : MonoBehaviour
                 break;
             case "ATCK":
                 classified = new AttackMessage(decoded);
+                if (classified.IsValid) classified.HandleMessage(this);
                 break;
             case "SPEL":
                 classified = null;
+                if (classified.IsValid) classified.HandleMessage(this);
                 break;
             case "SYNC":
                 classified = null;
+                if (classified.IsValid) classified.HandleMessage(this);
                 break;
             case "DISC":
                 classified = null;
                 break;
             case "BEAT":
                 classified = null;
+                if (classified.IsValid) classified.HandleMessage(this);
                 break;
             default:
                 classified = null;

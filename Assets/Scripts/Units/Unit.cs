@@ -84,17 +84,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
             else if (ClickManager.EligibleToAttack(this))
             {
                 var attacker = ClickManager.SelectedUnit;
-                attacker.Attack(attacker, this);
-                if (Health <= 0)
-                {
-                    Health = 0;
-                    OnKill(attacker, this);
-                    OnDeath(this, attacker);
-                    this.CleanlyDestroy();
-                }
-                this.SyncUi();
-                attacker.SyncUi();
-                ClickManager.Clear();
+                WebClient.Active.Send(new AttackMessage(attacker, this));
             }
             else if (Player.IsActive == true)
             {

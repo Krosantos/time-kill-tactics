@@ -74,15 +74,27 @@ public class AttackMessage : BaseMessage
         }
     }
 
-    public AttackMessage(Vector2 from, Vector2 to)
+    public AttackMessage(Unit attacker, Unit target)
     {
-        var rawString = $"ATCK|{from.x}|{from.y}|{to.x}|{to.y}";
+        var rawString = $"ATCK|{attacker.Tile.X}|{attacker.Tile.Y}|{target.Tile.X}|{target.Tile.Y}";
         Buffer = rawString.Encode();
     }
 
     public override void HandleMessage(MessageRelay relay)
     {
-
+        var attacker = relay.GetUnitByCoords(From);
+        var target = relay.GetUnitByCoords(To);
+        attacker.Attack(attacker, target);
+        if (target.Health <= 0)
+        {
+            target.Health = 0;
+            attacker.OnKill(attacker, target);
+            target.OnDeath(target, attacker);
+            target.CleanlyDestroy();
+        }
+        target.SyncUi();
+        attacker.SyncUi();
+        ClickManager.Clear();
     }
 }
 
