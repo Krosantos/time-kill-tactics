@@ -11,6 +11,7 @@ public class WebClient : MonoBehaviour
     public string IpAddress;
     public int Port, Heartbeat;
     public Status Status;
+    public Player Player, Enemy;
     public static WebClient Active;
     private MessageRelay _messageRelay;
     private Socket _socket;
@@ -51,15 +52,15 @@ public class WebClient : MonoBehaviour
         }
     }
 
-    public void Send(BaseMessage msg)
+    public static void Send(BaseMessage msg)
     {
-        if (Status != Status.Connected)
+        if (Active.Status != Status.Connected)
         {
             Debug.Log("WebClient isn't connected! Couldn't send message!");
         }
         else
         {
-            _socket.Send(msg.Buffer);
+            Active._socket.Send(msg.Buffer);
         }
     }
 

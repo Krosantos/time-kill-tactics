@@ -139,15 +139,23 @@ public class Tile : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDesele
         {
             if (ClickManager.EligibleToCast(this))
             {
-                ClickManager.SelectedSpell.Cast(this);
-                ClickManager.Clear();
+                ClickManager.SpellTargets.Add(this);
+                if (ClickManager.SpellTargets.Count == ClickManager.SelectedSpell.Targets)
+                {
+                    WebClient.Send(new SpellMessage(Player.Me.Team, ClickManager.SelectedSpell.Index, ClickManager.SpellTargets));
+                    ClickManager.Clear();
+                }
+                else
+                {
+                    ClickManager.ColorTiles();
+                }
             }
             else if (Unit != null) Unit.OnPointerClick(eventData);
             else if (ClickManager.EligibleToMoveTo(this))
             {
                 // Moving this server-side, experimentally!
                 // ClickManager.SelectedUnit.Move(ClickManager.SelectedUnit, this);
-                WebClient.Active.Send(new MoveMessage(ClickManager.SelectedUnit, this));
+                WebClient.Send(new MoveMessage(ClickManager.SelectedUnit, this));
                 ClickManager.Clear();
             }
             else

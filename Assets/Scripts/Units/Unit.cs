@@ -72,8 +72,16 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
     {
         if (ClickManager.EligibleToCast(Tile))
         {
-            ClickManager.SelectedSpell.Cast(Tile);
-            ClickManager.Clear();
+            ClickManager.SpellTargets.Add(Tile);
+            if (ClickManager.SpellTargets.Count == ClickManager.SelectedSpell.Targets)
+            {
+                WebClient.Send(new SpellMessage(Player.Me.Team, ClickManager.SelectedSpell.Index, ClickManager.SpellTargets));
+                ClickManager.Clear();
+            }
+            else
+            {
+                ClickManager.ColorTiles();
+            }
         }
         else if (!ClickManager.Active.alreadySelecting || !HasMoved || !HasAttacked)
         {
@@ -84,7 +92,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
             else if (ClickManager.EligibleToAttack(this))
             {
                 var attacker = ClickManager.SelectedUnit;
-                WebClient.Active.Send(new AttackMessage(attacker, this));
+                WebClient.Send(new AttackMessage(attacker, this));
             }
             else if (Player.IsActive == true)
             {
@@ -94,8 +102,9 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
         }
     }
 
-    public void OnMouseOver(){
-        
+    public void OnMouseOver()
+    {
+
     }
 
     public void OnSelect(BaseEventData eventData)

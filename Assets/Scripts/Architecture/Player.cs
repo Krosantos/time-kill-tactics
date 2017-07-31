@@ -9,18 +9,23 @@ public class Player : MonoBehaviour, ITurnable
     public List<ITurnable> TurnAssets;
     public bool IsEnemy, IsActive;
     public List<Unit> Units;
-    public List<PlayerSpell> Spells;
+    public PlayerSpell[] Spells;
     public TextAsset Army;
     public UnitBuilder UnitBuilder;
     public GameObject UnitPrefab;
     public int Mana, MaxMana;
+    public static Dictionary<int, Player> PlayersByTeam;
+    public static Player Me;
 
     public void Awake()
     {
+        if(PlayersByTeam == null) PlayersByTeam = new Dictionary<int, Player>();
+        PlayersByTeam.Add(Team, this);
+        Me = this;
         UnitBuilder = new UnitBuilder(Team, this);
         TurnAssets = new List<ITurnable>();
         Units = new List<Unit>();
-        Spells = new List<PlayerSpell>();
+        Spells = new PlayerSpell[0];
     }
 
     public void Start()
@@ -34,19 +39,17 @@ public class Player : MonoBehaviour, ITurnable
             TurnAssets.Add(unit);
         }
 
-        // Add Spells. They nest under each other in the UI for ease of procedural generation.
-        var index = 0;
+        // Add Spells.
         var parent = gameObject;
-        foreach (var spellString in army.Spells)
-        {
-            var spell = PlayerSpell.ConstructSpell(spellString, this);
-            if (spell != null)
-            {
-                Spells.Add(spell);
+        Spells = new PlayerSpell[army.Spells.Count];
+        for (var x = 0; x < army.Spells.Count;x++){
+            var spell = PlayerSpell.ConstructSpell(army.Spells[x], this);
+            if(spell != null){
+                spell.Index = x;
+                Spells[x] = spell;
                 TurnAssets.Add(spell);
-                UiManager.Active.createSpellTab(parent, index, spell);
+                UiManager.Active.createSpellTab(parent, x, spell);
             }
-            index++;
         }
     }
 

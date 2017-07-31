@@ -13,6 +13,7 @@ public class SpellHeal : PlayerSpell
         CooldownCounter = 0;
         HasAmmo = HasCooldown = true;
         Player.MaxMana += 3;
+        Targets = 1;
     }
 
     public override void TurnStart()
@@ -34,12 +35,13 @@ public class SpellHeal : PlayerSpell
         return result;
     }
 
-    public override void Cast(Tile tile)
+    public override void Cast(List<Tile> targets)
     {
-        if (IsDisabled() || tile.Unit == null) return;
-        tile.Unit.Health += 2;
-        if (tile.Unit.Health > tile.Unit.MaxHealth) tile.Unit.Health = tile.Unit.MaxHealth;
-        tile.Unit.SyncUi();
+        var target = targets[0];
+        if (IsDisabled() || target.Unit == null) return;
+        target.Unit.Health += 2;
+        if (target.Unit.Health > target.Unit.MaxHealth) target.Unit.Health = target.Unit.MaxHealth;
+        target.Unit.SyncUi();
         Ammo--;
         CooldownCounter = Cooldown;
     }

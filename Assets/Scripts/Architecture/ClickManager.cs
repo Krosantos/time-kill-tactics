@@ -8,7 +8,7 @@ public class ClickManager : EventSystem {
     public static List<Tile> MovableTiles;
     public static List<Unit> AttackableUnits;
     public static List<Unit> UnitsInRange;
-    public static List<Tile> SpellableTiles;
+    public static List<Tile> SpellableTiles, SpellTargets;
     public static ClickManager Active;
     public static Tile SelectedTile;
     public static Unit SelectedUnit;
@@ -22,6 +22,7 @@ public class ClickManager : EventSystem {
         AttackableUnits = new List<Unit>();
         UnitsInRange = new List<Unit>();
         SpellableTiles = new List<Tile>();
+        SpellTargets = new List<Tile>();
     }
 
     public static void ColorTiles()
@@ -45,6 +46,11 @@ public class ClickManager : EventSystem {
         {
             tile.ToggleGrey(true);
             tile.Color = new Color(1f,0.952f,0.682f);
+        }
+        foreach(var tile in SpellTargets)
+        {
+            tile.ToggleGrey(true);
+            tile.Color = new Color(0.952f,1f,0.682f);
         }
     }
 
@@ -70,6 +76,11 @@ public class ClickManager : EventSystem {
             tile.ToggleGrey(false);
             tile.Color = Color.white;
         }
+        foreach(var tile in SpellTargets)
+        {
+            tile.ToggleGrey(false);
+            tile.Color = Color.white;
+        }
         SelectedTile = null;
         SelectedUnit = null;
         SelectedSpell = null;
@@ -77,6 +88,7 @@ public class ClickManager : EventSystem {
         AttackableUnits = new List<Unit>();
         UnitsInRange = new List<Unit>();
         SpellableTiles = new List<Tile>();
+        SpellTargets = new List<Tile>();
         if (!Active.alreadySelecting) Active.SetSelectedGameObject(null);
     }
 
@@ -92,6 +104,6 @@ public class ClickManager : EventSystem {
 
     public static bool EligibleToCast(Tile target)
     {
-        return SelectedSpell != null && SpellableTiles.Contains(target);
+        return SelectedSpell != null && SpellableTiles.Contains(target) && !SpellTargets.Contains(target);
     }
 }

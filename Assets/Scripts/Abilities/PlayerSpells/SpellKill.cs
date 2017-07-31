@@ -12,6 +12,7 @@ public class SpellKill : PlayerSpell
         CooldownCounter = 1;
         Cost = 2;
         HasCost = HasCooldown = true;
+        Targets = 1;
     }
 
     public override void TurnStart()
@@ -33,18 +34,19 @@ public class SpellKill : PlayerSpell
         return result;
     }
 
-    public override void Cast(Tile tile)
+    public override void Cast(List<Tile> targets)
     {
-        if (IsDisabled() || tile.Unit == null) return;
-        tile.Unit.OnAttacked(null, tile.Unit, 5);
+        var target = targets[0];
+        if (IsDisabled() || target.Unit == null) return;
+        target.Unit.OnAttacked(null, target.Unit, 5);
         Player.Mana -= Cost;
         CooldownCounter = Cooldown;
-        if (tile.Unit.Health <= 0)
+        if (target.Unit.Health <= 0)
         {
-            tile.Unit.Health = 0;
-            tile.Unit.OnDeath(tile.Unit, null);
-            tile.Unit.CleanlyDestroy();
+            target.Unit.Health = 0;
+            target.Unit.OnDeath(target.Unit, null);
+            target.Unit.CleanlyDestroy();
         }
-        tile.Unit.SyncUi();
+        target.Unit.SyncUi();
     }
 }

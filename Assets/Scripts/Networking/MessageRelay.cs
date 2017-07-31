@@ -17,26 +17,34 @@ public class MessageRelay : MonoBehaviour
         {
             case "MOVE":
                 classified = new MoveMessage(decoded);
-                if (classified.IsValid) classified.HandleMessage(this);
+                if (classified.IsValid) classified.Execute(this);
                 break;
             case "ATCK":
                 classified = new AttackMessage(decoded);
-                if (classified.IsValid) classified.HandleMessage(this);
+                if (classified.IsValid) classified.Execute(this);
                 break;
             case "SPEL":
-                classified = null;
-                if (classified.IsValid) classified.HandleMessage(this);
+                classified = new SpellMessage(decoded);
+                if (classified.IsValid) classified.Execute(this);
+                break;
+            case "TURN":
+                classified = new TurnMessage(decoded);
+                if(classified.IsValid) classified.Execute(this);
                 break;
             case "SYNC":
                 classified = null;
-                if (classified.IsValid) classified.HandleMessage(this);
+                if (classified.IsValid) classified.Execute(this);
                 break;
             case "DISC":
                 classified = null;
                 break;
             case "BEAT":
                 classified = null;
-                if (classified.IsValid) classified.HandleMessage(this);
+                if (classified.IsValid) classified.Execute(this);
+                break;
+            case "VICT":
+                classified = null;
+                if (classified.IsValid) classified.Execute(this);
                 break;
             default:
                 classified = null;
