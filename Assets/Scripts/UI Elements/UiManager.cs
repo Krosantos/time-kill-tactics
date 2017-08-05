@@ -9,6 +9,7 @@ public class UiManager : MonoBehaviour
     public static UiManager Active;
     public Player Player;
     public Player Enemy;
+    public bool PlayerActive = true;
     public Text PlayerName, EnemyName, PlayerMana, EnemyMana;
     public Image PlayerManaRing, EnemyManaRing;
     public GameObject SpellTabUp, SpellTabDown, SpellAmmoDot;
@@ -23,7 +24,20 @@ public class UiManager : MonoBehaviour
 
     public void EndTurn()
     {
-       if(Player.Me.IsActive) WebClient.Send(new TurnMessage(Player.Me.Team));
+        if (PlayerActive)
+        {
+            Player.TurnEnd();
+            Enemy.TurnStart();
+        }
+        else
+        {
+            Enemy.TurnEnd();
+            Player.TurnStart();
+        }
+        PlayerActive = !PlayerActive;
+
+        // The rest isn't set up for this to genuinely require two clients yet.
+        // if (Player.Me.IsActive) WebClient.Send(new TurnMessage(Player.Me.Team));
     }
 
     public void Update()
