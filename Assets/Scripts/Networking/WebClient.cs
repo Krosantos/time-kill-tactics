@@ -60,15 +60,24 @@ public class WebClient : MonoBehaviour
         }
         else
         {
-            Active._socket.Send(msg.Buffer);
+            try
+            {
+                Active._socket.Send(msg.Buffer);
+            }
+            catch (Exception err)
+            {
+                Debug.Log(err);
+                Active.Status = Status.Error;
+            }
         }
     }
 
     void Update()
     {
-        // Digest the message backlog.
+        // Increment the internal timer. If it's been long enough without a message, ask for a heartbeat.
         _timeSinceLastMessage += Time.deltaTime;
-        if (_timeSinceLastMessage > Heartbeat) Send(new RawMessage());
+        if (_timeSinceLastMessage > Heartbeat && Status != Status.Error) Send(new HeartBeatMessage());
+        if (_timeSinceLastMessage >= 5 * Heartbeat) this.Status = Status.Error;
         // Swap out the queues. The lock prevents the constant Receive from altering them as this happens.
         lock (_lock)
         {
@@ -76,6 +85,7 @@ public class WebClient : MonoBehaviour
             _passiveQueue = _activeQueue;
             _activeQueue = holding;
         }
+        // Digest the message backlog.
         foreach (var msg in _activeQueue)
         {
             _messageRelay.ProcessMessage(msg);

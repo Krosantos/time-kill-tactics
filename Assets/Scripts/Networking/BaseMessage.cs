@@ -183,7 +183,23 @@ public class TurnMessage : BaseMessage
 
 public class HeartBeatMessage : BaseMessage
 {
-    public override void Execute(MessageRelay relay) { }
+
+    public HeartBeatMessage(string raw)
+    {
+        Buffer = raw.Encode();
+    }
+
+    public HeartBeatMessage()
+    {
+        var rawString = "BEAT";
+        Buffer = rawString.Encode();
+        IsValid = true;
+    }
+
+    public override void Execute(MessageRelay relay)
+    {
+        WebClient.Active.Status = Status.Connected;
+    }
 }
 
 public class ResyncMessage : BaseMessage
