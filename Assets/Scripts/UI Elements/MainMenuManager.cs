@@ -12,6 +12,7 @@ public class MainMenuManager : MonoBehaviour
     public void FindGame()
     {
         SceneManager.LoadScene("UnitsTest");
+        WebClient.Send(new FindGameMessage());
     }
 
     public void ShowSettings()

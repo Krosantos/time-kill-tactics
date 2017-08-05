@@ -44,6 +44,10 @@ public class MessageRelay : MonoBehaviour
                 classified = null;
                 if (classified.IsValid) classified.Execute(this);
                 break;
+            case "FIND":
+                classified = new FindGameMessage(decoded);
+                if (classified.IsValid) classified.Execute(this);
+                break;
             default:
                 classified = null;
                 break;

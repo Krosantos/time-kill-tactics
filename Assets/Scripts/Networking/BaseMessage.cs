@@ -211,3 +211,26 @@ public class DisconnectMessage : BaseMessage
 {
     public override void Execute(MessageRelay relay) { }
 }
+
+public class FindGameMessage : BaseMessage
+{
+    // We'll put in whatever we need for matchmaking eventually. We'll add another
+    // variable which the server will use to tell us which player we are (player or enemy).
+
+    public bool IsEnemy;
+
+    public FindGameMessage(string raw){
+        IsEnemy = raw.Split('|')[1] == "true";
+        Buffer = raw.Encode();
+        IsValid = true;
+    }
+
+    public FindGameMessage(bool isEnemy = false){
+        var rawString = $"FIND|{isEnemy}";
+        IsEnemy = isEnemy;
+        Buffer = rawString.Encode();
+        IsValid = true;
+    }
+
+    public override void Execute(MessageRelay relay) { }
+}
