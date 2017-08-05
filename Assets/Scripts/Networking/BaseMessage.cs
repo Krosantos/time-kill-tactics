@@ -151,11 +151,34 @@ public class SpellMessage : BaseMessage
 
 public class TurnMessage : BaseMessage
 {
+    int PlayerTeam;
+
     public TurnMessage(string raw)
     {
-
+        PlayerTeam = int.Parse(raw.Split('|')[1]);
+        IsValid = true;
+        Buffer = raw.Encode();
     }
-    public override void Execute(MessageRelay relay) { }
+
+    public TurnMessage(int team)
+    {
+        PlayerTeam = team;
+        var rawString = $"TURN|{team}";
+        IsValid = true;
+        Buffer = rawString.Encode();
+    }
+
+    public override void Execute(MessageRelay relay)
+    {
+        Debug.Log(PlayerTeam);
+        var endingPlayer = Player.PlayersByTeam[PlayerTeam];
+        var startingPlayer = (Player.PlayersByTeam.Count > PlayerTeam + 1) ? Player.PlayersByTeam[PlayerTeam + 1] : Player.PlayersByTeam[0];
+        endingPlayer.IsActive = false;
+        endingPlayer.TurnEnd();
+        startingPlayer.IsActive = true;
+        startingPlayer.TurnStart();
+        Debug.Log(startingPlayer.Name);
+    }
 }
 
 public class HeartBeatMessage : BaseMessage

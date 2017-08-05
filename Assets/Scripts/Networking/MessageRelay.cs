@@ -5,8 +5,6 @@ using UnityEngine;
 public class MessageRelay : MonoBehaviour
 {
 
-    public int lemon;
-
     public void ProcessMessage(BaseMessage msg)
     {
         Debug.Log(msg.Buffer.Decode());

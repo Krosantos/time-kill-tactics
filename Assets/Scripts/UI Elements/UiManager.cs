@@ -7,7 +7,6 @@ public class UiManager : MonoBehaviour
 {
 
     public static UiManager Active;
-    public bool PlayerActive;
     public Player Player;
     public Player Enemy;
     public Text PlayerName, EnemyName, PlayerMana, EnemyMana;
@@ -24,17 +23,7 @@ public class UiManager : MonoBehaviour
 
     public void EndTurn()
     {
-        if (PlayerActive)
-        {
-            Player.TurnEnd();
-            Enemy.TurnStart();
-        }
-        else
-        {
-            Enemy.TurnEnd();
-            Player.TurnStart();
-        }
-        PlayerActive = !PlayerActive;
+       if(Player.Me.IsActive) WebClient.Send(new TurnMessage(Player.Me.Team));
     }
 
     public void Update()
