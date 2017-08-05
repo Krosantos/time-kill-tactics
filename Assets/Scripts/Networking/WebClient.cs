@@ -27,6 +27,8 @@ public class WebClient : MonoBehaviour
     {
         _messageRelay = gameObject.AddComponent<MessageRelay>();
         Active = this;
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(_messageRelay);
         Connect();
     }
 
