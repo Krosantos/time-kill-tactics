@@ -15,13 +15,14 @@ public class Player : MonoBehaviour, ITurnable
     public GameObject UnitPrefab;
     public int Mana, MaxMana;
     public static Dictionary<int, Player> PlayersByTeam;
-    public static Player Me;
+    public static Player Me, Enemy;
 
     public void Awake()
     {
         if(PlayersByTeam == null) PlayersByTeam = new Dictionary<int, Player>();
-        PlayersByTeam.Add(Team, this);
         UnitBuilder = new UnitBuilder(Team, this);
+        if(IsEnemy) Enemy = this;
+        else Me = this;
         TurnAssets = new List<ITurnable>();
         Units = new List<Unit>();
         Spells = new PlayerSpell[0];

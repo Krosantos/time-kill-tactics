@@ -17,11 +17,24 @@ public static class MiscExtensions
         return dict[0].Sprite;
     }
 
-    public static Byte[] Encode(this string input){
+    public static Byte[] Encode(this string input)
+    {
         return Encoding.UTF8.GetBytes(input);
     }
 
-    public static string Decode(this byte[] input){
+    public static string Decode(this byte[] input)
+    {
         return Encoding.UTF8.GetString(input);
+    }
+
+    public static void DestroyChildren(this Transform self)
+    {
+        var children = self.childCount;
+        for (var x = 0; x < children; x++)
+        {
+            var child = self.GetChild(x);
+            if(child.childCount > 0) DestroyChildren(child);
+            GameObject.Destroy(child.gameObject);
+        }
     }
 }

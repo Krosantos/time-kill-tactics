@@ -225,29 +225,29 @@ public class FindGameMessage : BaseMessage
     // We'll put in whatever we need for matchmaking eventually. We'll add another
     // variable which the server will use to tell us which player we are (player or enemy).
 
-    public int AssignedTeam;
+    public int AssignedTeam, EnemyTeam;
 
     public FindGameMessage(string raw)
     {
-        // AssignedTeam = int.Parse(raw.Split('|')[1]);
-        var tentative = raw.Split('|')[1];
-        Debug.Log($"Tentative {tentative}");
-        AssignedTeam = int.Parse(tentative);
+        var split = raw.Split('|');
+        AssignedTeam = int.Parse(split[1]);
+        EnemyTeam = int.Parse(split[2]);
         Buffer = raw.Encode();
         IsValid = true;
     }
 
-    public FindGameMessage(int team = 0)
+    public FindGameMessage(int team = 0, int enemy = 0)
     {
-        var rawString = $"FIND|{team}";
+        var rawString = $"FIND|{team}|{enemy}";
         AssignedTeam = team;
+        EnemyTeam = enemy;
         Buffer = rawString.Encode();
         IsValid = true;
     }
 
     public override void Execute(MessageRelay relay)
     {
-        Player.Me = Player.PlayersByTeam[AssignedTeam];
-        Debug.Log($"I have been assigned {Player.Me.Name}");
+        Player.PlayersByTeam[AssignedTeam] = Player.Me;
+        Player.PlayersByTeam[EnemyTeam] = Player.Enemy;
     }
 }

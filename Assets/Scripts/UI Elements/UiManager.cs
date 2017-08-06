@@ -11,15 +11,15 @@ public class UiManager : MonoBehaviour
     public Player Enemy;
     public bool PlayerActive = true;
     public Text PlayerName, EnemyName, PlayerMana, EnemyMana;
-    public Image PlayerManaRing, EnemyManaRing;
+    public Image PlayerManaRing, EnemyManaRing, EndTurnButton;
     public GameObject SpellTabUp, SpellTabDown, SpellAmmoDot;
     public GameObject UnitHover, SpellHover, TileHover;
 
     public void Awake()
     {
         Active = this;
-        if(Player == Player.Me) PlayerName.color = Color.yellow;
-        if(Enemy == Player.Me) PlayerName.color = Color.yellow;
+        if (Player == Player.Me) PlayerName.color = Color.yellow;
+        if (Enemy == Player.Me) PlayerName.color = Color.yellow;
         PlayerName.text = Player.Name;
         EnemyName.text = Enemy.Name;
     }
@@ -29,18 +29,23 @@ public class UiManager : MonoBehaviour
         if (Player.Me.IsActive) WebClient.Send(new TurnMessage(Player.Me.Team));
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         _updateMana(Player, PlayerMana, PlayerManaRing);
         _updateMana(Enemy, EnemyMana, EnemyManaRing);
+        _updateEndTurn();
+    }
+
+    private void _updateEndTurn()
+    {
+        if(Player.Me == null) return;
+        EndTurnButton.color = Player.Me.IsActive ? Color.white : new Color(0.65f, 0.65f, 0.65f);
     }
 
     private void _updateMana(Player player, Text manaText, Image manaRing)
     {
         manaText.text = "Mana\r\n" + player.Mana + "/" + player.MaxMana;
         manaRing.fillAmount = player.MaxMana == 0 ? 0f : (float)player.Mana / (float)player.MaxMana;
-        var toLoad = player.IsActive ? "MAT_Standard" : "MAT_GreyScale";
-        manaRing.material = Resources.Load<Material>(toLoad);
     }
 
     public void CheckForVictory()

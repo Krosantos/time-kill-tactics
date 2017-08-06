@@ -58,4 +58,13 @@ public class MapSerializer : MonoBehaviour
             Tile.TileMap[tile.X, tile.Y] = tile;
         }
     }
+
+    public void WipeMap()
+    {
+        foreach (var tile in Tile.AllTiles)
+        {
+            if(tile.Unit) tile.Unit.Tile = null;
+        }
+        transform.DestroyChildren();
+    }
 }
