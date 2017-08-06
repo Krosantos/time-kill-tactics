@@ -73,6 +73,7 @@ public class SpellUi : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if(Spell.Player != Player.Me) return;
         if (!ClickManager.Active.alreadySelecting)
         {
             if (ClickManager.SelectedSpell == Spell)

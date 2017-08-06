@@ -6,7 +6,7 @@ class Game {
   }
 
   send (msg) {
-    _.forEach(this.connections, conn => conn.write(msg))
+    _.forEach(this.connections, conn => conn.send(msg))
   }
 
   addConnection (conn) {

@@ -10,7 +10,7 @@ module.exports = (conn, message) => {
       break
     default :
       // The default behaviour (for now) is to echo to the entire group/game.
-      conn.game ? conn.game.send(message) : conn.write(message)
+      conn.game ? conn.game.send(message) : conn.send(message)
       break
   }
 }

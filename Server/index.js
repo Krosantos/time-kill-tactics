@@ -9,6 +9,9 @@ const server = net.createServer(conn => {
   })
   conn.on('error', err => console.log(err))
   conn.on('end', () => console.log('client disconnected'))
+  conn.send = (msg) => {
+    setTimeout(() => conn.write(msg), 50)
+  }
 })
 
 server.on('error', (err) => {

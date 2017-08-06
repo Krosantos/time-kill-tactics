@@ -18,25 +18,14 @@ public class UiManager : MonoBehaviour
     public void Awake()
     {
         Active = this;
+        if(Player == Player.Me) PlayerName.color = Color.yellow;
+        if(Enemy == Player.Me) PlayerName.color = Color.yellow;
         PlayerName.text = Player.Name;
         EnemyName.text = Enemy.Name;
     }
 
     public void EndTurn()
     {
-        // if (PlayerActive)
-        // {
-        //     Player.TurnEnd();
-        //     Enemy.TurnStart();
-        // }
-        // else
-        // {
-        //     Enemy.TurnEnd();
-        //     Player.TurnStart();
-        // }
-        // PlayerActive = !PlayerActive;
-
-        // The rest isn't set up for this to genuinely require two clients yet.
         if (Player.Me.IsActive) WebClient.Send(new TurnMessage(Player.Me.Team));
     }
 
@@ -50,6 +39,8 @@ public class UiManager : MonoBehaviour
     {
         manaText.text = "Mana\r\n" + player.Mana + "/" + player.MaxMana;
         manaRing.fillAmount = player.MaxMana == 0 ? 0f : (float)player.Mana / (float)player.MaxMana;
+        var toLoad = player.IsActive ? "MAT_Standard" : "MAT_GreyScale";
+        manaRing.material = Resources.Load<Material>(toLoad);
     }
 
     public void CheckForVictory()

@@ -94,7 +94,7 @@ public class Unit : MonoBehaviour, ITurnable, IPointerClickHandler, ISelectHandl
                 var attacker = ClickManager.SelectedUnit;
                 WebClient.Send(new AttackMessage(attacker, this));
             }
-            else if (Player.IsActive == true)
+            else if (Player.IsActive == true && Player == Player.Me)
             {
                 ClickManager.Clear();
                 ClickManager.Active.SetSelectedGameObject(gameObject);

@@ -18,9 +18,13 @@ const match = () => {
   if (stack.length >= 2) {
     console.log('Making a game!')
     var newGame = new Game()
-    newGame.addConnection(stack.pop().conn)
-    newGame.addConnection(stack.pop().conn)
-    newGame.send('TURN|1')
+    var player = stack.pop().conn
+    player.write('FIND|0')
+    var enemy = stack.pop().conn
+    enemy.write('FIND|1')
+    newGame.addConnection(player)
+    newGame.addConnection(enemy)
+    newGame.send('TURN|88')
   }
   setTimeout(match, 1000)
 }

@@ -21,7 +21,6 @@ public class Player : MonoBehaviour, ITurnable
     {
         if(PlayersByTeam == null) PlayersByTeam = new Dictionary<int, Player>();
         PlayersByTeam.Add(Team, this);
-        Me = this;
         UnitBuilder = new UnitBuilder(Team, this);
         TurnAssets = new List<ITurnable>();
         Units = new List<Unit>();

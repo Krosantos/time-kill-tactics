@@ -170,14 +170,22 @@ public class TurnMessage : BaseMessage
 
     public override void Execute(MessageRelay relay)
     {
-        Debug.Log(PlayerTeam);
-        var endingPlayer = Player.PlayersByTeam[PlayerTeam];
-        var startingPlayer = (Player.PlayersByTeam.Count > PlayerTeam + 1) ? Player.PlayersByTeam[PlayerTeam + 1] : Player.PlayersByTeam[0];
-        endingPlayer.IsActive = false;
-        endingPlayer.TurnEnd();
-        startingPlayer.IsActive = true;
-        startingPlayer.TurnStart();
-        Debug.Log(startingPlayer.Name);
+        // If we send over something wild (which we do to begin the match), start player one.
+        if (!Player.PlayersByTeam.ContainsKey(PlayerTeam))
+        {
+            var startingPlayer = Player.PlayersByTeam[0];
+            startingPlayer.IsActive = true;
+            startingPlayer.TurnStart();
+        }
+        else
+        {
+            var endingPlayer = Player.PlayersByTeam[PlayerTeam];
+            var startingPlayer = (Player.PlayersByTeam.Count > PlayerTeam + 1) ? Player.PlayersByTeam[PlayerTeam + 1] : Player.PlayersByTeam[0];
+            endingPlayer.IsActive = false;
+            endingPlayer.TurnEnd();
+            startingPlayer.IsActive = true;
+            startingPlayer.TurnStart();
+        }
     }
 }
 
@@ -217,20 +225,29 @@ public class FindGameMessage : BaseMessage
     // We'll put in whatever we need for matchmaking eventually. We'll add another
     // variable which the server will use to tell us which player we are (player or enemy).
 
-    public bool IsEnemy;
+    public int AssignedTeam;
 
-    public FindGameMessage(string raw){
-        IsEnemy = raw.Split('|')[1] == "true";
+    public FindGameMessage(string raw)
+    {
+        // AssignedTeam = int.Parse(raw.Split('|')[1]);
+        var tentative = raw.Split('|')[1];
+        Debug.Log($"Tentative {tentative}");
+        AssignedTeam = int.Parse(tentative);
         Buffer = raw.Encode();
         IsValid = true;
     }
 
-    public FindGameMessage(bool isEnemy = false){
-        var rawString = $"FIND|{isEnemy}";
-        IsEnemy = isEnemy;
+    public FindGameMessage(int team = 0)
+    {
+        var rawString = $"FIND|{team}";
+        AssignedTeam = team;
         Buffer = rawString.Encode();
         IsValid = true;
     }
 
-    public override void Execute(MessageRelay relay) { }
+    public override void Execute(MessageRelay relay)
+    {
+        Player.Me = Player.PlayersByTeam[AssignedTeam];
+        Debug.Log($"I have been assigned {Player.Me.Name}");
+    }
 }
