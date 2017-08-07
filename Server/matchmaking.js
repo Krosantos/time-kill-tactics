@@ -5,11 +5,8 @@ const stack = []
 
 // We'll add things like ELO equivalent later.
 const enqueue = conn => {
-  var player = {
-    conn: conn,
-    ranking: 7
-  }
-  stack.push(player)
+  conn.army = {}
+  stack.push(conn)
   console.log(`The stack is at ${stack.length} players.`)
 }
 
@@ -18,13 +15,13 @@ const match = () => {
   if (stack.length >= 2) {
     console.log('Making a game!')
     var newGame = new Game()
-    var player = stack.pop().conn
+    var player = stack.shift()
     player.write('FIND|0')
-    var enemy = stack.pop().conn
+    var enemy = stack.shift()
     enemy.write('FIND|1')
     newGame.addConnection(player)
     newGame.addConnection(enemy)
-    newGame.send('TURN|88')
+    // newGame.send('TURN|88')
   }
   setTimeout(match, 1000)
 }

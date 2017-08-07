@@ -10,7 +10,6 @@ public class Player : MonoBehaviour, ITurnable
     public bool IsEnemy, IsActive;
     public List<Unit> Units;
     public PlayerSpell[] Spells;
-    public TextAsset Army;
     public UnitBuilder UnitBuilder;
     public GameObject UnitPrefab;
     public int Mana, MaxMana;
@@ -20,7 +19,7 @@ public class Player : MonoBehaviour, ITurnable
     public void Awake()
     {
         if(PlayersByTeam == null) PlayersByTeam = new Dictionary<int, Player>();
-        UnitBuilder = new UnitBuilder(Team, this);
+        UnitBuilder = new UnitBuilder(this);
         if(IsEnemy) Enemy = this;
         else Me = this;
         TurnAssets = new List<ITurnable>();
@@ -28,10 +27,9 @@ public class Player : MonoBehaviour, ITurnable
         Spells = new PlayerSpell[0];
     }
 
-    public void Start()
+    public void LoadArmy(Army army)
     {
         // This little block has to change once we go networked.
-        var army = JsonUtility.FromJson<Army>(Army.text);
         foreach (var unitString in army.Units)
         {
             var unit = UnitBuilder.ConstructUnit(UnitPrefab, unitString);

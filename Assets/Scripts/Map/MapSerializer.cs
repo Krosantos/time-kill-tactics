@@ -5,16 +5,13 @@ using UnityEngine;
 
 public class MapSerializer : MonoBehaviour
 {
-
+    public static MapSerializer Active;
     public GameObject TilePrefab, FillerPrefab;
-    public TextAsset MapFile;
     public SpriteDict[] TileDict, FillerDict;
 
     public void Awake()
     {
-        if (MapFile == null) return;
-        var serializedMap = JsonUtility.FromJson<Map>(MapFile.text);
-        DeserializeMap(serializedMap);
+        Active = this;
     }
 
     public static Map SerializeMap(List<Tile> tileList, string name)

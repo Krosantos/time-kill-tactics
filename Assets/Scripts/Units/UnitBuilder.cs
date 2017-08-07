@@ -3,12 +3,10 @@
 //Builds units from JSON
 public class UnitBuilder {
 
-    public int Team;
     public Player Player;
 
-    public UnitBuilder(int team, Player player)
+    public UnitBuilder(Player player)
     {
-        Team = team;
         Player = player;
     }
 
@@ -29,9 +27,8 @@ public class UnitBuilder {
         serializedUnit.OverwriteUnit(unit);
         unit.SerializedUnit = serializedUnit;
         unit.Sprite = GetSprite(serializedUnit.SpriteReference);
-        unit.Team = Team;
         unit.Player = Player;
-        if(unit.Team != 0)unit.transform.Rotate(new Vector3(0f, 180f, 0f));
+        if(Player.IsEnemy)unit.transform.Rotate(new Vector3(0f, 180f, 0f));
         unit.SyncUi();
         return unit;
     }

@@ -18,8 +18,6 @@ public class UiManager : MonoBehaviour
     public void Awake()
     {
         Active = this;
-        if (Player == Player.Me) PlayerName.color = Color.yellow;
-        if (Enemy == Player.Me) PlayerName.color = Color.yellow;
         PlayerName.text = Player.Name;
         EnemyName.text = Enemy.Name;
     }

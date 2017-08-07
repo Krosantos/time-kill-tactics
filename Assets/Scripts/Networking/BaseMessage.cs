@@ -195,6 +195,7 @@ public class HeartBeatMessage : BaseMessage
     public HeartBeatMessage(string raw)
     {
         Buffer = raw.Encode();
+        IsValid = true;
     }
 
     public HeartBeatMessage()
@@ -249,5 +250,73 @@ public class FindGameMessage : BaseMessage
     {
         Player.PlayersByTeam[AssignedTeam] = Player.Me;
         Player.PlayersByTeam[EnemyTeam] = Player.Enemy;
+    }
+}
+
+public class ArmyMessage : BaseMessage
+{
+    public Army Army;
+    public int Team;
+
+    public ArmyMessage(string raw)
+    {
+        var split = raw.Split('|');
+        Team = int.Parse(split[1]);
+
+        // For now, gonna play it safe on the off chance the army contains | characters.
+        var components = new string[split.Length - 2];
+        for (var x = 2; x < split.Length; x++) components[x - 2] = split[x];
+        var armyJson = string.Join("|", components);
+        Army = JsonUtility.FromJson<Army>(armyJson);
+        Buffer = raw.Encode();
+        IsValid = true;
+    }
+
+    public ArmyMessage(Army army, int team)
+    {
+        Army = army;
+        Team = team;
+        var armyJson = JsonUtility.ToJson(army, false);
+        var rawString = $"ARMY|{team}|{armyJson}";
+        Buffer = rawString.Encode();
+        IsValid = true;
+    }
+
+    public override void Execute(MessageRelay relay)
+    {
+        var player = Player.PlayersByTeam[Team];
+        player.LoadArmy(Army);
+    }
+}
+
+public class MapMessage : BaseMessage
+{
+    public Map Map;
+
+    public MapMessage(string raw)
+    {
+        var split = raw.Split('|');
+
+        // For now, gonna play it safe on the off chance the army contains | characters.
+        var components = new string[split.Length - 1];
+        for (var x = 1; x < split.Length; x++) components[x - 1] = split[x];
+        var mapJson = string.Join("|", components);
+        Map = JsonUtility.FromJson<Map>(mapJson);
+        Buffer = raw.Encode();
+        IsValid = true;
+    }
+
+    public MapMessage(Map map){
+        Map = map;
+        var mapJson = JsonUtility.ToJson(map);
+        var rawString = $"MAPP|{mapJson}";
+        Buffer = rawString.Encode();
+        IsValid = true;
+    }
+
+    public override void Execute(MessageRelay relay)
+    {
+        MapSerializer.Active.WipeMap();
+        MapSerializer.Active.DeserializeMap(Map);
     }
 }

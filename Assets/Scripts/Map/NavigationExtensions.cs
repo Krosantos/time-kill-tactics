@@ -99,7 +99,7 @@ public static class NavigationExtensions
         if (Mathf.Abs(tile.Height - tileFrom.Height) > maxHeight) return true;
         if (tile.Unit != null)
         {
-            if ((tile.Unit.Team != unit.Team) && !moveThroughImpass) return true;
+            if ((tile.Unit.Player != unit.Player) && !moveThroughImpass) return true;
         }
         if (!tile.Passable && !moveThroughImpass) return true;
         return false;

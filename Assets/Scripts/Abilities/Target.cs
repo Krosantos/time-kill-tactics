@@ -24,8 +24,8 @@ public class Target : MonoBehaviour {
         {
             if(neighbour.Unit != null)
             {
-                if (neighbour.Unit.Team != unit.Team && targetEnemies) result.Add(neighbour.Unit);
-                if (neighbour.Unit.Team == unit.Team && targetAllies) result.Add(neighbour.Unit);
+                if (neighbour.Unit.Player != unit.Player && targetEnemies) result.Add(neighbour.Unit);
+                if (neighbour.Unit.Player == unit.Player && targetAllies) result.Add(neighbour.Unit);
             }
         }
         if (getAllInRange)
@@ -36,8 +36,8 @@ public class Target : MonoBehaviour {
                 {
                     if (neighbour.Unit != null && Mathf.Abs(tile.Height - neighbour.Height) < 2)
                     {
-                        if (neighbour.Unit.Team != unit.Team && targetEnemies) result.Add(neighbour.Unit);
-                        if (neighbour.Unit.Team == unit.Team && targetAllies) result.Add(neighbour.Unit);
+                        if (neighbour.Unit.Player != unit.Player && targetEnemies) result.Add(neighbour.Unit);
+                        if (neighbour.Unit.Player == unit.Player && targetAllies) result.Add(neighbour.Unit);
                     }
                 }
             }

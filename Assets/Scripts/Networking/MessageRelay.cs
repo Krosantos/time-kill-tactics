@@ -14,44 +14,43 @@ public class MessageRelay : MonoBehaviour
         switch (split[0])
         {
             case "MOVE":
-                classified = new MoveMessage(decoded);
-                if (classified.IsValid) classified.Execute(this);
+                classified = new MoveMessage(decoded);                
                 break;
             case "ATCK":
-                classified = new AttackMessage(decoded);
-                if (classified.IsValid) classified.Execute(this);
+                classified = new AttackMessage(decoded);                
                 break;
             case "SPEL":
-                classified = new SpellMessage(decoded);
-                if (classified.IsValid) classified.Execute(this);
+                classified = new SpellMessage(decoded);                
                 break;
             case "TURN":
                 classified = new TurnMessage(decoded);
-                if(classified.IsValid) classified.Execute(this);
                 break;
             case "SYNC":
-                classified = null;
-                if (classified.IsValid) classified.Execute(this);
+                classified = null;                
                 break;
             case "DISC":
                 classified = null;
                 break;
             case "BEAT":
-                classified = null;
-                if (classified.IsValid) classified.Execute(this);
+                classified = new HeartBeatMessage(decoded);                
                 break;
             case "VICT":
-                classified = null;
-                if (classified.IsValid) classified.Execute(this);
+                classified = null;                
                 break;
             case "FIND":
-                classified = new FindGameMessage(decoded);
-                if (classified.IsValid) classified.Execute(this);
+                classified = new FindGameMessage(decoded);                
+                break;
+            case "ARMY":
+                classified = new ArmyMessage(decoded);                
+                break;
+            case "MAPP":
+                classified = new MapMessage(decoded);                
                 break;
             default:
                 classified = null;
                 break;
         }
+        if (classified != null && classified.IsValid) classified.Execute(this);
     }
 
     public Unit GetUnitByCoords(Vector2 coords)
