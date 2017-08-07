@@ -16,12 +16,12 @@ const match = () => {
     console.log('Making a game!')
     var newGame = new Game()
     var player = stack.shift()
-    player.write('FIND|0')
     var enemy = stack.shift()
-    enemy.write('FIND|1')
+    player.write('FIND|0|1')
+    enemy.write('FIND|1|0')
     newGame.addConnection(player)
     newGame.addConnection(enemy)
-    // newGame.send('TURN|88')
+    newGame.start()
   }
   setTimeout(match, 1000)
 }

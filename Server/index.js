@@ -8,9 +8,9 @@ const server = net.createServer(conn => {
     handler.message(conn, data)
   })
   conn.on('error', err => handler.error(conn, err))
-  conn.on('end', handler.disconnect(conn))
-  conn.send = (msg) => {
-    setTimeout(() => conn.write(msg), 50)
+  conn.on('end', () => handler.disconnect(conn))
+  conn.send = (msg, delay) => {
+    setTimeout(() => conn.write(msg), delay || 50)
   }
 })
 

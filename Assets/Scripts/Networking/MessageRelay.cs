@@ -7,46 +7,47 @@ public class MessageRelay : MonoBehaviour
 
     public void ProcessMessage(BaseMessage msg)
     {
-        Debug.Log(msg.Buffer.Decode());
         var decoded = msg.Buffer.Decode();
         var split = decoded.Split('|');
         BaseMessage classified;
         switch (split[0])
         {
             case "MOVE":
-                classified = new MoveMessage(decoded);                
+                classified = new MoveMessage(decoded);
                 break;
             case "ATCK":
-                classified = new AttackMessage(decoded);                
+                classified = new AttackMessage(decoded);
                 break;
             case "SPEL":
-                classified = new SpellMessage(decoded);                
+                classified = new SpellMessage(decoded);
                 break;
             case "TURN":
                 classified = new TurnMessage(decoded);
                 break;
             case "SYNC":
-                classified = null;                
+                classified = null;
                 break;
             case "DISC":
                 classified = null;
                 break;
             case "BEAT":
-                classified = new HeartBeatMessage(decoded);                
+                classified = new HeartBeatMessage(decoded);
                 break;
             case "VICT":
-                classified = null;                
+                classified = null;
                 break;
             case "FIND":
-                classified = new FindGameMessage(decoded);                
+                classified = new FindGameMessage(decoded);
                 break;
             case "ARMY":
-                classified = new ArmyMessage(decoded);                
+                classified = new ArmyMessage(decoded);
                 break;
             case "MAPP":
-                classified = new MapMessage(decoded);                
+                classified = new MapMessage(decoded);
                 break;
             default:
+                Debug.Log("DEFAULT");
+                Debug.Log(msg.Buffer.Decode());
                 classified = null;
                 break;
         }

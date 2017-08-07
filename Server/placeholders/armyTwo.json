@@ -1,9 +1,9 @@
 {
     "Name": "",
-    "Spells":["Kill","Heal"],
+    "Spells":["Heal"],
     "Units": [
         {
-            "X": 2,
+            "X": 7,
             "Y": 2,
             "Health": 4,
             "Strength": 2,
@@ -40,10 +40,47 @@
             "AbilityTwo": ""
         },
         {
-            "X": 3,
-            "Y": 2,
+            "X": 6,
+            "Y": 3,
             "Health": 1,
             "Strength": 1,
+            "Speed": 3,
+            "OnMoves": [
+                "Standard"
+            ],
+            "Attacks": [
+                "Standard"
+            ],
+            "OnTurnStarts": [
+                "Standard"
+            ],
+            "OnTurnEnds": [
+                "Standard"
+            ],
+            "OnDeaths": [
+                "Standard"
+            ],
+            "OnKills": [
+                "Standard"
+            ],
+            "OnAttackeds": [
+                "Standard"
+            ],
+            "Tags": [
+                "Standard"
+            ],
+            "Name": "Decaying Thrall",
+            "SpriteReference": "placeholderEnemy",
+            "MoveType": "Standard",
+            "TargetType": "Melee",
+            "AbilityOne": "",
+            "AbilityTwo": ""
+        },
+        {
+            "X": 6,
+            "Y": 2,
+            "Health": 1,
+            "Strength": 3,
             "Speed": 2,
             "OnMoves": [
                 "Standard"
