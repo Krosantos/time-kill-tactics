@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const net = require('net')
 const handler = require('./handler')
 
@@ -10,7 +11,7 @@ const server = net.createServer(conn => {
   conn.on('error', err => handler.error(conn, err))
   conn.on('end', () => handler.disconnect(conn))
   conn.send = (msg, delay) => {
-    setTimeout(() => conn.write(msg), delay || 50)
+    setTimeout(() => conn.write(msg), delay || 100)
   }
 })
 
