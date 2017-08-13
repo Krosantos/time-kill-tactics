@@ -19,13 +19,17 @@ public class MessageRelay : MonoBehaviour
         if (MessageDict[id].AppendPacket(decoded))
         {
             var finalized = MessageDict[id].FinalizeMessage();
-            ExecuteMessage(finalized);
+            ExecuteMessage(finalized, id);
         }
     }
 
-    public void ExecuteMessage(BaseMessage msg)
+    public void ExecuteMessage(BaseMessage msg, string id)
     {
-        if (msg != null && msg.IsValid) msg.Execute(this);
+        if (msg != null && msg.IsValid)
+        {
+            msg.Execute(this);
+            MessageDict.Remove(id);
+        }
     }
 
     public Unit GetUnitByCoords(Vector2 coords)
