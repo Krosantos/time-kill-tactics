@@ -28,7 +28,7 @@ public class UnitBuilder {
         unit.SerializedUnit = serializedUnit;
         unit.Sprite = GetSprite(serializedUnit.SpriteReference);
         unit.Player = Player;
-        if(Player.IsEnemy)unit.transform.Rotate(new Vector3(0f, 180f, 0f));
+        if(Player.Team == 1)unit.transform.Rotate(new Vector3(0f, 180f, 0f));
         unit.SyncUi();
         return unit;
     }
