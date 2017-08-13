@@ -4,6 +4,7 @@ const message = (conn, message) => {
   var split = message.split('|')
   var type = split.shift()
   var body = split.join('|')
+  console.log(message)
   switch (type) {
     case 'FIND':
       // Add to matchmaking queue

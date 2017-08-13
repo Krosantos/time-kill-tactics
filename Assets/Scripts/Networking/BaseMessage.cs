@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class BaseMessage
 {
     public bool IsValid;
-    public byte[] Buffer = new byte[1028];
+    public byte[] Buffer = new byte[256];
     public abstract void Execute(MessageRelay relay);
 }
 
@@ -170,6 +170,8 @@ public class TurnMessage : BaseMessage
 
     public override void Execute(MessageRelay relay)
     {
+        Debug.Log($"Ending turn for {PlayerTeam}");
+
         // If we send over something wild (which we do to begin the match), start player one.
         if (!Player.PlayersByTeam.ContainsKey(PlayerTeam))
         {
@@ -249,7 +251,9 @@ public class FindGameMessage : BaseMessage
     public override void Execute(MessageRelay relay)
     {
         Player.PlayersByTeam[AssignedTeam] = Player.Me;
+        Player.Me.Team = AssignedTeam;
         Player.PlayersByTeam[EnemyTeam] = Player.Enemy;
+        Player.Enemy.Team = EnemyTeam;
     }
 }
 

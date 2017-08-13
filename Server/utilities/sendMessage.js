@@ -6,11 +6,12 @@ const crypto = require('crypto')
 
 // We reserve 32 bytes for header data. The remaining 996 bytes are for the body.
 module.exports = (type, body, connection) => {
-  const chunked = _.chunk(body, 996)
+  const chunked = _.chunk(body, 224)
   const id = crypto.randomBytes(Math.ceil(9)).toString('hex').slice(0, 18)
 
   _.forEach(chunked, (snippet, index) => {
     var packet = _formatPacket(type, id, index, index + 1 === chunked.length, snippet)
+    console.log(packet)
     connection.write(packet)
   })
 }

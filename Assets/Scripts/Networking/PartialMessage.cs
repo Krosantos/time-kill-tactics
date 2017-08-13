@@ -45,10 +45,8 @@ public class PartialMessage
         var result = true;
         for (var x = 0; x < _packetCount; x++)
         {
-            Debug.Log($"Checking for packet {x + 1} of {_packetCount}");
             if (!_packets.ContainsKey(x))
             {
-                Debug.Log("It ain't there =(");
                 result = false;
                 break;
             }
