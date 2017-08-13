@@ -11,8 +11,6 @@ module.exports = (type, body, connection) => {
 
   _.forEach(chunked, (snippet, index) => {
     var packet = _formatPacket(type, id, index, index + 1 === chunked.length, snippet)
-    // console.log(packet)
-    console.log(`${type}-${packet.length} (${index + 1}/${chunked.length})`)
     connection.write(packet)
   })
 }

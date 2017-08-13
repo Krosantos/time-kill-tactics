@@ -267,7 +267,6 @@ public class ArmyMessage : BaseMessage
         var components = new string[split.Length - 2];
         for (var x = 2; x < split.Length; x++) components[x - 2] = split[x];
         var armyJson = string.Join("|", components);
-        Debug.Log($"The Army Message is {raw.Length} characters long");
         Army = JsonUtility.FromJson<Army>(armyJson);
         Buffer = raw.Encode();
         IsValid = true;
@@ -302,9 +301,6 @@ public class MapMessage : BaseMessage
         var components = new string[split.Length - 1];
         for (var x = 1; x < split.Length; x++) components[x - 1] = split[x];
         var mapJson = string.Join("|", components);
-        Debug.Log($"The Map Message is {raw.Length} characters long");
-        Debug.Log(mapJson);
-        Debug.Log(raw);
         Map = JsonUtility.FromJson<Map>(mapJson);
         Buffer = raw.Encode();
         IsValid = true;

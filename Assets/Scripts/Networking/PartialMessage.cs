@@ -21,7 +21,6 @@ public class PartialMessage
         // Each packet looks like --> Type|ID|Order|Final?|Body
         // These have lengths of  -->    4|18|    5|     1| 996
         var split = raw.Split('|');
-        Debug.Log(raw);
         if (_type == null) _type = split[0];
         var order = int.Parse(split[2]);
         var body = "";
@@ -65,7 +64,6 @@ public class PartialMessage
         for (var x = 0; x < _packetCount; x++)
         {
             compiled += _packets[x];
-            Debug.Log($"{_type}: I'm appending a packet which is {_packets[x].Length} long. Now we're at {compiled.Length}.\r\n{_packets[x]}");
         }
         switch (_type)
         {

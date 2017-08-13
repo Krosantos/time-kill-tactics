@@ -1,8 +1,6 @@
 const matchmaking = require('./matchmaking')
 
 const message = (conn, message) => {
-  // console.log(message)
-  // console.log(message.length)
   var split = message.split('|')
   var type = split.shift()
   var body = split.join('|')
