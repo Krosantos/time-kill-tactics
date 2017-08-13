@@ -58,9 +58,10 @@ public class MapSerializer : MonoBehaviour
 
     public void WipeMap()
     {
+        if (Tile.AllTiles == null) return;
         foreach (var tile in Tile.AllTiles)
         {
-            if(tile.Unit) tile.Unit.Tile = null;
+            if (tile.Unit) tile.Unit.Tile = null;
         }
         transform.DestroyChildren();
     }

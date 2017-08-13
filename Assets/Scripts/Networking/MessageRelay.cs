@@ -5,53 +5,27 @@ using UnityEngine;
 public class MessageRelay : MonoBehaviour
 {
 
-    public void ProcessMessage(BaseMessage msg)
+    public static Dictionary<string, PartialMessage> MessageDict;
+
+    public void ProcessMessage(BaseMessage packet)
     {
-        var decoded = msg.Buffer.Decode();
-        var split = decoded.Split('|');
-        BaseMessage classified;
-        switch (split[0])
+        var decoded = packet.Buffer.Decode();
+        if (decoded.Split('|').Length < 2)
         {
-            case "MOVE":
-                classified = new MoveMessage(decoded);
-                break;
-            case "ATCK":
-                classified = new AttackMessage(decoded);
-                break;
-            case "SPEL":
-                classified = new SpellMessage(decoded);
-                break;
-            case "TURN":
-                classified = new TurnMessage(decoded);
-                break;
-            case "SYNC":
-                classified = null;
-                break;
-            case "DISC":
-                classified = null;
-                break;
-            case "BEAT":
-                classified = new HeartBeatMessage(decoded);
-                break;
-            case "VICT":
-                classified = null;
-                break;
-            case "FIND":
-                classified = new FindGameMessage(decoded);
-                break;
-            case "ARMY":
-                classified = new ArmyMessage(decoded);
-                break;
-            case "MAPP":
-                classified = new MapMessage(decoded);
-                break;
-            default:
-                Debug.Log("DEFAULT");
-                Debug.Log(msg.Buffer.Decode());
-                classified = null;
-                break;
+            Debug.Log(decoded);
         }
-        if (classified != null && classified.IsValid) classified.Execute(this);
+        var id = decoded.Split('|')[1];
+        if (!MessageDict.ContainsKey(id)) MessageDict[id] = new PartialMessage();
+        if (MessageDict[id].AppendPacket(decoded))
+        {
+            var finalized = MessageDict[id].FinalizeMessage();
+            ExecuteMessage(finalized);
+        }
+    }
+
+    public void ExecuteMessage(BaseMessage msg)
+    {
+        if (msg != null && msg.IsValid) msg.Execute(this);
     }
 
     public Unit GetUnitByCoords(Vector2 coords)

@@ -6,8 +6,8 @@ class Game {
     this.connections = []
   }
 
-  send (msg) {
-    _.forEach(this.connections, conn => conn.send(msg))
+  send (type, body) {
+    _.forEach(this.connections, conn => conn.send(type, body))
   }
 
   addConnection (conn) {
@@ -17,10 +17,10 @@ class Game {
 
   start () {
     var map = Math.random() >= 0.5 ? placeholders.mapOne : placeholders.mapTwo
-    this.send(`MAPP|${JSON.stringify(map)}`)
-    this.send(`ARMY|0|${JSON.stringify(placeholders.armyOne)}`, 1500)
-    this.send(`ARMY|1|${JSON.stringify(placeholders.armyTwo)}`, 1500)
-    this.send(`TURN|88`, 1000)
+    this.send('MAPP', JSON.stringify(map))
+    this.send('ARMY', `0|${JSON.stringify(placeholders.armyOne)}`, 1500)
+    this.send('ARMY', `1|${JSON.stringify(placeholders.armyTwo)}`, 1500)
+    this.send('TURN', '88', 1000)
   }
 
   end () {

@@ -1,8 +1,11 @@
 const matchmaking = require('./matchmaking')
 
 const message = (conn, message) => {
-  console.log(message)
-  var type = message.split('|')[0]
+  // console.log(message)
+  // console.log(message.length)
+  var split = message.split('|')
+  var type = split.shift()
+  var body = split.join('|')
   switch (type) {
     case 'FIND':
       // Add to matchmaking queue
@@ -13,7 +16,7 @@ const message = (conn, message) => {
       break
     default :
       // The default behaviour (for now) is to echo to the entire group/game.
-      conn.game ? conn.game.send(message) : conn.send(message)
+      conn.game ? conn.game.send(type, body) : conn.send(type, body)
       break
   }
 }

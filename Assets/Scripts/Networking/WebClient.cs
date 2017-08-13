@@ -25,6 +25,7 @@ public class WebClient : MonoBehaviour
     void Awake()
     {
         _messageRelay = gameObject.AddComponent<MessageRelay>();
+        MessageRelay.MessageDict = new Dictionary<string, PartialMessage>();
         Active = this;
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(_messageRelay);
@@ -99,7 +100,7 @@ public class WebClient : MonoBehaviour
     void Receive()
     {
         var msg = new RawMessage();
-        _socket.BeginReceive(msg.Buffer, 0, 256, SocketFlags.None, new AsyncCallback(OnReceive), msg);
+        _socket.BeginReceive(msg.Buffer, 0, 1028, SocketFlags.None, new AsyncCallback(OnReceive), msg);
     }
 
     void OnReceive(IAsyncResult ar)

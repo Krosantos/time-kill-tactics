@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class BaseMessage
 {
     public bool IsValid;
-    public byte[] Buffer = new byte[256];
+    public byte[] Buffer = new byte[1028];
     public abstract void Execute(MessageRelay relay);
 }
 
@@ -303,12 +303,15 @@ public class MapMessage : BaseMessage
         for (var x = 1; x < split.Length; x++) components[x - 1] = split[x];
         var mapJson = string.Join("|", components);
         Debug.Log($"The Map Message is {raw.Length} characters long");
+        Debug.Log(mapJson);
+        Debug.Log(raw);
         Map = JsonUtility.FromJson<Map>(mapJson);
         Buffer = raw.Encode();
         IsValid = true;
     }
 
-    public MapMessage(Map map){
+    public MapMessage(Map map)
+    {
         Map = map;
         var mapJson = JsonUtility.ToJson(map);
         var rawString = $"MAPP|{mapJson}";
