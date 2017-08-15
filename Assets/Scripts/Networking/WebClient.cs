@@ -15,6 +15,7 @@ public class WebClient : MonoBehaviour
     private MessageRelay _messageRelay;
     private Socket _socket;
     private object _lock;
+    private int _skippedBeats;
     private float _timeSinceLastMessage;
     private List<BaseMessage> _activeQueue, _passiveQueue;
 
@@ -38,6 +39,7 @@ public class WebClient : MonoBehaviour
         _activeQueue = new List<BaseMessage>();
         _passiveQueue = new List<BaseMessage>();
         _timeSinceLastMessage = 0f;
+        _skippedBeats = 0;
         _socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
         _socket.BeginConnect(IpAddress, Port, new AsyncCallback(OnConnect), _socket);
         Status = Status.Connecting;
@@ -78,8 +80,13 @@ public class WebClient : MonoBehaviour
     {
         // Increment the internal timer. If it's been long enough without a message, ask for a heartbeat.
         _timeSinceLastMessage += Time.deltaTime;
-        if (_timeSinceLastMessage > Heartbeat && Status != Status.Error) Send(new HeartBeatMessage());
-        if (_timeSinceLastMessage >= 5 * Heartbeat) this.Status = Status.Error;
+        if (_timeSinceLastMessage > Heartbeat && Status != Status.Error)
+        {
+            Send(new HeartBeatMessage());
+            _skippedBeats++;
+            _timeSinceLastMessage = 0;
+        }
+        if (_skippedBeats >= 5) this.Status = Status.Error;
         // Swap out the queues. The lock prevents the constant Receive from altering them as this happens.
         lock (_lock)
         {
@@ -109,6 +116,7 @@ public class WebClient : MonoBehaviour
         if (length > 0)
         {
             _timeSinceLastMessage = 0f;
+            _skippedBeats = 0;
             var msg = (BaseMessage)ar.AsyncState;
             lock (_lock) _passiveQueue.Add(msg);
         }

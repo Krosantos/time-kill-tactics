@@ -23,6 +23,7 @@ public class UnitBuilder {
     public Unit ConstructUnit(GameObject unitPrefab, SerializedUnit serializedUnit){
         var result = GameObject.Instantiate(unitPrefab, new Vector3(), Quaternion.identity);
         var unit = result.GetComponentInChildren<Unit>();
+        // Units start getting unpacked at 2, 13 and 9, 13
         // The brunt of stat and ability assignment happens in here.
         serializedUnit.OverwriteUnit(unit);
         unit.SerializedUnit = serializedUnit;
