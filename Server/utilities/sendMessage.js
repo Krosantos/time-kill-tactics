@@ -1,10 +1,10 @@
 const _ = require('lodash')
 const crypto = require('crypto')
 
-// The client accepts packets in chunks of 1028 bytes. In order to send large messages, we need to break down
+// The client accepts packets in chunks of 256 bytes. In order to send large messages, we need to break down
 // their bodies into annotated snippets, with an order, id, type, and "isFinal" flag.
 
-// We reserve 32 bytes for header data. The remaining 996 bytes are for the body.
+// We reserve 32 bytes for header data. The remaining 224 bytes are for the body.
 module.exports = (type, body, connection) => {
   const chunked = _.chunk(body, 224)
   const id = crypto.randomBytes(Math.ceil(9)).toString('hex').slice(0, 18)
